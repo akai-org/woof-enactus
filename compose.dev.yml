@@ -1,0 +1,24 @@
+services:
+  database:
+    image: postgres:alpine
+    restart: unless-stopped
+    container_name: database
+    hostname: database
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=enactus
+      - POSTGRES_PASSWORD=zaq1@WSX
+      - POSTGRES_DB=woof
+
+  pgAdmin:
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    container_name: pgAdmin
+    hostname: pgadmin
+    ports:
+      - "8080:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@woof.dev
+      - PGADMIN_DEFAULT_PASSWORD=zaq1@WSX
+      - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True
