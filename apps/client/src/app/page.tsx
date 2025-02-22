@@ -1,5 +1,5 @@
-import { Button } from "@chakra-ui/react";
+import { Map } from "@/components";
 
 export default function Home() {
-  return <Button>Click me!</Button>;
+  return <Map />;
 }
