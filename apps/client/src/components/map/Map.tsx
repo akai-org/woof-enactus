@@ -1,14 +1,24 @@
 "use client";
 
-import L from "leaflet";
+import L, { ErrorEvent, LocationEvent } from "leaflet";
 import { useEffect } from "react";
 
 function Map() {
   useEffect(() => {
-    const map = L.map("map", { zoomControl: false }).setView(
-      [51.505, -0.09],
-      13,
-    );
+    const map = L.map("map", { zoomControl: false }).locate({
+      setView: true,
+    });
+
+    const onLocationFound = (_: LocationEvent) => {
+      map.setZoom(12);
+    };
+
+    const onLocationError = (_: ErrorEvent) => {
+      map.setView([52.40379, 16.94935], 15);
+    };
+
+    map.once("locationfound", onLocationFound);
+    map.once("locationerror", onLocationError);
 
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
@@ -16,6 +26,7 @@ function Map() {
     }).addTo(map);
 
     return () => {
+      map.stopLocate();
       map.remove();
     };
   }, []);
