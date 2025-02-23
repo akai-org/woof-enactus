@@ -1,5 +1,6 @@
 "use client";
 
+import { Box } from "@chakra-ui/react";
 import L, { ErrorEvent, LocationEvent } from "leaflet";
 import { useEffect } from "react";
 
@@ -31,7 +32,7 @@ function Map() {
     };
   }, []);
 
-  return <div id="map" style={{ width: "100%", height: "700px" }}></div>;
+  return <Box id="map" width="100%" minHeight="60vh" />;
 }
 
 export default Map;
