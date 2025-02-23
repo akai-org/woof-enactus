@@ -1,3 +1,3 @@
-import MapNoSSR from "./map/MapNoSSR";
+import Map from "./map/Map";
 
-export { MapNoSSR as Map };
+export { Map };
