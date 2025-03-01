@@ -16,6 +16,17 @@ const config: Config = {
       coverageDirectory: "../coverage",
       testEnvironment: "node",
     },
+    {
+      displayName: "Backend e2e",
+      cache: true,
+      moduleFileExtensions: ["js", "json", "ts"],
+      rootDir: "./apps/server/test",
+      testEnvironment: "node",
+      testRegex: ".e2e-spec.ts$",
+      transform: {
+        "^.+\\.(t|j)s$": "ts-jest",
+      },
+    },
   ],
 };
 
