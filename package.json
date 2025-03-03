@@ -1,9 +1,9 @@
 {
   "name": "woof-enactus",
   "version": "1.0.0",
-  "main": "index.js",
   "private": true,
   "scripts": {
+    "start:dev:db": "docker compose -f compose.dev.yml up -d",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier": "prettier . --write"
   },
