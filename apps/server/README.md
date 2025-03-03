@@ -21,6 +21,12 @@ Za pomocą polecenia `npm run start:dev:db` uruchamia się bazę danych PostgreS
 Poleceniem `npm -w server start:dev` uruchamia się backend aplikacji w środowisku development.
 Aby backend poprawnie się uruchomił musi być uruchomiana baza danych za pomocą wcześniej opisanego polecenia.
 
+## Development
+Trzymać się dobrych praktyk opisanych w dokumentacji Nest'a (np. używanie CLI do generowania templateów). Używać Prettier'a do formatowania kodu. Commity, Issue oraz Pull Requesty opisywać w sposób czytelny/autodokumnentujący się.
+
+### Prisma ORM
+Po dodaniu modelu/i do [schematu Prismy](./prisma/schema.prisma) należy wykonać polecenie `npm -w server prisma:generate`. Wygeneruje ono typy oraz definicje klas dla opiektów z bazy. UWAGA! Po genereacji może być konieczne zrestartowanie IDE. ww. polecenie należy również wykonać przy pierwszym uruchomieniu projektu. Wymagane też jest ustawienie pliku [.env](.env) zgodnie z plikiem [.env.example](.env.example).
+
 ## Przydatne linki + info
 - [Dokumentacja Nest.js](https://docs.nestjs.com/)
 - [Dokumentacja Prismy](https://prisma.io/docs)
