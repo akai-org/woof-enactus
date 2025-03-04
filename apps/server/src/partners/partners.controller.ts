@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Controller, Get, Param, Res } from "@nestjs/common";
 import { PartnersService } from "./partners.service";
+import type { Response } from "express";
 
 @Controller("partners")
 export class PartnersController {
@@ -7,13 +8,13 @@ export class PartnersController {
 
   // GET /partners
   @Get()
-  async getAllPartners() {
-    return this.partnersService.findAll();
+  async getAllPartners(@Res() res: Response) {
+    return this.partnersService.findAll(res);
   }
 
   // GET /partners/:uuid
   @Get(":uuid")
-  async getPartnerByUuid(@Param("uuid") uuid: string) {
-    return this.partnersService.findOne(uuid);
+  async getPartnerByUuid(@Param("uuid") uuid: string, @Res() res: Response) {
+    return this.partnersService.findOne(uuid, res);
   }
 }
