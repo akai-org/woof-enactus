@@ -10,8 +10,10 @@
     "prettier": "prettier . --write"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.8.0",
+    "@chakra-ui/react": "^3.8.1",
     "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "framer-motion": "^12.4.9",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
