@@ -8,7 +8,7 @@ export class PartnersService {
 
   async findAll(res: Response) {
     try {
-      return this.prisma.partner.findMany();
+      return await this.prisma.partner.findMany();
     } catch {
       res.status(500).json({
         ok: false,
@@ -19,7 +19,7 @@ export class PartnersService {
 
   async findOne(uuid: string, res: Response) {
     try {
-      return this.prisma.partner.findUnique({
+      return await this.prisma.partner.findUnique({
         where: { uuid },
       });
     } catch {
