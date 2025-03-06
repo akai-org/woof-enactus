@@ -16,7 +16,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "codegen:download": "bash ./setup_codegen.sh",
+    "codegen:run": "java -jar ./bin/codegen.jar generate -i http://localhost:3000/api/json -l typescript-axios -o ../../packages/woof-api-client"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -24,6 +26,8 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.0.6",
     "@prisma/client": "^6.4.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
