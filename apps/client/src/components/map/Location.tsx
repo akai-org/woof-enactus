@@ -23,7 +23,7 @@ function Location({ defaultPosition, defaultZoom }: LocationProps) {
     return () => {
       map.stopLocate();
     };
-  }, [defaultPosition, map]);
+  }, [map]);
 
   return <></>;
 }
