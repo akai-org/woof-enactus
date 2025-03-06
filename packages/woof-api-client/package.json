@@ -4,8 +4,7 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc --outDir dist/",
-    "prepublishOnly": "npm run build"
+    "build": "tsc --outDir dist/"
   },
   "dependencies": {
     "axios": "^0.21.1"
