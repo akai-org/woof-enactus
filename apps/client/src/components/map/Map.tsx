@@ -1,48 +1,37 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
-import L, { ErrorEvent, LocationEvent } from "leaflet";
-import { useEffect, useRef } from "react";
+import { LatLngExpression } from "leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
+import Location from "./Location";
 
-function Map() {
-  const mapRef = useRef<L.Map | null>(null);
+/* 
+  WARNING: Except for its children, MapContainer props are immutable:
+  changing them after they have been set a first time will have no effect on the Map instance or its container.
+*/
 
-  useEffect(() => {
-    const map = L.map("map", { zoomControl: false }).locate({
-      setView: true,
-    });
+const DEFAULT_POSITION: LatLngExpression = [52.40379, 16.94935];
+const DEFAULT_ZOOM = 13;
 
-    mapRef.current = map;
+type MapProps = {
+  children?: React.ReactNode;
+};
 
-    const onLocationFound = (_: LocationEvent) => {
-      if (mapRef.current) {
-        mapRef.current.setZoom(12);
-      }
-    };
-
-    const onLocationError = (_: ErrorEvent) => {
-      if (mapRef.current) {
-        mapRef.current.setView([52.40379, 16.94935], 15);
-      }
-    };
-
-    map.once("locationfound", onLocationFound);
-    map.once("locationerror", onLocationError);
-
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
-
-    return () => {
-      if (mapRef.current) {
-        mapRef.current.stopLocate();
-        mapRef.current.remove();
-      }
-    };
-  }, []);
-
-  return <Box id="map" width="100%" minHeight="60vh" />;
+function Map({ children }: MapProps) {
+  return (
+    <MapContainer
+      center={DEFAULT_POSITION}
+      zoom={DEFAULT_ZOOM}
+      style={{ minHeight: "60vh" }}
+      zoomControl={false}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <Location defaultPosition={DEFAULT_POSITION} defaultZoom={DEFAULT_ZOOM} />
+      {children}
+    </MapContainer>
+  );
 }
 
 export default Map;
