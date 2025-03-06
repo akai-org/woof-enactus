@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier": "prettier . --write",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "chakra:typegen": "chakra typegen src/constants/theme.ts"
   },
   "dependencies": {
