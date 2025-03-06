@@ -1,4 +1,4 @@
-export default interface GenericResponse {
+export declare interface GenericResponse {
   ok: boolean;
   data?: unknown;
   message?: string;

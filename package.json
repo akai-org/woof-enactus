@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start:dev:db": "docker compose -f compose.dev.yml up -d",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "prettier": "prettier . --write"
   },
   "keywords": [],
@@ -12,8 +11,7 @@
   "license": "ISC",
   "description": "",
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/*"
   ],
   "devDependencies": {
     "prettier": "^3.5.1"
