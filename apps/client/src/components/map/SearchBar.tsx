@@ -34,10 +34,12 @@ export default function SearchBar() {
       <Group attached width={"100%"}>
         <Input placeholder="Miasto, ulica" size="sm" />
         <InputAddon bg="none" size="sm">
-          <Popover.Root positioning={{ placement: "bottom-end" }}>
-            <Popover.Trigger padding={0} as="button">
-              + {slider.value}km
-            </Popover.Trigger>
+          <Popover.Root
+            positioning={{
+              placement: "bottom-end",
+            }}
+          >
+            <Popover.Trigger as="button">+ {slider.value}km</Popover.Trigger>
             <Portal>
               <Popover.Positioner>
                 <Popover.Content>
@@ -73,7 +75,7 @@ export default function SearchBar() {
           </IconButton>
         </InputAddon>
       </Group>
-      <Flex justify="space-between" padding={2}>
+      <Flex justify="space-between" py={2}>
         <Popover.Root positioning={{ placement: "bottom-start" }}>
           <Popover.Trigger asChild>
             <Button size="sm" variant="outline">
@@ -112,7 +114,7 @@ export default function SearchBar() {
                           ]}
                         >
                           {value => (
-                            <Flex align="center" gap={4}>
+                            <Flex align="center" gap={4} key={value.name}>
                               <Box boxSize={4} rounded="sm" bg={value.color} />
                               <Text>{value.name}</Text>
                             </Flex>
