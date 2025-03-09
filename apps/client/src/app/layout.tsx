@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import Provider from "../provider";
+
+import { Footer } from "@/components/Footer";
+import { Nav } from "@/components/Navbar";
+import { Container } from "@chakra-ui/react";
+import Providers from "../providers";
 
 import "leaflet/dist/leaflet.css";
 
@@ -14,9 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl">
+    <html lang="pl" suppressHydrationWarning>
       <body>
-        <Provider>{children}</Provider>
+        <Providers>
+          <Nav></Nav>
+          <Container flex={1}>{children}</Container>
+          <Footer></Footer>
+        </Providers>
       </body>
     </html>
   );
