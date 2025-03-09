@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier": "prettier . --write"
+    "prettier": "prettier . --write",
+    "chakra:typegen": "chakra typegen src/constants/theme.ts"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.8.1",
