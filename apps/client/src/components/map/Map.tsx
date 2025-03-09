@@ -3,6 +3,7 @@
 import { LatLngExpression } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 import Location from "./Location";
+import MapMarker from "./MapMarker";
 
 /* 
   WARNING: Except for its children, MapContainer props are immutable:
@@ -15,6 +16,19 @@ const DEFAULT_ZOOM = 13;
 type MapProps = {
   children?: React.ReactNode;
 };
+
+const coordinates: Array<LatLngExpression> = [
+  [52.472013, 16.994563],
+  [52.523089, 16.934824],
+  [52.58961, 17.142845],
+  [52.508163, 17.207341],
+  [52.401124, 16.84257],
+  [52.515939, 16.878021],
+  [52.553108, 17.034453],
+  [52.428763, 16.981219],
+  [52.462308, 17.176126],
+  [52.494705, 16.839512],
+];
 
 function Map({ children }: MapProps) {
   return (
@@ -29,6 +43,9 @@ function Map({ children }: MapProps) {
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Location defaultPosition={DEFAULT_POSITION} defaultZoom={DEFAULT_ZOOM} />
+      {coordinates.map((latLng, index) => (
+        <MapMarker position={latLng} key={index} />
+      ))}
       {children}
     </MapContainer>
   );
