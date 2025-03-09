@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import Providers from "./providers";
+
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Navbar";
 import { Container } from "@chakra-ui/react";
+import Providers from "../providers";
+
+import "leaflet/dist/leaflet.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
