@@ -10,6 +10,7 @@ import { GetAllPartnersResponse, GenericResponse } from "../types";
 export class PartnersController {
   constructor(private readonly partnersService: PartnersService) {}
 
+  // GET /partners?city=example&type=example
   @ApiResponse({ type: GetAllPartnersResponse })
   @ApiQuery({ name: "city", required: false, example: "Warszawa" })
   @ApiQuery({ name: "type", required: false, example: "SHELTER" })
@@ -23,6 +24,7 @@ export class PartnersController {
     return res.status(result.ok ? 200 : 400).json(result);
   }
 
+  // GET /partners/:uuid
   @Get(":uuid")
   async getPartnerByUuid(@Param("uuid") uuid: string, @Res() res: Response) {
     const result = await this.partnersService.findOne(uuid);
