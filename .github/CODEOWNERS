@@ -1,0 +1,8 @@
+# global rule:
+* @Aleks334
+
+# frontend
+apps/client @Aleks334
+
+# backend
+apps/server @zakhildev @Aleks334
