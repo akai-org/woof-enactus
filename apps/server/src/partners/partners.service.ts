@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { PartnerType } from "@prisma/client";
-import type { GetAllPartnersResponse } from "../types/index";
+import type { GetAllPartnersResponse, GenericResponse } from "../types/index";
+import CreatePartnerDto from "./dto/CreatePartnerDto";
 
 @Injectable()
 export class PartnersService {
@@ -42,6 +43,32 @@ export class PartnersService {
         error: e.message,
         data: undefined,
       };
+    }
+  }
+
+  async findOne(uuid: string): Promise<GenericResponse> {
+    try {
+      const partner = await this.prisma.partner.findUnique({
+        where: { uuid },
+      });
+
+      if (!partner) {
+        return { ok: false, message: "Partner not found", data: undefined };
+      }
+
+      return { ok: true, data: partner };
+    } catch (e: any) {
+      return { ok: false, message: "Internal server error", error: e.message };
+    }
+  }
+
+  async create(body: CreatePartnerDto): Promise<GenericResponse> {
+    try {
+      const newPartner = await this.prisma.partner.create({ data: body });
+
+      return { ok: true, data: newPartner };
+    } catch (e: any) {
+      return { ok: false, message: "Error creating partner", error: e.message };
     }
   }
 }
