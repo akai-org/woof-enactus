@@ -1,55 +1,75 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { Response } from "express";
+import { PartnerType } from "@prisma/client";
+import type { GetAllPartnersResponse, GenericResponse } from "../types/index";
 import CreatePartnerDto from "./dto/CreatePartnerDto";
-import type { GenericResponse, GetAllPartnersResponse } from "../types/index";
+import { Prisma } from "@prisma/client";
 
 @Injectable()
 export class PartnersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(res: Response): Promise<GetAllPartnersResponse> {
+  async findAll(city?: string, type?: string): Promise<GetAllPartnersResponse> {
     try {
-      const data = await this.prisma.partner.findMany();
-      res.status(200);
-      const response: GetAllPartnersResponse = {
-        ok: true,
-        data,
-      };
-      return response;
-    } catch (e: unknown) {
-      res.status(500);
-      const response: GetAllPartnersResponse = {
+      const filter: Prisma.PartnerWhereInput = {};
+
+      if (city) {
+        filter.city = city;
+      }
+
+      if (type) {
+        const enumType = Object.values(PartnerType).includes(
+          type as PartnerType,
+        )
+          ? (type as PartnerType)
+          : undefined;
+
+        if (!enumType) {
+          return {
+            ok: false,
+            message: "Invalid partner type",
+            data: undefined,
+          };
+        }
+        filter.type = enumType;
+      }
+
+      const data = await this.prisma.partner.findMany({ where: filter });
+
+      return { ok: true, data };
+    } catch (e: any) {
+      return {
         ok: false,
         message: "Internal server error",
-        error:
-          process.env.NODE_ENV == "development"
-            ? (e as Error).message
-            : undefined,
+        error: e.message,
         data: undefined,
       };
-      return response;
     }
   }
 
-  async findOne(uuid: string, res: Response) {
+  async findOne(uuid: string): Promise<GenericResponse> {
     try {
-      return await this.prisma.partner.findUnique({
+      const partner = await this.prisma.partner.findUnique({
         where: { uuid },
       });
-    } catch {
-      res.status(500).json({
-        ok: false,
-        message: "Internal server error!",
-      });
+
+      if (!partner) {
+        return { ok: false, message: "Partner not found", data: undefined };
+      }
+
+      return { ok: true, data: partner };
+    } catch (e: any) {
+      return { ok: false, message: "Internal server error", error: e.message };
     }
   }
 
-  create(body: CreatePartnerDto, res: Response) {
-    // TODO: na razie testowo, chciałem zobaczyć czy typowanie i walidacja działa
-    const resData: GenericResponse = {
-      ok: true,
-    };
-    return res.status(200).json(resData);
+  async create(body: CreatePartnerDto): Promise<GenericResponse> {
+    try {
+      const newPartner = await this.prisma.partner.create({ data: body });
+
+      return { ok: true, data: newPartner };
+    } catch (e: any) {
+      return { ok: false, message: "Error creating partner", error: e.message };
+    }
   }
 }
