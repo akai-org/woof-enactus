@@ -3,6 +3,7 @@ import { PrismaService } from "../prisma/prisma.service";
 import { PartnerType } from "@prisma/client";
 import type { GetAllPartnersResponse, GenericResponse } from "../types/index";
 import CreatePartnerDto from "./dto/CreatePartnerDto";
+import { Prisma } from "@prisma/client";
 
 @Injectable()
 export class PartnersService {
@@ -10,7 +11,7 @@ export class PartnersService {
 
   async findAll(city?: string, type?: string): Promise<GetAllPartnersResponse> {
     try {
-      const filter: any = {};
+      const filter: Prisma.PartnerWhereInput = {};
 
       if (city) {
         filter.city = city;
