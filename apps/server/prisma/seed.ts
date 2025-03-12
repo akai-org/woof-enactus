@@ -7,6 +7,7 @@ const prisma = new PrismaClient();
 async function main() {
   const partnersData: Prisma.PartnerCreateManyInput[] = [];
   const profilesData: Prisma.PartnerProfileCreateManyInput[] = [];
+  const hoursData: Prisma.WorkingHoursCreateManyInput[] = [];
 
   for (let i = 0; i < 1000; i++) {
     partnersData.push({
@@ -15,6 +16,7 @@ async function main() {
       type: faker.helpers.arrayElement(["VET", "ORG", "SHOP", "SHELTER"]),
     });
     profilesData.push({
+      id: i,
       partnerId: i,
       animals: faker.helpers.arrayElements(["Dogs", "Cats", "Parrots"], {
         min: 1,
@@ -29,6 +31,17 @@ async function main() {
       phone: fakerPL.phone.number(),
       website: faker.internet.url(),
     });
+    hoursData.push({
+      id: i,
+      profileId: i,
+      monday: "8:00 - 15:00",
+      tuesday: "8:00 - 15:00",
+      wednesday: "8:00 - 15:00",
+      thursday: "8:00 - 15:00",
+      friday: "8:00 - 15:00",
+      saturday: "Zamknięte",
+      sunday: "Zamknięte",
+    });
   }
 
   const resultPartners = await prisma.partner.createMany({
@@ -39,8 +52,13 @@ async function main() {
     data: profilesData,
   });
 
+  const resultHours = await prisma.workingHours.createMany({
+    data: hoursData,
+  });
+
   console.log(`Inserted ${resultPartners.count} partners`);
   console.log(`Inserted ${resultProfiles.count} profiles`);
+  console.log(`Inserted ${resultHours.count} working hours`);
 }
 
 main()
