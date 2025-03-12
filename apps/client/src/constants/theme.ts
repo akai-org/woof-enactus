@@ -17,6 +17,10 @@ const customConfig = defineConfig({
           accent: { value: "#FFD600" }, // Żółty - akcentowy kolor
         },
       },
+      fonts: {
+        heading: { value: "var(--font-hk-grotesk)" },
+        body: { value: "var(--font-open-sans)" },
+      },
     },
     semanticTokens: {
       colors: {
