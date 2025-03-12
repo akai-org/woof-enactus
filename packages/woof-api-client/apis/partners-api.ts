@@ -68,10 +68,12 @@ export const PartnersApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {string} [city] 
+         * @param {string} [type] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnersControllerGetAllPartners: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partnersControllerGetAllPartners: async (city?: string, type?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/partners`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -82,6 +84,14 @@ export const PartnersApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions :AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (city !== undefined) {
+                localVarQueryParameter['city'] = city;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
 
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
@@ -162,11 +172,13 @@ export const PartnersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} [city] 
+         * @param {string} [type] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partnersControllerGetAllPartners(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<GetAllPartnersResponse>>> {
-            const localVarAxiosArgs = await PartnersApiAxiosParamCreator(configuration).partnersControllerGetAllPartners(options);
+        async partnersControllerGetAllPartners(city?: string, type?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<GetAllPartnersResponse>>> {
+            const localVarAxiosArgs = await PartnersApiAxiosParamCreator(configuration).partnersControllerGetAllPartners(city, type, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -205,11 +217,13 @@ export const PartnersApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @param {string} [city] 
+         * @param {string} [type] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partnersControllerGetAllPartners(options?: AxiosRequestConfig): Promise<AxiosResponse<GetAllPartnersResponse>> {
-            return PartnersApiFp(configuration).partnersControllerGetAllPartners(options).then((request) => request(axios, basePath));
+        async partnersControllerGetAllPartners(city?: string, type?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<GetAllPartnersResponse>> {
+            return PartnersApiFp(configuration).partnersControllerGetAllPartners(city, type, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -242,12 +256,14 @@ export class PartnersApi extends BaseAPI {
     }
     /**
      * 
+     * @param {string} [city] 
+     * @param {string} [type] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PartnersApi
      */
-    public async partnersControllerGetAllPartners(options?: AxiosRequestConfig) : Promise<AxiosResponse<GetAllPartnersResponse>> {
-        return PartnersApiFp(this.configuration).partnersControllerGetAllPartners(options).then((request) => request(this.axios, this.basePath));
+    public async partnersControllerGetAllPartners(city?: string, type?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<GetAllPartnersResponse>> {
+        return PartnersApiFp(this.configuration).partnersControllerGetAllPartners(city, type, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
