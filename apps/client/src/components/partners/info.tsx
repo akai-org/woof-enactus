@@ -36,7 +36,13 @@ const placeholder = {
 
 export default function PartnerInfo() {
   return (
-    <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={4} p={5}>
+    <Grid
+      templateColumns={{ md: "repeat(2, 1fr)" }}
+      gap={4}
+      bg="white"
+      borderRadius={20}
+      p={2}
+    >
       <VStack gap={4} align="start">
         <Card.Root w="full">
           <Card.Header>
@@ -46,29 +52,25 @@ export default function PartnerInfo() {
               <Heading size="4xl">Szczegóły placówki</Heading>
             </Flex>
           </Card.Header>
-          <Card.Body color="fg.muted">
+          <Card.Body>
             <InfoBox title="Główny numer telefonu">{placeholder.phone}</InfoBox>
             <InfoBox title="Adres">{placeholder.address}</InfoBox>
             <InfoBox title="Strona internetowa">{placeholder.website}</InfoBox>
           </Card.Body>
         </Card.Root>
         <Card.Root w="full">
-          <Card.Body color="fg.muted">
+          <Card.Body>
             <InfoBox icon={<FaMapMarkerAlt />} title="Adres">
               {placeholder.address}
             </InfoBox>
-            <InfoBox
-              title="Informacje o dojeździe"
-              align="start"
-              direction="column"
-            >
+            <InfoBox title="Informacje o dojeździe" direction="column">
               {placeholder.transport_acess}
             </InfoBox>
           </Card.Body>
         </Card.Root>
         <Card.Root w="full">
-          <Card.Body color="fg.muted">
-            <InfoBox icon={<FaRegClock />} title="Godziny pracy" mb={2} />
+          <Card.Body>
+            <InfoBox icon={<FaRegClock />} title="Godziny pracy" mb={5} />
             <VStack>
               {placeholder.workinHours.map((day, i) => (
                 <Flex
@@ -94,20 +96,16 @@ export default function PartnerInfo() {
       </VStack>
       <VStack gap={4} align="start">
         <Card.Root w="full">
-          <Card.Body color="fg.muted">
+          <Card.Body>
             <Image src={placeholder.photo} />
           </Card.Body>
         </Card.Root>
         <Card.Root w="full">
-          <Card.Body color="fg.muted">
-            <InfoBox title="Opis placówki" direction="column" align="start">
+          <Card.Body>
+            <InfoBox title="Opis placówki" direction="column">
               {placeholder.description}
             </InfoBox>
-            <InfoBox
-              title="Zwierzęta po naszą opieką"
-              direction="column"
-              align="start"
-            >
+            <InfoBox title="Zwierzęta po naszą opieką" direction="column">
               <List.Root>
                 {placeholder.animals.map(animal => (
                   <List.Item
@@ -137,8 +135,14 @@ function InfoBox({
   ...rest
 }: { icon?: ReactNode; title: string; children?: ReactNode } & FlexProps) {
   return (
-    <Flex align="center" gap={2} my={1} {...rest}>
-      <Flex align="center" gap={2} color="palette.main">
+    <Flex
+      align={rest.direction == "column" ? "start" : "center"}
+      gap={2}
+      my={1}
+      wrap="wrap"
+      {...rest}
+    >
+      <Flex align="center" gap={2} color="palette.main" textWrap="nowrap">
         {icon}
         <Heading size="lg">{title}:</Heading>
       </Flex>

@@ -57,11 +57,7 @@ export default function PartnerPage() {
         </Tabs.List>
         <For each={tabs}>
           {tab => (
-            <Tabs.Content
-              border="solid 10px"
-              borderColor={tab.color}
-              value={tab.id}
-            >
+            <Tabs.Content bg={tab.color} value={tab.id} p={5}>
               {tab.content}
             </Tabs.Content>
           )}
