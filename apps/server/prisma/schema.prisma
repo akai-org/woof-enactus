@@ -14,11 +14,13 @@ datasource db {
 }
 
 model Partner {
-  id      Int         @id @default(autoincrement())
-  uuid    String      @unique @default(uuid())
-  name    String
-  profile PartnerProfile?
-  type    PartnerType
+  id        Int         @id @default(autoincrement())
+  uuid      String      @unique @default(uuid())
+  name      String
+  latitude  Float       @default(0)
+  logitude  Float       @default(0)
+  profile   PartnerProfile?
+  type      PartnerType
 }
 
 model PartnerProfile {
