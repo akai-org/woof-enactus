@@ -36,13 +36,7 @@ const placeholder = {
 
 export default function PartnerInfo() {
   return (
-    <Grid
-      templateColumns={{ md: "repeat(2, 1fr)" }}
-      gap={4}
-      bg="white"
-      borderRadius={20}
-      p={2}
-    >
+    <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={4}>
       <VStack gap={4} align="start">
         <Card.Root w="full">
           <Card.Header>
