@@ -1,20 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import {
-  IsString,
-  IsNotEmpty,
-  Length,
-  IsPostalCode,
-  IsPhoneNumber,
-  IsUrl,
-  IsEnum,
-} from "class-validator";
-
-enum PartnerType {
-  VET = "VET",
-  ORG = "ORG",
-  SHOP = "SHOP",
-  SHELTER = "SHELTER",
-}
+import { PartnerType } from "@prisma/client";
+import { IsString, IsNotEmpty, Length, IsEnum } from "class-validator";
 
 export default class CreatePartnerDto {
   @ApiProperty()
@@ -22,34 +8,6 @@ export default class CreatePartnerDto {
   @IsNotEmpty()
   @Length(2, 64)
   name: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  city?: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  street?: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsPostalCode("PL")
-  @IsNotEmpty()
-  postal?: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsPhoneNumber("PL")
-  @IsNotEmpty()
-  phone?: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsUrl()
-  @IsNotEmpty()
-  website?: string;
 
   @ApiProperty({
     enum: PartnerType,

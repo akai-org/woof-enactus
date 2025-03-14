@@ -9,19 +9,20 @@ import { Prisma } from "@prisma/client";
 export class PartnersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(city?: string, type?: string): Promise<GetAllPartnersResponse> {
+  async findAll(
+    city?: string,
+    type?: PartnerType,
+  ): Promise<GetAllPartnersResponse> {
     try {
       const filter: Prisma.PartnerWhereInput = {};
 
-      if (city) {
-        filter.city = city;
+      if (city && filter.profile) {
+        filter.profile.city = city;
       }
 
       if (type) {
-        const enumType = Object.values(PartnerType).includes(
-          type as PartnerType,
-        )
-          ? (type as PartnerType)
+        const enumType = Object.values(PartnerType).includes(type)
+          ? type
           : undefined;
 
         if (!enumType) {
@@ -37,11 +38,12 @@ export class PartnersService {
       const data = await this.prisma.partner.findMany({ where: filter });
 
       return { ok: true, data };
-    } catch (e: any) {
+    } catch (e) {
+      const error = e as Error;
       return {
         ok: false,
         message: "Internal server error",
-        error: e.message,
+        error: error.message,
         data: undefined,
       };
     }
