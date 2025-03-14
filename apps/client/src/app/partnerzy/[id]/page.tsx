@@ -1,5 +1,6 @@
+import PartnerEvents from "@/components/partners/events";
 import PartnerInfo from "@/components/partners/info";
-import { Button, For, Heading, Tabs } from "@chakra-ui/react";
+import { Box, Button, For, Heading, Tabs } from "@chakra-ui/react";
 import { RiArrowLeftLine } from "react-icons/ri";
 
 const tabs = [
@@ -19,7 +20,7 @@ const tabs = [
     id: "events",
     label: "Wydarzenia",
     color: "palette.lighter",
-    content: "Duzo wydarzeń",
+    content: <PartnerEvents />,
   },
 ];
 
@@ -58,7 +59,9 @@ export default function PartnerPage() {
         <For each={tabs}>
           {tab => (
             <Tabs.Content bg={tab.color} value={tab.id} p={5}>
-              {tab.content}
+              <Box bg="white" borderRadius={20} p={2}>
+                {tab.content}
+              </Box>
             </Tabs.Content>
           )}
         </For>
