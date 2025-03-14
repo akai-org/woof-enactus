@@ -16,19 +16,19 @@ import { IoMenu } from "react-icons/io5";
 const Links = [
   {
     name: "Mapa",
-    href: "#map",
+    href: "/",
   },
   {
     name: "Blog",
-    href: "#blog",
+    href: "/blog",
   },
   {
     name: "Wsparcie",
-    href: "#support",
+    href: "/wsparcie",
   },
   {
     name: "O nas",
-    href: "#about",
+    href: "/o-nas",
   },
 ];
 
