@@ -5,23 +5,30 @@ import { FiFacebook, FiInstagram, FiLinkedin } from "react-icons/fi";
 export const Footer = () => {
   return (
     <Box bg="palette.darker" p="25px" className="footer">
-      <Flex justify="space-between" align="center" position="relative">
+      <Flex
+        flexDir={{ base: "column", md: "row" }}
+        gap={4}
+        justify="space-between"
+        align="center"
+        position="relative"
+      >
         {/* Lewa strona */}
-        <Text fontWeight="bold" color="palette.lighter">
-          @kontaktwithenactus@gmail.com
-        </Text>
+        <Box>
+          <Text fontWeight="bold" color="palette.lighter">
+            @kontaktwithenactus@gmail.com
+          </Text>
+        </Box>
 
         {/* Środkowy tekst, zawsze centrowany */}
-        <Text
-          fontWeight="bold"
-          color="palette.lighter"
-          position="absolute"
+        <Box
           left="50%"
-          transform="translateX(-50%)"
-          whiteSpace="nowrap"
+          position={{ base: "unset", md: "absolute" }}
+          transform={{ base: "", md: "translateX(-50%)" }}
         >
-          &#169; Enactus Poland
-        </Text>
+          <Text fontWeight="bold" color="palette.lighter" whiteSpace="nowrap">
+            &#169; Enactus Poland
+          </Text>
+        </Box>
 
         {/* Prawa strona - ikony */}
         <Flex gap="10px">
