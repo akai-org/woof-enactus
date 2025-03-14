@@ -1,5 +1,6 @@
-import PartnerEvents from "@/components/partners/events";
-import PartnerInfo from "@/components/partners/info";
+import PartnerEvents from "@/components/partner/events";
+import PartnerInfo from "@/components/partner/info";
+import PartnerNeeds from "@/components/partner/needs";
 import { Box, Button, For, Heading, Tabs } from "@chakra-ui/react";
 import { RiArrowLeftLine } from "react-icons/ri";
 
@@ -8,7 +9,7 @@ const tabs = [
     id: "stuff",
     label: "Potrzebne rzeczy",
     color: "palette.darker",
-    content: "Duzo rzeczy",
+    content: <PartnerNeeds />,
   },
   {
     id: "info",
