@@ -15,6 +15,8 @@ export class PartnersController {
   @ApiResponse({ type: GetAllPartnersResponse })
   @ApiQuery({ name: "city", required: false, example: "Warszawa" })
   @ApiQuery({ name: "type", required: false, example: "SHELTER" })
+  @ApiQuery({ name: "name", required: false, example: "Schronisko 1" })
+  @ApiQuery({ name: "street", required: false })
   @Get()
   async getAllPartners(
     @Res() res: Response,

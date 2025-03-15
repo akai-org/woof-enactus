@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import type { GetAllPartnersResponse, GenericResponse } from "../types/index";
 import CreatePartnerDto from "./dto/CreatePartnerDto";
 import { PrismaService } from "../prisma/prisma.service";
+import { Partner, PartnerType, Prisma } from "@prisma/client";
 
 @Injectable()
 export class PartnersService {
@@ -11,37 +12,32 @@ export class PartnersService {
     name?: string,
     city?: string,
     street?: string,
-    type?: PartnerType
+    type?: PartnerType,
   ): Promise<GetAllPartnersResponse> {
     try {
-      let partners;
-      console.log(this.prisma);
-      console.log(this.prisma.partner);
-    
+      let partners: Partner[];
+
       const filter: Prisma.PartnerWhereInput = {};
 
       if (city && filter.profile) {
         filter.profile.city = city;
       }
 
-      if (type) {
-        const enumType = Object.values(PartnerType).includes(type)
-          ? type
-          : undefined;
+      const enumType = Object.values(PartnerType).includes(type as PartnerType)
+        ? type
+        : undefined;
 
-      if (name || city || street || type) {
-        partners = await this.prisma.partner.similarity({
+      if (enumType) {
+        filter.type = enumType;
+      }
+
+      if (name || street) {
+        partners = await this.prisma.partnerTrgm.similarity({
           query: {
             ...(name && {
               name: {
                 similarity: { text: name, order: "desc" },
                 word_similarity: { text: name, threshold: { gt: 0.2 } },
-              },
-            }),
-            ...(city && {
-              city: {
-                similarity: { text: city, order: "desc" },
-                word_similarity: { text: city, threshold: { gt: 0.2 } },
               },
             }),
             ...(street && {
@@ -50,18 +46,17 @@ export class PartnersService {
                 word_similarity: { text: street, threshold: { gt: 0.2 } },
               },
             }),
-            ...(type && {
-              type: {
-                similarity: { text: type, order: "desc" },
-                word_similarity: { text: type, threshold: { gt: 0.2 } },
-              },
-            }),
           },
         });
       } else {
-        partners = await this.prisma.partner.findMany();
+        partners = await this.prisma.partner.findMany({
+          where: filter,
+        });
       }
-      return { ok: true, data: partners };
+      return {
+        ok: true,
+        data: partners,
+      };
     } catch (e) {
       const error = e as Error;
       return {
@@ -85,7 +80,12 @@ export class PartnersService {
 
       return { ok: true, data: partner };
     } catch (e: any) {
-      return { ok: false, message: "Internal server error", error: e.message };
+      const error = e as Error;
+      return {
+        ok: false,
+        message: "Internal server error",
+        error: error.message,
+      };
     }
   }
 
@@ -95,7 +95,12 @@ export class PartnersService {
 
       return { ok: true, data: newPartner };
     } catch (e: any) {
-      return { ok: false, message: "Error creating partner", error: e.message };
+      const error = e as Error;
+      return {
+        ok: false,
+        message: "Error creating partner",
+        error: error.message,
+      };
     }
   }
 }

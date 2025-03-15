@@ -8,10 +8,15 @@ import { PrismaClient } from "@prisma/client";
 import { withPgTrgm } from "prisma-extension-pg-trgm";
 
 @Injectable()
-export class PrismaService implements OnModuleInit, OnModuleDestroy {
+export class PrismaService
+  extends PrismaClient
+  implements OnModuleInit, OnModuleDestroy
+{
   private logger = new Logger("PrismaService");
   private prisma = new PrismaClient().$extends(
-    withPgTrgm({ logQueries: true }),
+    withPgTrgm({
+      logQueries: process.env.NODE_ENV == "development",
+    }),
   );
 
   async onModuleInit() {
@@ -24,7 +29,7 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
     this.logger.verbose("Database disconnected");
   }
 
-  get partner() {
+  get partnerTrgm() {
     return this.prisma.partner;
   }
 }
