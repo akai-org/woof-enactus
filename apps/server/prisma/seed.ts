@@ -14,6 +14,8 @@ async function main() {
       id: i,
       name: faker.company.name(),
       type: faker.helpers.arrayElement(["VET", "ORG", "SHOP", "SHELTER"]),
+      latitude: faker.location.latitude({ min: 50, max: 54, precision: 5 }),
+      longitude: faker.location.longitude({ min: 15, max: 23, precision: 5 }),
     });
     profilesData.push({
       id: i,

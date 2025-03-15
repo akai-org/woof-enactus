@@ -18,7 +18,7 @@ model Partner {
   uuid      String      @unique @default(uuid())
   name      String
   latitude  Float       @default(0)
-  logitude  Float       @default(0)
+  longitude  Float       @default(0)
   profile   PartnerProfile?
   type      PartnerType
 }
