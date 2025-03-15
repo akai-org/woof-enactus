@@ -11,12 +11,23 @@ export class PartnersService {
     name?: string,
     city?: string,
     street?: string,
-    type?: string,
+    type?: PartnerType
   ): Promise<GetAllPartnersResponse> {
     try {
       let partners;
       console.log(this.prisma);
       console.log(this.prisma.partner);
+    
+      const filter: Prisma.PartnerWhereInput = {};
+
+      if (city && filter.profile) {
+        filter.profile.city = city;
+      }
+
+      if (type) {
+        const enumType = Object.values(PartnerType).includes(type)
+          ? type
+          : undefined;
 
       if (name || city || street || type) {
         partners = await this.prisma.partner.similarity({
@@ -50,13 +61,13 @@ export class PartnersService {
       } else {
         partners = await this.prisma.partner.findMany();
       }
-
       return { ok: true, data: partners };
-    } catch (e: any) {
+    } catch (e) {
+      const error = e as Error;
       return {
         ok: false,
         message: "Internal server error",
-        error: e.message,
+        error: error.message,
         data: undefined,
       };
     }
