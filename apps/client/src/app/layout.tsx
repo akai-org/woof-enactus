@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Container } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 import Providers from "../providers";
 import { hkGrotesk, openSans } from "./fonts";
@@ -26,9 +26,9 @@ export default function RootLayout({
     >
       <body>
         <Providers>
-          <Nav></Nav>
-          <Container flex={1}>{children}</Container>
-          <Footer></Footer>
+          <Nav />
+          <Box flex={1}>{children}</Box>
+          <Footer />
         </Providers>
       </body>
     </html>

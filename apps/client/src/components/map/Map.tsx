@@ -2,7 +2,6 @@
 
 import { LatLngExpression } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
-import Location from "./Location";
 import MapMarker from "./MapMarker";
 
 /* 
@@ -42,7 +41,7 @@ function Map({ children }: MapProps) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Location defaultPosition={DEFAULT_POSITION} defaultZoom={DEFAULT_ZOOM} />
+
       {coordinates.map((latLng, index) => (
         <MapMarker position={latLng} key={index} />
       ))}
