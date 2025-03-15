@@ -1,42 +1,57 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "../prisma/prisma.service";
-import { PartnerType } from "@prisma/client";
 import type { GetAllPartnersResponse, GenericResponse } from "../types/index";
 import CreatePartnerDto from "./dto/CreatePartnerDto";
-import { Prisma } from "@prisma/client";
+import { PrismaService } from "../prisma/prisma.service";
 
 @Injectable()
 export class PartnersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(city?: string, type?: string): Promise<GetAllPartnersResponse> {
+  async findAll(
+    name?: string,
+    city?: string,
+    street?: string,
+    type?: string,
+  ): Promise<GetAllPartnersResponse> {
     try {
-      const filter: Prisma.PartnerWhereInput = {};
+      let partners;
+      console.log(this.prisma);
+      console.log(this.prisma.partner);
 
-      if (city) {
-        filter.city = city;
+      if (name || city || street || type) {
+        partners = await this.prisma.partner.similarity({
+          query: {
+            ...(name && {
+              name: {
+                similarity: { text: name, order: "desc" },
+                word_similarity: { text: name, threshold: { gt: 0.2 } },
+              },
+            }),
+            ...(city && {
+              city: {
+                similarity: { text: city, order: "desc" },
+                word_similarity: { text: city, threshold: { gt: 0.2 } },
+              },
+            }),
+            ...(street && {
+              street: {
+                similarity: { text: street, order: "desc" },
+                word_similarity: { text: street, threshold: { gt: 0.2 } },
+              },
+            }),
+            ...(type && {
+              type: {
+                similarity: { text: type, order: "desc" },
+                word_similarity: { text: type, threshold: { gt: 0.2 } },
+              },
+            }),
+          },
+        });
+      } else {
+        partners = await this.prisma.partner.findMany();
       }
 
-      if (type) {
-        const enumType = Object.values(PartnerType).includes(
-          type as PartnerType,
-        )
-          ? (type as PartnerType)
-          : undefined;
-
-        if (!enumType) {
-          return {
-            ok: false,
-            message: "Invalid partner type",
-            data: undefined,
-          };
-        }
-        filter.type = enumType;
-      }
-
-      const data = await this.prisma.partner.findMany({ where: filter });
-
-      return { ok: true, data };
+      return { ok: true, data: partners };
     } catch (e: any) {
       return {
         ok: false,
