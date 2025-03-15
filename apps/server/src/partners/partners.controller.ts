@@ -37,4 +37,10 @@ export class PartnersController {
     const result = await this.partnersService.create(body);
     return res.status(result.ok ? 201 : 500).json(result);
   }
+
+  // GET /partners/profile/:uuid
+  @Get('profile/:uuid')
+  async getPartnerWithProfile(@Param('uuid') uuid: string) {
+    return this.partnersService.findOneWithProfile(uuid);
+  }
 }
