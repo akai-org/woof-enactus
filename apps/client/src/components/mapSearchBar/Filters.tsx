@@ -48,7 +48,11 @@ export default function Filters() {
                       ]}
                     >
                       {value => (
-                        <Checkbox.Root key={value} value={value}>
+                        <Checkbox.Root
+                          key={value}
+                          value={value}
+                          colorPalette="green"
+                        >
                           <Checkbox.HiddenInput />
                           <Checkbox.Control>
                             <Checkbox.Indicator />
