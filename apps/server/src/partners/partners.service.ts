@@ -74,4 +74,31 @@ export class PartnersService {
       return { ok: false, message: "Error creating partner", error: e.message };
     }
   }
+
+  async findOneWithProfile(uuid: string): Promise<GenericResponse> {
+    try {
+      const partner = await this.prisma.partner.findUnique({
+        where: { uuid },
+        include: {
+          profile: {
+            include: {
+              openHours: true,
+            },
+          },
+        },
+      });
+  
+      if (!partner) {
+        return { ok: false, message: "Partner not found", data: undefined };
+      }
+  
+      return { ok: true, data: partner };
+    } catch (e: any) {
+      return { ok: false, message: "Internal server error", error: e.message };
+    }
+  }
+  
 }
+
+
+  
