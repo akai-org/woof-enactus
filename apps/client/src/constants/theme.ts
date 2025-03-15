@@ -1,20 +1,35 @@
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 
+/* NOTE: to update types after theme update enter npm run chakra:typegen -w client */
+
 const customConfig = defineConfig({
   globalCss: {
     body: {
       display: "flex",
       flexDirection: "column",
     },
+    html: {
+      colorPalette: "brand",
+    },
   },
   theme: {
     tokens: {
       colors: {
-        palette: {
-          main: { value: "#0D6F00" }, // Zielony - główny kolor
-          lighter: { value: "#4AA900" }, // Jaśniejszy zielony
-          darker: { value: "#095100" }, // Ciemniejszy zielony
-          accent: { value: "#FFD600" }, // Żółty - akcentowy kolor
+        brand: {
+          100: { value: "#FFFFFF" },
+          200: { value: "#F1FFE5" },
+          300: { value: "#DAF0C9" },
+          400: { value: "#B5CC08" },
+          500: { value: "#4AA900" },
+          600: { value: "#0D6F00" },
+          700: { value: "#095100" },
+          800: { value: "#152812" },
+          900: { value: "#1A202C" },
+        },
+        accent: {
+          yellow: { value: "#FFD600" },
+          green: { value: "#38A169" },
+          gray: { value: "#EDF2F7" },
         },
       },
       fonts: {
@@ -25,16 +40,16 @@ const customConfig = defineConfig({
     semanticTokens: {
       colors: {
         brand: {
-          solid: { value: "{colors.palette.main}" }, // Główny kolor (tło przycisków, główne elementy)
-          contrast: { value: "white" }, // Kolor tekstu na głównym tle
-          fg: { value: "{colors.palette.darker}" }, // Kolor tekstu/ikon (ciemniejszy ton)
-          muted: { value: "{colors.palette.lighter}" }, // Stonowany odcień (jaśniejszy ton)
-          emphasized: { value: "{colors.palette.accent}" }, // Akcentowy kolor (żółty)
-          focusRing: { value: "{colors.palette.accent}" }, // Obramowanie focus (np. dla inputów)
+          solid: { value: "{colors.brand.500}" }, // Główny kolor (tło przycisków, główne elementy)
+          contrast: { value: "{colors.brand.100}" }, // Kolor tekstu na głównym tle
+          fg: { value: "{colors.brand.700}" }, // Kolor tekstu/ikon (ciemniejszy ton)
+          muted: { value: "{colors.brand.300}" }, // Stonowany odcień (jaśniejszy ton)
+          emphasized: { value: "{colors.brand.400}" }, // Akcentowy kolor (żółty)
+          focusRing: { value: "{colors.brand.300}" }, // Obramowanie focus (np. dla inputów)
 
-          hover: { value: "{colors.palette.darker}" }, // Ciemniejszy kolor po najechaniu
-          active: { value: "{colors.palette.darker}" }, // Jeszcze ciemniejszy po kliknięciu
-          border: { value: "{colors.palette.accent}" }, // Kolor obramowania (akcent)
+          hover: { value: "{colors.brand.600}" }, // Ciemniejszy kolor po najechaniu
+          active: { value: "{colors.brand.700}" }, // Jeszcze ciemniejszy po kliknięciu
+          border: { value: "{colors.brand.300}" }, // Kolor obramowania (akcent)
         },
       },
     },
