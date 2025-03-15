@@ -1,5 +1,5 @@
-import { PrismaClient, Prisma } from '@prisma/client';
-import { faker } from '@faker-js/faker';
+import { PrismaClient, Prisma } from "@prisma/client";
+import { faker } from "@faker-js/faker";
 
 const prisma = new PrismaClient();
 
@@ -15,7 +15,7 @@ async function main() {
       postal: faker.location.zipCode(),
       phone: faker.phone.number(),
       website: faker.internet.url(),
-      type: faker.helpers.arrayElement(['VET', 'ORG', 'SHOP', 'SHELTER']),
+      type: faker.helpers.arrayElement(["VET", "ORG", "SHOP", "SHELTER"]),
     });
   }
 
@@ -27,7 +27,7 @@ async function main() {
 }
 
 main()
-  .catch((e) => {
+  .catch(e => {
     console.error(e);
     process.exit(1);
   })

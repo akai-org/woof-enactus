@@ -17,10 +17,12 @@ export class PartnersController {
   @Get()
   async getAllPartners(
     @Res() res: Response,
+    @Query("name") name?: string,
     @Query("city") city?: string,
+    @Query("street") street?: string,
     @Query("type") type?: string,
   ) {
-    const result = await this.partnersService.findAll(city, type);
+    const result = await this.partnersService.findAll(name, city, street, type);
     return res.status(result.ok ? 200 : 400).json(result);
   }
 
