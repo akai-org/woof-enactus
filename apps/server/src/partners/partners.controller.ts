@@ -3,7 +3,8 @@ import { PartnersService } from "./partners.service";
 import { Response } from "express";
 import CreatePartnerDto from "./dto/CreatePartnerDto";
 import { ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { GetAllPartnersResponse, GenericResponse } from "../types";
+import { GetAllPartnersResponse } from "../types";
+import { PartnerType } from "@prisma/client";
 
 @ApiTags("partners")
 @Controller("partners")
@@ -20,7 +21,7 @@ export class PartnersController {
     @Query("name") name?: string,
     @Query("city") city?: string,
     @Query("street") street?: string,
-    @Query("type") type?: string,
+    @Query("type") type?: PartnerType,
   ) {
     const result = await this.partnersService.findAll(name, city, street, type);
     return res.status(result.ok ? 200 : 400).json(result);
