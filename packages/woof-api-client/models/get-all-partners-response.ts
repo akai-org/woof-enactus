@@ -18,27 +18,27 @@
  */
 export interface GetAllPartnersResponse {
     /**
-     * 
+     * Jeżeli zapytanie było poprawne i znaleziono żądany zasób to jest ustawione na TRUE. W każdym innym przypadku FALSE.
      * @type {boolean}
      * @memberof GetAllPartnersResponse
      */
     ok: boolean;
     /**
-     * 
-     * @type {Array<string>}
-     * @memberof GetAllPartnersResponse
-     */
-    data?: Array<string>;
-    /**
-     * 
+     * Zawiera żądany zasób, jeśli taki istnieje
      * @type {any}
      * @memberof GetAllPartnersResponse
      */
-    message?: any;
+    data?: any;
     /**
-     * 
-     * @type {any}
+     * Zawiera wiadomość o błędzie
+     * @type {string}
      * @memberof GetAllPartnersResponse
      */
-    error?: any;
+    message?: string;
+    /**
+     * Zawiera szczegółowy opis błędu, dostępne tylko na devie
+     * @type {string}
+     * @memberof GetAllPartnersResponse
+     */
+    error?: string;
 }
