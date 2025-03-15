@@ -1,6 +1,6 @@
 import { LatLngExpression, icon } from "leaflet";
 import React from "react";
-import { Marker, Popup } from "react-leaflet";
+import { Marker } from "react-leaflet";
 
 type MapMarkerProps = {
   position: LatLngExpression;
@@ -12,13 +12,7 @@ const customIcon = icon({
 });
 
 function MapMarker({ position }: MapMarkerProps) {
-  return (
-    <Marker position={position} icon={customIcon}>
-      <Popup>
-        A pretty CSS3 popup. <br /> Easily customizable.
-      </Popup>
-    </Marker>
-  );
+  return <Marker position={position} icon={customIcon}></Marker>;
 }
 
 export default MapMarker;
