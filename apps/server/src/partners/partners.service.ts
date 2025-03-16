@@ -15,13 +15,13 @@ export class PartnersService {
     type?: PartnerType,
   ): Promise<GetAllPartnersResponse> {
     try {
-      let partners: Partner[];
+      let partners: Array<
+        Partner & {
+          profile?: { city?: string | null; street?: string | null } | null;
+        }
+      >;
 
       const filter: Prisma.PartnerWhereInput = {};
-
-      if (city && filter.profile) {
-        filter.profile.city = city;
-      }
 
       const enumType = Object.values(PartnerType).includes(type as PartnerType)
         ? type
@@ -31,28 +31,59 @@ export class PartnersService {
         filter.type = enumType;
       }
 
-      if (name || street) {
-        partners = await this.prisma.partnerTrgm.similarity({
+      let partnerProfileIds: number[] = [];
+
+      if (city) {
+        const cityResults = await this.prisma.partnerProfileTrgm.similarity({
           query: {
-            ...(name && {
-              name: {
-                similarity: { text: name, order: "desc" },
-                word_similarity: { text: name, threshold: { gt: 0.2 } },
-              },
-            }),
-            ...(street && {
-              street: {
-                similarity: { text: street, order: "desc" },
-                word_similarity: { text: street, threshold: { gt: 0.2 } },
-              },
-            }),
+            city: {
+              similarity: { text: city, order: "desc" },
+              word_similarity: { text: city, threshold: { gt: 0.2 } },
+            },
           },
+        });
+        partnerProfileIds = cityResults.map(
+          (p: { partnerId: number }) => p.partnerId,
+        );
+      }
+
+      if (street) {
+        const streetResults = await this.prisma.partnerProfileTrgm.similarity({
+          query: {
+            street: {
+              similarity: { text: street, order: "desc" },
+              word_similarity: { text: street, threshold: { gt: 0.2 } },
+            },
+          },
+        });
+        const streetProfileIds = streetResults.map(
+          (p: { partnerId: number }) => p.partnerId,
+        );
+        partnerProfileIds = partnerProfileIds.length
+          ? partnerProfileIds.filter(id => streetProfileIds.includes(id))
+          : streetProfileIds;
+      }
+
+      if (partnerProfileIds.length) {
+        partners = await this.prisma.partner.findMany({
+          where: { id: { in: partnerProfileIds }, ...filter },
+          include: { profile: true },
         });
       } else {
         partners = await this.prisma.partner.findMany({
           where: filter,
+          include: { profile: true },
         });
       }
+
+      if (name || enumType) {
+        partners = partners.filter(partner => {
+          const matchName = name ? partner.name.includes(name) : true;
+          const matchType = enumType ? partner.type === enumType : true;
+          return matchName && matchType;
+        });
+      }
+
       return {
         ok: true,
         data: partners,
