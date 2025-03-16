@@ -5,6 +5,11 @@ const prisma = new PrismaClient();
 
 // Insert 1000 records to test
 async function main() {
+  // Delete records
+  await prisma.workingHours.deleteMany();
+  await prisma.partnerProfile.deleteMany();
+  await prisma.partner.deleteMany();
+
   const partnersData: Prisma.PartnerCreateManyInput[] = [];
   const profilesData: Prisma.PartnerProfileCreateManyInput[] = [];
   const hoursData: Prisma.WorkingHoursCreateManyInput[] = [];
