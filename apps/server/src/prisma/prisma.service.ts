@@ -32,4 +32,7 @@ export class PrismaService
   get partnerTrgm() {
     return this.prisma.partner;
   }
+  get partnerProfileTrgm() {
+    return this.prisma.partnerProfile;
+  }
 }
