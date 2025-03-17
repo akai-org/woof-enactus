@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post, Query, Res } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Delete, Query, Res } from "@nestjs/common";
 import { PartnersService } from "./partners.service";
 import { Response } from "express";
-import CreatePartnerDto from "./dto/CreatePartnerDto";
+import { CreatePartnerDto } from './dto/CreatePartnerDto';
+import UpdatePartnerDto from "./dto/UpdatePartnerDto";
 import { ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { GetAllPartnersResponse } from "../types";
 import { PartnerType } from "@prisma/client";
@@ -36,10 +37,29 @@ export class PartnersController {
     return res.status(result.ok ? 200 : 404).json(result);
   }
 
+  // POST /partners
   @Post()
   async createPartner(@Body() body: CreatePartnerDto, @Res() res: Response) {
     const result = await this.partnersService.create(body);
     return res.status(result.ok ? 201 : 500).json(result);
+  }
+
+  // PUT /partners/:uuid
+  @Put(":uuid")
+  async updatePartner(
+    @Param("uuid") uuid: string,
+    @Body() body: UpdatePartnerDto,
+    @Res() res: Response,
+  ) {
+    const result = await this.partnersService.update(uuid, body);
+    return res.status(result.ok ? 200 : 500).json(result);
+  }
+
+  // DELETE /partners/:uuid
+  @Delete(":uuid")
+  async deletePartner(@Param("uuid") uuid: string, @Res() res: Response) {
+    const result = await this.partnersService.delete(uuid);
+    return res.status(result.ok ? 200 : 500).json(result);
   }
 
   // GET /partners/profile/:uuid
