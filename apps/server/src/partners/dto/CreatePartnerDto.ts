@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PartnerType } from '@prisma/client';
-import { IsString, IsNotEmpty, Length, IsEnum, IsOptional, IsArray } from 'class-validator';
+import { IsString, IsNotEmpty, Length, IsEnum, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
 
 export class CreatePartnerDto {
   @ApiProperty()
@@ -51,7 +51,8 @@ export class CreatePartnerDto {
 
   @ApiProperty({ type: [String] })
   @IsArray()
-  animals: string[];
+  @ArrayNotEmpty()
+  animals: [string];
 
   @ApiProperty({ required: false })
   @IsOptional()
