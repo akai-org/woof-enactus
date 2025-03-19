@@ -3,6 +3,7 @@
 import { LatLngExpression } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MapMarker from "./MapMarker";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 
 /* 
   NOTE: Except for its children, MapContainer props are immutable:
@@ -39,10 +40,12 @@ function Map({ children, data }: MapProps) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      <MarkerClusterGroup showCoverageOnHover={false}>
+        {data.map(item => (
+          <MapMarker markerData={item} key={item.uuid} />
+        ))}
+      </MarkerClusterGroup>
 
-      {data.map(item => (
-        <MapMarker markerData={item} key={item.uuid} />
-      ))}
       {children}
     </MapContainer>
   );
