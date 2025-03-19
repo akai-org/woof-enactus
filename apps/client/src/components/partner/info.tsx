@@ -39,21 +39,20 @@ export default function PartnerInfo() {
     <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={4}>
       <VStack gap={4} align="start">
         <Card.Root w="full">
-          <Card.Header>
+          <Card.Header p={[2, 4]}>
             <Flex align="center" gap={2} color="palette.darker">
-              <FaPhoneVolume size={40} />
-
-              <Heading size="4xl">Szczegóły placówki</Heading>
+              <FaPhoneVolume size={30} />
+              <Heading size={["2xl", "4xl"]}>Szczegóły placówki</Heading>
             </Flex>
           </Card.Header>
-          <Card.Body>
+          <Card.Body p={[2, 4]}>
             <InfoBox title="Główny numer telefonu">{placeholder.phone}</InfoBox>
-            <InfoBox title="Adres">{placeholder.address}</InfoBox>
+            <InfoBox title="Email">{placeholder.email}</InfoBox>
             <InfoBox title="Strona internetowa">{placeholder.website}</InfoBox>
           </Card.Body>
         </Card.Root>
         <Card.Root w="full">
-          <Card.Body>
+          <Card.Body p={[2, 4]}>
             <InfoBox icon={<FaMapMarkerAlt />} title="Adres">
               {placeholder.address}
             </InfoBox>
@@ -63,7 +62,7 @@ export default function PartnerInfo() {
           </Card.Body>
         </Card.Root>
         <Card.Root w="full">
-          <Card.Body>
+          <Card.Body p={[2, 4]}>
             <InfoBox icon={<FaRegClock />} title="Godziny pracy" mb={5} />
             <VStack>
               {placeholder.workinHours.map((day, i) => (
@@ -90,12 +89,12 @@ export default function PartnerInfo() {
       </VStack>
       <VStack gap={4} align="start">
         <Card.Root w="full">
-          <Card.Body>
+          <Card.Body p={[2, 4]}>
             <Image src={placeholder.photo} />
           </Card.Body>
         </Card.Root>
         <Card.Root w="full">
-          <Card.Body>
+          <Card.Body p={[2, 4]}>
             <InfoBox title="Opis placówki" direction="column">
               {placeholder.description}
             </InfoBox>

@@ -45,34 +45,47 @@ const items = [
 
 export default function PartnerNeeds() {
   return (
-    <Flex direction="column">
+    <Flex direction="column" p={[2, 10, 20]}>
       <Heading color="palette.darker">Czego obecnie potrzebujemy?</Heading>
       <Text color="palette.main">Ostatnia aktualizacja: 12.12.2000 8:00</Text>
-      <Table.Root size="lg" my={10} striped>
-        <Table.Header>
-          <Table.Row>
-            <Table.ColumnHeader color="palette.main">NAZWA</Table.ColumnHeader>
-            <Table.ColumnHeader color="palette.main">
-              STAN OBECNY
-            </Table.ColumnHeader>
-            <Table.ColumnHeader color="palette.main">
-              KATEGORIA
-            </Table.ColumnHeader>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {items.map((item, i) => (
-            <Table.Row key={i}>
-              <Table.Cell>{item.name}</Table.Cell>
-              <Table.Cell>{item.availability}</Table.Cell>
-              <Table.Cell display="flex" gap={5}>
-                <Box bg={item.category.color} boxSize={4} rounded={5} />
-                {item.category.label}
-              </Table.Cell>
+      <Box overflowX="auto">
+        <Table.Root size="lg" my={10} striped minW="md">
+          <Table.Header>
+            <Table.Row>
+              {["NAZWA", "STAN OBECNY", "KATEGORIA"].map((header, i) => (
+                <Table.ColumnHeader
+                  key={i}
+                  color="palette.main"
+                  textAlign="center"
+                  textWrap="nowrap"
+                >
+                  {header}
+                </Table.ColumnHeader>
+              ))}
             </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
+          </Table.Header>
+          <Table.Body>
+            {items.map((item, i) => (
+              <Table.Row key={i}>
+                <Table.Cell>{item.name}</Table.Cell>
+                <Table.Cell>{item.availability}</Table.Cell>
+                <Table.Cell>
+                  <Flex alignItems="center" gap={2}>
+                    <Box
+                      bg={item.category.color}
+                      minW={4}
+                      boxSize={4}
+                      rounded={5}
+                    />
+                    {item.category.label}
+                  </Flex>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table.Root>
+      </Box>
+
       <Box p={5}>
         <Heading w="full" color="palette.lighter">
           Notatka od nas!

@@ -6,17 +6,18 @@ export default function PartnerEvents() {
       {Array.from({ length: 3 }).map((_, i) => (
         <Card.Root
           display="grid"
-          gridTemplateColumns={["1fr", "2fr 1fr"]}
+          gridTemplateColumns={["1fr", "1fr", "2fr 1fr"]}
           gap={4}
-          p={5}
+          p={[0, 4]}
+          key={i}
         >
           <div>
-            <Card.Header>
+            <Card.Header p={2} textAlign={["center", "left"]}>
               <Card.Title color="palette.darker" fontWeight="bold">
                 12.12.2000 - Lorem ipsum
               </Card.Title>
             </Card.Header>
-            <Card.Body>
+            <Card.Body p={2}>
               <Card.Description>asdaskfjsdljgblsdhfgbl</Card.Description>
             </Card.Body>
           </div>
