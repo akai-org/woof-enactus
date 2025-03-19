@@ -3,7 +3,17 @@ import React from "react";
 import { Marker } from "react-leaflet";
 
 type MapMarkerProps = {
-  position: LatLngExpression;
+  markerData: Data;
+};
+
+// TEMPORARY
+type Data = {
+  id: number;
+  uuid: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  type: "VET" | "ORG" | "SHOP" | "SHELTER";
 };
 
 const customIcon = icon({
@@ -11,7 +21,10 @@ const customIcon = icon({
   iconSize: [35, 35],
 });
 
-function MapMarker({ position }: MapMarkerProps) {
+function MapMarker({ markerData }: MapMarkerProps) {
+  const { latitude, longitude } = markerData;
+  const position: LatLngExpression = [latitude, longitude];
+
   return <Marker position={position} icon={customIcon}></Marker>;
 }
 

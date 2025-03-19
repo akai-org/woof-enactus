@@ -5,7 +5,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import MapMarker from "./MapMarker";
 
 /* 
-  WARNING: Except for its children, MapContainer props are immutable:
+  NOTE: Except for its children, MapContainer props are immutable:
   changing them after they have been set a first time will have no effect on the Map instance or its container.
 */
 
@@ -14,22 +14,20 @@ const DEFAULT_ZOOM = 13;
 
 type MapProps = {
   children?: React.ReactNode;
+  data: Data[];
 };
 
-const coordinates: Array<LatLngExpression> = [
-  [52.472013, 16.994563],
-  [52.523089, 16.934824],
-  [52.58961, 17.142845],
-  [52.508163, 17.207341],
-  [52.401124, 16.84257],
-  [52.515939, 16.878021],
-  [52.553108, 17.034453],
-  [52.428763, 16.981219],
-  [52.462308, 17.176126],
-  [52.494705, 16.839512],
-];
+// TEMPORARY
+type Data = {
+  id: number;
+  uuid: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  type: "VET" | "ORG" | "SHOP" | "SHELTER";
+};
 
-function Map({ children }: MapProps) {
+function Map({ children, data }: MapProps) {
   return (
     <MapContainer
       center={DEFAULT_POSITION}
@@ -42,8 +40,8 @@ function Map({ children }: MapProps) {
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {coordinates.map((latLng, index) => (
-        <MapMarker position={latLng} key={index} />
+      {data.map(item => (
+        <MapMarker markerData={item} key={item.uuid} />
       ))}
       {children}
     </MapContainer>
