@@ -28,36 +28,6 @@ export interface CreatePartnerDto {
      * @type {string}
      * @memberof CreatePartnerDto
      */
-    city: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePartnerDto
-     */
-    street: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePartnerDto
-     */
-    postal: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePartnerDto
-     */
-    phone: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePartnerDto
-     */
-    website: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePartnerDto
-     */
     type: CreatePartnerDtoTypeEnum;
 }
 

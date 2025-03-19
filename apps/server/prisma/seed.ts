@@ -1,29 +1,74 @@
-import { PrismaClient, Prisma } from '@prisma/client';
-import { faker } from '@faker-js/faker';
+import { PrismaClient, Prisma } from "@prisma/client";
+import { faker, fakerPL } from "@faker-js/faker";
 
 const prisma = new PrismaClient();
 
-// Insert 1000 records to test
+// Insert 1000 records for testing
 async function main() {
-  const partnersData: Prisma.PartnerCreateManyInput[] = [];
+  await prisma.workingHours.deleteMany();
+  await prisma.partnerProfile.deleteMany();
+  await prisma.partner.deleteMany();
 
+  await prisma.$executeRaw`ALTER SEQUENCE "Partner_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "PartnerProfile_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "WorkingHours_id_seq" RESTART WITH 1;`;
+
+  const partnersData: Prisma.PartnerCreateManyInput[] = [];
   for (let i = 0; i < 1000; i++) {
     partnersData.push({
       name: faker.company.name(),
-      city: faker.location.city(),
-      street: faker.location.streetAddress(),
-      postal: faker.location.zipCode(),
-      phone: faker.phone.number(),
-      website: faker.internet.url(),
-      type: faker.helpers.arrayElement(['VET', 'ORG', 'SHOP', 'SHELTER']),
+      type: faker.helpers.arrayElement(["VET", "ORG", "SHOP", "SHELTER"]),
+      // Leave latitude and logitude at default 0 for now
+      latitude: 0,
+      logitude: 0,
     });
   }
 
-  const result = await prisma.partner.createMany({
+  const resultPartners = await prisma.partner.createMany({
     data: partnersData,
   });
 
-  console.log(`Inserted ${result.count} partners`);
+  const profilesData: Prisma.PartnerProfileCreateManyInput[] = [];
+  const hoursData: Prisma.WorkingHoursCreateManyInput[] = [];
+  for (let i = 0; i < 1000; i++) {
+    profilesData.push({
+      partnerId: i + 1,
+      animals: faker.helpers.arrayElements(["Dogs", "Cats", "Parrots"], {
+        min: 1,
+        max: 3,
+      }),
+      city: fakerPL.location.city(),
+      street: fakerPL.location.street(),
+      getToInfo: "Jakieś tam instrukcje dojazdu...",
+      postal: fakerPL.location.zipCode("##-###"),
+      description: fakerPL.lorem.paragraph(),
+      visitHours: "Pon-Pt 10:30 - 14:00",
+      phone: fakerPL.phone.number(),
+      website: faker.internet.url(),
+    });
+    hoursData.push({
+      profileId: i + 1,
+      monday: "8:00 - 15:00",
+      tuesday: "8:00 - 15:00",
+      wednesday: "8:00 - 15:00",
+      thursday: "8:00 - 15:00",
+      friday: "8:00 - 15:00",
+      saturday: "Zamknięte",
+      sunday: "Zamknięte",
+    });
+  }
+
+  const resultProfiles = await prisma.partnerProfile.createMany({
+    data: profilesData,
+  });
+
+  const resultHours = await prisma.workingHours.createMany({
+    data: hoursData,
+  });
+
+  console.log(`Inserted ${resultPartners.count} partners`);
+  console.log(`Inserted ${resultProfiles.count} profiles`);
+  console.log(`Inserted ${resultHours.count} working hours`);
 }
 
 main()

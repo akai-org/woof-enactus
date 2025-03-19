@@ -14,15 +14,44 @@ datasource db {
 }
 
 model Partner {
-  id      Int         @id @default(autoincrement())
-  uuid    String      @unique @default(uuid())
-  name    String
-  city    String?
-  street  String?
-  postal  String?
-  phone   String?
-  website String?
-  type    PartnerType
+  id        Int         @id @default(autoincrement())
+  uuid      String      @unique @default(uuid())
+  name      String
+  latitude  Float       @default(0)
+  logitude  Float       @default(0)
+  profile   PartnerProfile?
+  type      PartnerType
+}
+
+model PartnerProfile {
+  id          Int     @id @default(autoincrement())
+  uuid        String  @unique @default(uuid())
+  partner     Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  partnerId   Int     @unique
+  description String?
+  getToInfo   String?
+  city        String?
+  street      String?
+  postal      String?
+  phone       String?
+  website     String?
+  animals     String[]
+  visitHours  String?
+  openHours   WorkingHours?
+}
+
+model WorkingHours {
+  id          Int             @id @default(autoincrement())
+  uuid        String          @unique @default(uuid())
+  profile     PartnerProfile  @relation(fields: [profileId], references: [id])
+  profileId   Int             @unique
+  monday      String
+  tuesday     String
+  wednesday   String
+  thursday    String
+  friday      String
+  saturday    String
+  sunday      String
 }
 
 enum PartnerType {
