@@ -1,61 +1,90 @@
-import { ApiProperty } from "@nestjs/swagger";
-import {
-  IsString,
-  IsNotEmpty,
-  Length,
-  IsPostalCode,
-  IsPhoneNumber,
-  IsUrl,
-  IsEnum,
-} from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { PartnerType } from '@prisma/client';
+import { IsString, IsNotEmpty, Length, IsEnum, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
 
-enum PartnerType {
-  VET = "VET",
-  ORG = "ORG",
-  SHOP = "SHOP",
-  SHELTER = "SHELTER",
-}
-
-export default class CreatePartnerDto {
+export class CreatePartnerDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
   @Length(2, 64)
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: PartnerType })
+  @IsEnum(PartnerType)
+  type: PartnerType;
+
+  // Profile fields
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
+  description?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  getToInfo?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
   city?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   street?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsString()
-  @IsPostalCode("PL")
-  @IsNotEmpty()
   postal?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsString()
-  @IsPhoneNumber("PL")
-  @IsNotEmpty()
   phone?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsString()
-  @IsUrl()
-  @IsNotEmpty()
   website?: string;
 
-  @ApiProperty({
-    enum: PartnerType,
-  })
-  @IsEnum(PartnerType)
+  @ApiProperty({ type: [String] })
+  @IsArray()
+  @ArrayNotEmpty()
+  animals: [string];
+
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  type: PartnerType;
+  visitHours?: string;
+
+  // WorkingHours fields (for openHours)
+  @ApiProperty()
+  @IsString()
+  monday: string;
+
+  @ApiProperty()
+  @IsString()
+  tuesday: string;
+
+  @ApiProperty()
+  @IsString()
+  wednesday: string;
+
+  @ApiProperty()
+  @IsString()
+  thursday: string;
+
+  @ApiProperty()
+  @IsString()
+  friday: string;
+
+  @ApiProperty()
+  @IsString()
+  saturday: string;
+
+  @ApiProperty()
+  @IsString()
+  sunday: string;
 }
