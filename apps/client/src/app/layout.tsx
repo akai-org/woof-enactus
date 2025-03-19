@@ -7,6 +7,7 @@ import { hkGrotesk, openSans } from "./fonts";
 import { Footer, Nav } from "@/components";
 
 import "leaflet/dist/leaflet.css";
+import "react-leaflet-markercluster/styles";
 
 export const metadata: Metadata = {
   title: "Create Next App",

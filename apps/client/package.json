@@ -15,13 +15,14 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "framer-motion": "^12.4.9",
-    "woof-api-client": "file:../../packages/woof-api-client",
     "leaflet": "^1.9.4",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
-    "react-leaflet": "^5.0.0"
+    "react-leaflet": "^5.0.0",
+    "react-leaflet-markercluster": "^5.0.0-rc.0",
+    "woof-api-client": "file:../../packages/woof-api-client"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^3.8.1",
