@@ -4,6 +4,7 @@ import { LatLngExpression } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MapMarker from "./MapMarker";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+import { Data } from "./types";
 
 /* 
   NOTE: Except for its children, MapContainer props are immutable:
@@ -16,16 +17,6 @@ const DEFAULT_ZOOM = 13;
 type MapProps = {
   children?: React.ReactNode;
   data: Data[];
-};
-
-// TEMPORARY
-type Data = {
-  id: number;
-  uuid: string;
-  name: string;
-  latitude: number;
-  longitude: number;
-  type: "VET" | "ORG" | "SHOP" | "SHELTER";
 };
 
 function Map({ children, data }: MapProps) {
