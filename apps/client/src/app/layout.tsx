@@ -8,6 +8,7 @@ import { Footer, Nav } from "@/components";
 
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/styles";
+import "../style.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
