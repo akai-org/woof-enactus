@@ -3,7 +3,6 @@
 import { LatLngExpression } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MapMarker from "./MapMarker";
-import "./style.css";
 
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Data } from "./types";
@@ -14,7 +13,7 @@ import { Data } from "./types";
 */
 
 const DEFAULT_POSITION: LatLngExpression = [52.40379, 16.94935];
-const DEFAULT_ZOOM = 13;
+const DEFAULT_ZOOM = 11;
 
 type MapProps = {
   children?: React.ReactNode;
@@ -26,10 +25,10 @@ function Map({ children, data }: MapProps) {
     <MapContainer
       center={DEFAULT_POSITION}
       zoom={DEFAULT_ZOOM}
-      minZoom={10}
-      maxZoom={18}
       style={{ minHeight: "60vh" }}
       zoomControl={true}
+      minZoom={6}
+      maxZoom={18}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
