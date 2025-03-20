@@ -4,17 +4,17 @@ import { FiFacebook, FiInstagram, FiLinkedin } from "react-icons/fi";
 
 export const Footer = () => {
   return (
-    <Box bg="palette.darker" p="25px" className="footer">
+    <Box bg="brand.800" p="25px" className="footer">
       <Flex justify="space-between" align="center" position="relative">
         {/* Lewa strona */}
-        <Text fontWeight="bold" color="palette.lighter">
+        <Text fontWeight="bold" color="brand.500">
           @kontaktwithenactus@gmail.com
         </Text>
 
         {/* Środkowy tekst, zawsze centrowany */}
         <Text
           fontWeight="bold"
-          color="palette.lighter"
+          color="brand.500"
           position="absolute"
           left="50%"
           transform="translateX(-50%)"
@@ -32,7 +32,7 @@ export const Footer = () => {
             _hover={{ textDecoration: "none" }}
             _focus={{ boxShadow: "none", outline: "none" }}
           >
-            <Icon color="palette.lighter">
+            <Icon color="brand.500">
               <FiFacebook size="30px" />
             </Icon>
           </Link>
@@ -44,7 +44,7 @@ export const Footer = () => {
             _hover={{ textDecoration: "none" }}
             _focus={{ boxShadow: "none", outline: "none" }}
           >
-            <Icon color="palette.lighter">
+            <Icon color="brand.500">
               <FiInstagram size="30px" />
             </Icon>
           </Link>
@@ -56,7 +56,7 @@ export const Footer = () => {
             _hover={{ textDecoration: "none" }}
             _focus={{ boxShadow: "none", outline: "none" }}
           >
-            <Icon color="palette.lighter">
+            <Icon color="brand.500">
               <FiLinkedin size="30px" />
             </Icon>
           </Link>

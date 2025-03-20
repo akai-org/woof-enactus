@@ -1,9 +1,13 @@
+"use client";
+
 import { LatLngExpression, icon } from "leaflet";
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
+import { Data } from "./types";
+import { chakra } from "@chakra-ui/react";
 
 type MapMarkerProps = {
-  position: LatLngExpression;
+  markerData: Data;
 };
 
 const customIcon = icon({
@@ -11,12 +15,19 @@ const customIcon = icon({
   iconSize: [35, 35],
 });
 
-function MapMarker({ position }: MapMarkerProps) {
+const PopupUI = chakra(Popup);
+
+/*
+ TODO: remove default styles like shadow (css). Add content to popup.
+*/
+
+function MapMarker({ markerData }: MapMarkerProps) {
+  const { latitude, longitude, name, profile } = markerData;
+  const position: LatLngExpression = [latitude, longitude];
+
   return (
     <Marker position={position} icon={customIcon}>
-      <Popup>
-        A pretty CSS3 popup. <br /> Easily customizable.
-      </Popup>
+      <PopupUI closeButton={false}>{name}</PopupUI>
     </Marker>
   );
 }
