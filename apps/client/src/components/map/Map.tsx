@@ -4,6 +4,7 @@ import { LatLngExpression } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 import Location from "./Location";
 import MapMarker from "./MapMarker";
+import "./style.css";
 
 /* 
   WARNING: Except for its children, MapContainer props are immutable:
@@ -35,8 +36,10 @@ function Map({ children }: MapProps) {
     <MapContainer
       center={DEFAULT_POSITION}
       zoom={DEFAULT_ZOOM}
+      minZoom={10}
+      maxZoom={18}
       style={{ minHeight: "60vh" }}
-      zoomControl={false}
+      zoomControl={true}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
