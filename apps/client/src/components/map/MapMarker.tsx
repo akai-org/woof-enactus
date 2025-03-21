@@ -4,8 +4,9 @@ import { LatLngExpression, icon } from "leaflet";
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
 import { Data } from "./types";
-import { Box, Button, Link, List, Text } from "@chakra-ui/react";
-import { MdArrowRightAlt, MdLanguage, MdLocalPhone } from "react-icons/md";
+import { Box, Link, List, Text } from "@chakra-ui/react";
+import { MdLanguage, MdLocalPhone } from "react-icons/md";
+import Btn from "../Btn";
 
 type MapMarkerProps = {
   markerData: Data;
@@ -15,10 +16,6 @@ const customIcon = icon({
   iconUrl: "marker-icon.svg",
   iconSize: [35, 35],
 });
-
-/*
- TODO: remove default styles like shadow (css). Add content to popup.
-*/
 
 function MapMarker({ markerData }: MapMarkerProps) {
   const { latitude, longitude, name, profile } = markerData;
@@ -54,15 +51,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
               <Link href={profile.website}>{profile.website}</Link>
             </List.Item>
           </List.Root>
-          <Button
-            variant={"solid"}
-            fontFamily={"heading"}
-            textTransform={"uppercase"}
-            letterSpacing={"wide"}
-            bgColor={"accent.green"}
-          >
-            Szczegóły <MdArrowRightAlt />
-          </Button>
+          <Btn>Szczegóły</Btn>
         </Box>
       </Popup>
     </Marker>
