@@ -130,7 +130,7 @@ export class PartnersService {
           type: body.type,
           //TODO latitude and logitude remain 0 for now;
           latitude: 0,
-          logitude: 0,
+          longitude: 0,
           profile: {
             create: {
               description: body.description,
@@ -169,7 +169,10 @@ export class PartnersService {
     }
   }
 
-  async update(uuid: string, updateDto: UpdatePartnerDto): Promise<GenericResponse> {
+  async update(
+    uuid: string,
+    updateDto: UpdatePartnerDto,
+  ): Promise<GenericResponse> {
     try {
       const updatedPartner = await this.prisma.partner.update({
         where: { uuid },
@@ -188,11 +191,11 @@ export class PartnersService {
         where: { uuid },
         include: { profile: true },
       });
-      
+
       if (!partner) {
         return { ok: false, message: "Partner not found", data: undefined };
       }
-  
+
       // If a profile exists, first delete its associated working hours,
       // then delete the profile.
       if (partner.profile) {
@@ -203,18 +206,17 @@ export class PartnersService {
           where: { partnerId: partner.id },
         });
       }
-  
+
       // Now delete the partner record.
       const deletedPartner = await this.prisma.partner.delete({
         where: { uuid },
       });
-  
+
       return { ok: true, data: deletedPartner };
     } catch (e: any) {
       return { ok: false, message: "Error deleting partner", error: e.message };
     }
   }
-  
 
   async findOneWithProfile(uuid: string): Promise<GenericResponse> {
     try {
@@ -228,18 +230,14 @@ export class PartnersService {
           },
         },
       });
-  
+
       if (!partner) {
         return { ok: false, message: "Partner not found", data: undefined };
       }
-  
+
       return { ok: true, data: partner };
     } catch (e: any) {
       return { ok: false, message: "Internal server error", error: e.message };
     }
   }
-  
 }
-
-
-  
