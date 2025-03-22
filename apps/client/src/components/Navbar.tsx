@@ -11,7 +11,7 @@ export const Nav = () => {
       justifyContent="space-between"
       padding="20px"
     >
-      <Text color="palette.lighter" fontSize="28px" fontWeight="bold">
+      <Text color="brand.500" fontSize="28px" fontWeight="bold">
         HAUMAPS
       </Text>
 
@@ -28,7 +28,7 @@ export const Nav = () => {
         >
           <Tabs.Trigger value="map" asChild>
             <Box
-              color="palette.lighter"
+              color="brand.500"
               as="button"
               px="20px" // Zwiększa obszar w prawo i lewo
               py="10px" // Zachowuje normalny padding góra/dół
@@ -36,13 +36,13 @@ export const Nav = () => {
               transition="background-color 0.3s ease"
               _hover={{
                 color: "white", // Tekst zmienia się na biały
-                backgroundColor: "green",
+                backgroundColor: "accent.green",
 
                 _before: { content: "none" }, // Ukrywa before (underline)
               }}
               _selected={{
                 _before: {
-                  backgroundColor: "palette.lighter", // Zmiana koloru underline na aktywny
+                  backgroundColor: "brand.500", // Zmiana koloru underline na aktywny
                 },
               }}
             >
@@ -58,7 +58,7 @@ export const Nav = () => {
         >
           <Tabs.Trigger value="blog" asChild>
             <Box
-              color="palette.lighter"
+              color="brand.500"
               as="button"
               px="20px" // Zwiększa obszar w prawo i lewo
               py="10px" // Zachowuje normalny padding góra/dół
@@ -66,13 +66,13 @@ export const Nav = () => {
               transition="background-color 0.3s ease"
               _hover={{
                 color: "white", // Tekst zmienia się na biały
-                backgroundColor: "green",
+                backgroundColor: "accent.green",
 
                 _before: { content: "none" }, // Ukrywa before (underline)
               }}
               _selected={{
                 _before: {
-                  backgroundColor: "palette.lighter", // Zmiana koloru underline na aktywny
+                  backgroundColor: "brand.500", // Zmiana koloru underline na aktywny
                 },
               }}
             >
@@ -88,7 +88,7 @@ export const Nav = () => {
         >
           <Tabs.Trigger value="support" asChild>
             <Box
-              color="palette.lighter"
+              color="brand.500"
               as="button"
               px="20px" // Zwiększa obszar w prawo i lewo
               py="10px" // Zachowuje normalny padding góra/dół
@@ -96,13 +96,13 @@ export const Nav = () => {
               transition="background-color 0.3s ease"
               _hover={{
                 color: "white", // Tekst zmienia się na biały
-                backgroundColor: "green",
+                backgroundColor: "accent.green",
 
                 _before: { content: "none" }, // Ukrywa before (underline)
               }}
               _selected={{
                 _before: {
-                  backgroundColor: "palette.lighter", // Zmiana koloru underline na aktywny
+                  backgroundColor: "brand.500", // Zmiana koloru underline na aktywny
                 },
               }}
             >
@@ -118,7 +118,7 @@ export const Nav = () => {
         >
           <Tabs.Trigger value="about" asChild>
             <Box
-              color="palette.lighter"
+              color="brand.500"
               as="button"
               px="20px" // Zwiększa obszar w prawo i lewo
               py="10px" // Zachowuje normalny padding góra/dół
@@ -126,13 +126,13 @@ export const Nav = () => {
               transition="background-color 0.3s ease"
               _hover={{
                 color: "white", // Tekst zmienia się na biały
-                backgroundColor: "green",
+                backgroundColor: "accent.green",
 
                 _before: { content: "none" }, // Ukrywa before (underline)
               }}
               _selected={{
                 _before: {
-                  backgroundColor: "palette.lighter", // Zmiana koloru underline na aktywny
+                  backgroundColor: "brand.500", // Zmiana koloru underline na aktywny
                 },
               }}
             >

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start:dev:db": "docker compose -f compose.dev.yml up -d",
-    "prettier": "prettier . --write"
+    "stop:dev:db": "docker compose -f compose.dev.yml down"
   },
   "keywords": [],
   "author": "",
