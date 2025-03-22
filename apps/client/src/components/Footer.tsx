@@ -39,7 +39,7 @@ export const Footer = () => {
             _hover={{ textDecoration: "none" }}
             _focus={{ boxShadow: "none", outline: "none" }}
           >
-            <Icon color="palette.lighter">
+            <Icon color="brand.500">
               <FiFacebook size="30px" />
             </Icon>
           </Link>
@@ -51,7 +51,7 @@ export const Footer = () => {
             _hover={{ textDecoration: "none" }}
             _focus={{ boxShadow: "none", outline: "none" }}
           >
-            <Icon color="palette.lighter">
+            <Icon color="brand.500">
               <FiInstagram size="30px" />
             </Icon>
           </Link>
@@ -63,7 +63,7 @@ export const Footer = () => {
             _hover={{ textDecoration: "none" }}
             _focus={{ boxShadow: "none", outline: "none" }}
           >
-            <Icon color="palette.lighter">
+            <Icon color="brand.500">
               <FiLinkedin size="30px" />
             </Icon>
           </Link>

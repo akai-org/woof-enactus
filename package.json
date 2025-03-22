@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start:dev:db": "docker compose -f compose.dev.yml up -d",
-    "prettier": "prettier . --write"
+    "stop:dev:db": "docker compose -f compose.dev.yml down"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +16,8 @@
   ],
   "devDependencies": {
     "prettier": "^3.5.1"
+  },
+  "dependencies": {
+    "prisma-extension-pg-trgm": "^1.1.0"
   }
 }
