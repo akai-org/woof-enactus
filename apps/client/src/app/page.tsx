@@ -1,7 +1,6 @@
-import { Map } from "@/components";
-import SearchBar from "@/components/mapSearchBar/SearchBar";
+import { Map, SearchBar } from "@/components";
 import { api } from "@/constants/partnersApi";
-import { ClientOnly, Skeleton } from "@chakra-ui/react";
+import { ClientOnly, Container, Skeleton, Heading } from "@chakra-ui/react";
 
 export default async function Home() {
   const result = await api.partnersControllerGetAllPartners();
@@ -9,7 +8,12 @@ export default async function Home() {
 
   return (
     <ClientOnly fallback={<Skeleton />}>
-      <SearchBar />
+      <Container marginTop="8">
+        <Heading as="h1" size="4xl" color="brand.700" my="2">
+          Znajdź placówki prozwierzęce
+        </Heading>
+        <SearchBar />
+      </Container>
       <Map data={partners} />
     </ClientOnly>
   );

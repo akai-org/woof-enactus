@@ -14,17 +14,31 @@ export default function Filters() {
   return (
     <Popover.Root positioning={{ placement: "bottom-end" }}>
       <Popover.Trigger asChild>
-        <Button variant="outline" size="xs">
+        <Button
+          variant="surface"
+          size="md"
+          textTransform="uppercase"
+          fontWeight="bold"
+        >
           <IoFilterSharp />
-          FILTRY
+          Filtry
         </Button>
       </Popover.Trigger>
       <Portal>
         <Popover.Positioner>
           <Popover.Content>
-            <Popover.Body>
-              <Popover.Title fontWeight="medium" fontSize="2xl">
-                FILTRY
+            <Popover.Body
+              borderWidth="thin"
+              borderColor="brand.300"
+              borderRadius="sm"
+            >
+              <Popover.Title
+                fontWeight="semibold"
+                fontSize="2xl"
+                textTransform="uppercase"
+                fontFamily="heading"
+              >
+                Filtry
               </Popover.Title>
               <Popover.CloseTrigger
                 fontWeight="medium"
@@ -48,11 +62,7 @@ export default function Filters() {
                       ]}
                     >
                       {value => (
-                        <Checkbox.Root
-                          key={value}
-                          value={value}
-                          colorPalette="green"
-                        >
+                        <Checkbox.Root key={value} value={value}>
                           <Checkbox.HiddenInput />
                           <Checkbox.Control>
                             <Checkbox.Indicator />
