@@ -16,9 +16,5 @@
   ],
   "devDependencies": {
     "prettier": "^3.5.1"
-  },
-  "dependencies": {
-    "react-icons": "^5.5.0",
-    "prisma-extension-pg-trgm": "^1.1.0"
   }
 }
