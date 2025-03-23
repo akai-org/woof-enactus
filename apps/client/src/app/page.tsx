@@ -1,12 +1,16 @@
 import { Map } from "@/components";
 import SearchBar from "@/components/mapSearchBar/SearchBar";
+import { api } from "@/constants/partnersApi";
 import { ClientOnly, Skeleton } from "@chakra-ui/react";
 
-export default function Home() {
+export default async function Home() {
+  const result = await api.partnersControllerGetAllPartners();
+  const partners = result.data.data;
+
   return (
     <ClientOnly fallback={<Skeleton />}>
       <SearchBar />
-      <Map />
+      <Map data={partners} />
     </ClientOnly>
   );
 }
