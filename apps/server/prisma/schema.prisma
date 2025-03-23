@@ -18,7 +18,7 @@ model Partner {
   uuid      String      @unique @default(uuid())
   name      String
   latitude  Float       @default(0)
-  logitude  Float       @default(0)
+  longitude  Float       @default(0)
   profile   PartnerProfile?
   type      PartnerType
 }
@@ -26,7 +26,7 @@ model Partner {
 model PartnerProfile {
   id          Int     @id @default(autoincrement())
   uuid        String  @unique @default(uuid())
-  partner     Partner @relation(fields: [partnerId], references: [id])
+  partner     Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
   partnerId   Int     @unique
   description String?
   getToInfo   String?

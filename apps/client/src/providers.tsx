@@ -1,5 +1,5 @@
 "use client";
-import { system } from "@/constants/theme";
+import { system } from "@/constants";
 import { ChakraProvider } from "@chakra-ui/react";
 
 function Providers({ children }: { children: React.ReactNode }) {
