@@ -35,127 +35,144 @@ const links = [
 
 function Nav() {
   return (
-    <Tabs.Root defaultValue="map" paddingY="6">
-      <Container display="flex" justifyContent="space-between">
-        <Flex gap={4} align="center">
-          <Drawer.Root placement="start" size="xs">
-            <Drawer.Trigger asChild>
-              <IconButton
-                size="sm"
-                bg={"brand.700"}
-                hideFrom="md"
-                aria-label="Menu"
-                variant={"solid"}
+    <Box
+      position="sticky"
+      top="0"
+      bg="brand.100"
+      zIndex="banner"
+      borderWidth="2px"
+      borderColor="brand.300"
+    >
+      <Container>
+        <Flex>
+          <Flex gap={4} flex="1" justifyContent="flex-start">
+            <Drawer.Root placement="start" size="xs">
+              <Drawer.Trigger asChild>
+                <IconButton
+                  size="sm"
+                  bg={"brand.700"}
+                  hideFrom="md"
+                  aria-label="Menu"
+                  variant={"solid"}
+                >
+                  <IoMenu />
+                </IconButton>
+              </Drawer.Trigger>
+              <Portal>
+                <Drawer.Backdrop />
+                <Drawer.Positioner>
+                  <Drawer.Content>
+                    <Drawer.Header>
+                      <Flex justify="space-between" align="center">
+                        <Drawer.Title>
+                          <Text
+                            color="brand.500"
+                            textStyle={"3xl"}
+                            fontWeight="bold"
+                          >
+                            Menu
+                          </Text>
+                        </Drawer.Title>
+                        <Drawer.CloseTrigger asChild>
+                          <CloseButton size="xl" />
+                        </Drawer.CloseTrigger>
+                      </Flex>
+                    </Drawer.Header>
+                    <Drawer.Body display="flex" flexDirection="column" gap={8}>
+                      <For each={links}>
+                        {item => (
+                          <Link
+                            href={item.href}
+                            textDecoration="none"
+                            textStyle={"md"}
+                            _focus={{ boxShadow: "none", outline: "none" }}
+                          >
+                            {item.name}
+                          </Link>
+                        )}
+                      </For>
+                    </Drawer.Body>
+                    <Drawer.Footer>
+                      <Link
+                        href="/"
+                        textDecoration="none"
+                        color="brand.500"
+                        textStyle={"xl"}
+                        fontWeight="bold"
+                        textTransform={"uppercase"}
+                      >
+                        Haumaps
+                      </Link>
+                    </Drawer.Footer>
+                  </Drawer.Content>
+                </Drawer.Positioner>
+              </Portal>
+            </Drawer.Root>
+            <Link
+              href="/"
+              textDecoration="none"
+              color="brand.500"
+              textStyle="3xl"
+              fontWeight="bold"
+              textTransform={"uppercase"}
+              _focus={{ boxShadow: "none", outline: "none" }}
+            >
+              Haumaps
+            </Link>
+          </Flex>
+
+          <Flex flex="1" justifyContent="center">
+            <Tabs.Root defaultValue="map" paddingY="6">
+              <Tabs.List
+                hideBelow="md"
+                defaultValue={links[0].name}
+                borderBottom="none"
+                minWidth="50%"
+                display="flex"
+                gap="12"
               >
-                <IoMenu />
-              </IconButton>
-            </Drawer.Trigger>
-            <Portal>
-              <Drawer.Backdrop />
-              <Drawer.Positioner>
-                <Drawer.Content>
-                  <Drawer.Header>
-                    <Flex justify="space-between" align="center">
-                      <Drawer.Title>
-                        <Text
-                          color="brand.500"
-                          textStyle={"3xl"}
-                          fontWeight="bold"
-                        >
-                          Menu
-                        </Text>
-                      </Drawer.Title>
-                      <Drawer.CloseTrigger asChild>
-                        <CloseButton size="xl" />
-                      </Drawer.CloseTrigger>
-                    </Flex>
-                  </Drawer.Header>
-                  <Drawer.Body display="flex" flexDirection="column" gap={8}>
-                    <For each={links}>
-                      {item => (
-                        <Link
-                          href={item.href}
-                          textDecoration="none"
-                          textStyle={"md"}
-                          _focus={{ boxShadow: "none", outline: "none" }}
-                        >
-                          {item.name}
-                        </Link>
-                      )}
-                    </For>
-                  </Drawer.Body>
-                  <Drawer.Footer>
-                    <Text
-                      color="brand.500"
-                      textStyle={"xl"}
-                      fontWeight="bold"
-                      textTransform={"uppercase"}
+                <For each={links}>
+                  {item => (
+                    <Link
+                      href={item.href}
+                      textDecoration="none"
+                      textStyle="md"
+                      _focus={{ boxShadow: "none", outline: "none" }}
                     >
-                      Haumaps
-                    </Text>
-                  </Drawer.Footer>
-                </Drawer.Content>
-              </Drawer.Positioner>
-            </Portal>
-          </Drawer.Root>
-          <Text
-            color="brand.500"
-            textStyle="2xl"
-            fontWeight="bold"
-            textTransform={"uppercase"}
-          >
-            Haumaps
-          </Text>
+                      <Tabs.Trigger
+                        value={item.name}
+                        color="brand.500"
+                        as="span"
+                        borderRadius="sm"
+                        transition="background-color 0.3s ease"
+                        _hover={{
+                          color: "brand.100",
+                          backgroundColor: "brand.500",
+                        }}
+                      >
+                        {item.name}
+                      </Tabs.Trigger>
+                    </Link>
+                  )}
+                </For>
+              </Tabs.List>
+            </Tabs.Root>
+          </Flex>
+
+          <Flex flex="1" justifyContent="flex-end">
+            <Link
+              href="/login"
+              textDecoration="none"
+              _focus={{ boxShadow: "none", outline: "none" }}
+            >
+              <Avatar.Root>
+                <Avatar.Fallback />
+              </Avatar.Root>
+            </Link>
+          </Flex>
         </Flex>
-
-        <Tabs.List
-          hideBelow="md"
-          defaultValue={links[0].name}
-          borderBottom="none"
-          minWidth="50%"
-          display="flex"
-          justifyContent="space-between"
-        >
-          <For each={links}>
-            {item => (
-              <Link
-                href={item.href}
-                textDecoration="none"
-                textStyle="md"
-                _focus={{ boxShadow: "none", outline: "none" }}
-              >
-                <Tabs.Trigger value={item.name} asChild>
-                  <Box
-                    color="brand.500"
-                    as="span"
-                    px="6"
-                    py="3"
-                    borderRadius="sm"
-                    transition="background-color 0.3s ease"
-                    _hover={{
-                      color: "brand.100",
-                      backgroundColor: "brand.500",
-                    }}
-                  >
-                    {item.name}
-                  </Box>
-                </Tabs.Trigger>
-              </Link>
-            )}
-          </For>
-        </Tabs.List>
-
-        <Link
-          href="/login"
-          textDecoration="none"
-          _focus={{ boxShadow: "none", outline: "none" }}
-        >
-          <Avatar.Root>
-            <Avatar.Fallback />
-          </Avatar.Root>
-        </Link>
       </Container>
-    </Tabs.Root>
+    </Box>
   );
 }
 

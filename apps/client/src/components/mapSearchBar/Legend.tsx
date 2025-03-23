@@ -3,7 +3,6 @@ import {
   Button,
   Flex,
   For,
-  HStack,
   Popover,
   Portal,
   Text,
@@ -15,16 +14,31 @@ export default function Legend() {
   return (
     <Popover.Root positioning={{ placement: "bottom-start" }}>
       <Popover.Trigger asChild>
-        <Button size="xs" variant="outline">
-          LEGENDA
+        <Button
+          size="md"
+          variant="surface"
+          textTransform={"uppercase"}
+          fontWeight="bold"
+        >
+          Legenda
         </Button>
       </Popover.Trigger>
       <Portal>
         <Popover.Positioner>
           <Popover.Content>
-            <Popover.Body>
-              <Popover.Title fontWeight="medium" fontSize="2xl">
-                LEGENDA
+            <Popover.Body
+              borderWidth="thin"
+              borderColor="brand.300"
+              borderRadius="sm"
+            >
+              <Popover.Title
+                fontWeight="semibold"
+                fontSize="2xl"
+                textTransform="uppercase"
+                fontFamily="heading"
+                marginBottom="6"
+              >
+                Legenda
               </Popover.Title>
               <Popover.CloseTrigger
                 fontWeight="medium"
@@ -36,16 +50,16 @@ export default function Legend() {
               >
                 <IoClose />
               </Popover.CloseTrigger>
-              <VStack align="self-start" my={4} gap={4}>
+              <VStack align="self-start" gap={4}>
                 <For
                   each={[
-                    { name: "Schroniska", color: "#0c5404" },
+                    { name: "Schroniska", color: "brand.700" },
                     {
                       name: "Organizacje prozwierzęce",
-                      color: "#b4cc09",
+                      color: "brand.400",
                     },
-                    { name: "Weterynaria", color: "#fed700" },
-                    { name: "Sklepy zoologiczne", color: "#4aa801" },
+                    { name: "Weterynaria", color: "accent.yellow" },
+                    { name: "Sklepy zoologiczne", color: "brand.500" },
                   ]}
                 >
                   {value => (
