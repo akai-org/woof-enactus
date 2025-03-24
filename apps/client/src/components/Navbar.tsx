@@ -8,10 +8,12 @@ import {
   Portal,
   Text,
   Container,
+  Avatar,
+  Tabs,
+  Link,
+  Icon,
+  Center,
 } from "@chakra-ui/react";
-import { Avatar } from "@chakra-ui/react";
-import { Tabs } from "@chakra-ui/react";
-import { Link } from "@chakra-ui/react";
 import { IoMenu } from "react-icons/io5";
 
 const links = [
@@ -38,24 +40,21 @@ function Nav() {
     <Box
       position="sticky"
       top="0"
+      width="100%"
       bg="brand.100"
       zIndex="banner"
-      borderWidth="2px"
-      borderColor="brand.300"
+      borderBottomWidth="2px"
+      borderBottomColor="brand.300"
     >
       <Container>
-        <Flex>
-          <Flex gap={4} flex="1" justifyContent="flex-start">
-            <Drawer.Root placement="start" size="xs">
+        <Center minHeight="20">
+          <Flex gap={4} flex="1" justifyContent="flex-start" marginRight="8">
+            <Drawer.Root placement="start">
               <Drawer.Trigger asChild>
-                <IconButton
-                  size="sm"
-                  bg={"brand.700"}
-                  hideFrom="md"
-                  aria-label="Menu"
-                  variant={"solid"}
-                >
-                  <IoMenu />
+                <IconButton hideFrom="md" aria-label="Menu" variant="ghost">
+                  <Icon size="2xl">
+                    <IoMenu />
+                  </Icon>
                 </IconButton>
               </Drawer.Trigger>
               <Portal>
@@ -129,7 +128,7 @@ function Nav() {
                 borderBottom="none"
                 minWidth="50%"
                 display="flex"
-                gap="12"
+                gap="10"
               >
                 <For each={links}>
                   {item => (
@@ -137,6 +136,7 @@ function Nav() {
                       href={item.href}
                       textDecoration="none"
                       textStyle="md"
+                      width="max-content"
                       _focus={{ boxShadow: "none", outline: "none" }}
                     >
                       <Tabs.Trigger
@@ -170,7 +170,7 @@ function Nav() {
               </Avatar.Root>
             </Link>
           </Flex>
-        </Flex>
+        </Center>
       </Container>
     </Box>
   );

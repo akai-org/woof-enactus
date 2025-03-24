@@ -14,7 +14,15 @@ function Footer() {
           position="relative"
         >
           <Flex flex="1" justifyContent="flex-start">
-            <Text fontWeight="bold">kontaktwithenactus@gmail.com</Text>
+            <Link
+              href="mailto:kontaktwithenactus@gmail.com"
+              color="brand.500"
+              textDecoration="none"
+              _focus={{ boxShadow: "none", outline: "none" }}
+              fontWeight="bold"
+            >
+              kontaktwithenactus@gmail.com
+            </Link>
           </Flex>
 
           <Flex flex="1" justifyContent="center">
