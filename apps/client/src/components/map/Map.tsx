@@ -25,10 +25,10 @@ function Map({ children, data }: MapProps) {
     <MapContainer
       center={DEFAULT_POSITION}
       zoom={DEFAULT_ZOOM}
-      style={{ minHeight: "60vh" }}
       zoomControl={true}
       minZoom={6}
       maxZoom={18}
+      style={{ minHeight: "80vh" }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
