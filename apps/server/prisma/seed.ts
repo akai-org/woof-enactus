@@ -18,9 +18,8 @@ async function main() {
     partnersData.push({
       name: faker.company.name(),
       type: faker.helpers.arrayElement(["VET", "ORG", "SHOP", "SHELTER"]),
-      // Leave latitude and logitude at default 0 for now
-      latitude: 0,
-      logitude: 0,
+      latitude: faker.location.latitude({ min: 50, max: 54, precision: 5 }),
+      longitude: faker.location.longitude({ min: 15, max: 23, precision: 5 }),
     });
   }
 
@@ -72,7 +71,7 @@ async function main() {
 }
 
 main()
-  .catch((e) => {
+  .catch(e => {
     console.error(e);
     process.exit(1);
   })

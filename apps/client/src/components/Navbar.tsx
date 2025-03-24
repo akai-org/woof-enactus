@@ -1,156 +1,179 @@
-import { Box, Text } from "@chakra-ui/react";
-import { Avatar } from "@chakra-ui/react";
-import { Tabs } from "@chakra-ui/react";
-import { Link } from "@chakra-ui/react";
+import {
+  Box,
+  CloseButton,
+  Drawer,
+  Flex,
+  For,
+  IconButton,
+  Portal,
+  Text,
+  Container,
+  Avatar,
+  Tabs,
+  Link,
+  Icon,
+  Center,
+} from "@chakra-ui/react";
+import { IoMenu } from "react-icons/io5";
 
-export const Nav = () => {
+const links = [
+  {
+    name: "Mapa",
+    href: "/",
+  },
+  {
+    name: "Blog",
+    href: "/blog",
+  },
+  {
+    name: "Wsparcie",
+    href: "/wsparcie",
+  },
+  {
+    name: "O nas",
+    href: "/o-nas",
+  },
+];
+
+function Nav() {
   return (
-    <Tabs.Root
-      defaultValue="map"
-      display="flex"
-      justifyContent="space-between"
-      padding="20px"
+    <Box
+      position="sticky"
+      top="0"
+      width="100%"
+      bg="brand.100"
+      zIndex="banner"
+      borderBottomWidth="2px"
+      borderBottomColor="brand.300"
     >
-      <Text color="palette.lighter" fontSize="28px" fontWeight="bold">
-        HAUMAPS
-      </Text>
-
-      <Tabs.List
-        borderBottom="none"
-        width="50%"
-        display="flex"
-        justifyContent="space-between"
-      >
-        <Link
-          href="#map"
-          _hover={{ textDecoration: "none" }}
-          _focus={{ boxShadow: "none", outline: "none" }}
-        >
-          <Tabs.Trigger value="map" asChild>
-            <Box
-              color="palette.lighter"
-              as="button"
-              px="20px" // Zwiększa obszar w prawo i lewo
-              py="10px" // Zachowuje normalny padding góra/dół
-              borderRadius="5px"
-              transition="background-color 0.3s ease"
-              _hover={{
-                color: "white", // Tekst zmienia się na biały
-                backgroundColor: "green",
-
-                _before: { content: "none" }, // Ukrywa before (underline)
-              }}
-              _selected={{
-                _before: {
-                  backgroundColor: "palette.lighter", // Zmiana koloru underline na aktywny
-                },
-              }}
+      <Container>
+        <Center minHeight="20">
+          <Flex gap={4} flex="1" justifyContent="flex-start" marginRight="8">
+            <Drawer.Root placement="start">
+              <Drawer.Trigger asChild>
+                <IconButton hideFrom="md" aria-label="Menu" variant="ghost">
+                  <Icon size="2xl">
+                    <IoMenu />
+                  </Icon>
+                </IconButton>
+              </Drawer.Trigger>
+              <Portal>
+                <Drawer.Backdrop />
+                <Drawer.Positioner>
+                  <Drawer.Content>
+                    <Drawer.Header>
+                      <Flex justify="space-between" align="center">
+                        <Drawer.Title>
+                          <Text
+                            color="brand.500"
+                            textStyle={"3xl"}
+                            fontWeight="bold"
+                          >
+                            Menu
+                          </Text>
+                        </Drawer.Title>
+                        <Drawer.CloseTrigger asChild>
+                          <CloseButton size="xl" />
+                        </Drawer.CloseTrigger>
+                      </Flex>
+                    </Drawer.Header>
+                    <Drawer.Body display="flex" flexDirection="column" gap={8}>
+                      <For each={links}>
+                        {item => (
+                          <Link
+                            href={item.href}
+                            textDecoration="none"
+                            textStyle={"md"}
+                            _focus={{ boxShadow: "none", outline: "none" }}
+                          >
+                            {item.name}
+                          </Link>
+                        )}
+                      </For>
+                    </Drawer.Body>
+                    <Drawer.Footer>
+                      <Link
+                        href="/"
+                        textDecoration="none"
+                        color="brand.500"
+                        textStyle={"xl"}
+                        fontWeight="bold"
+                        textTransform={"uppercase"}
+                      >
+                        Haumaps
+                      </Link>
+                    </Drawer.Footer>
+                  </Drawer.Content>
+                </Drawer.Positioner>
+              </Portal>
+            </Drawer.Root>
+            <Link
+              href="/"
+              textDecoration="none"
+              color="brand.500"
+              textStyle="3xl"
+              fontWeight="bold"
+              textTransform={"uppercase"}
+              _focus={{ boxShadow: "none", outline: "none" }}
             >
-              Mapa
-            </Box>
-          </Tabs.Trigger>
-        </Link>
+              Haumaps
+            </Link>
+          </Flex>
 
-        <Link
-          href="#blog"
-          _hover={{ textDecoration: "none" }}
-          _focus={{ boxShadow: "none", outline: "none" }}
-        >
-          <Tabs.Trigger value="blog" asChild>
-            <Box
-              color="palette.lighter"
-              as="button"
-              px="20px" // Zwiększa obszar w prawo i lewo
-              py="10px" // Zachowuje normalny padding góra/dół
-              borderRadius="5px"
-              transition="background-color 0.3s ease"
-              _hover={{
-                color: "white", // Tekst zmienia się na biały
-                backgroundColor: "green",
+          <Flex flex="1" justifyContent="center">
+            <Tabs.Root defaultValue="map" paddingY="6">
+              <Tabs.List
+                hideBelow="md"
+                defaultValue={links[0].name}
+                borderBottom="none"
+                minWidth="50%"
+                display="flex"
+                gap="10"
+              >
+                <For each={links}>
+                  {item => (
+                    <Link
+                      href={item.href}
+                      textDecoration="none"
+                      textStyle="md"
+                      width="max-content"
+                      _focus={{ boxShadow: "none", outline: "none" }}
+                    >
+                      <Tabs.Trigger
+                        value={item.name}
+                        color="brand.500"
+                        as="span"
+                        borderRadius="sm"
+                        transition="background-color 0.3s ease"
+                        _hover={{
+                          color: "brand.100",
+                          backgroundColor: "brand.500",
+                        }}
+                      >
+                        {item.name}
+                      </Tabs.Trigger>
+                    </Link>
+                  )}
+                </For>
+              </Tabs.List>
+            </Tabs.Root>
+          </Flex>
 
-                _before: { content: "none" }, // Ukrywa before (underline)
-              }}
-              _selected={{
-                _before: {
-                  backgroundColor: "palette.lighter", // Zmiana koloru underline na aktywny
-                },
-              }}
+          <Flex flex="1" justifyContent="flex-end">
+            <Link
+              href="/login"
+              textDecoration="none"
+              _focus={{ boxShadow: "none", outline: "none" }}
             >
-              Blog
-            </Box>
-          </Tabs.Trigger>
-        </Link>
-
-        <Link
-          href="#support"
-          _hover={{ textDecoration: "none" }}
-          _focus={{ boxShadow: "none", outline: "none" }}
-        >
-          <Tabs.Trigger value="support" asChild>
-            <Box
-              color="palette.lighter"
-              as="button"
-              px="20px" // Zwiększa obszar w prawo i lewo
-              py="10px" // Zachowuje normalny padding góra/dół
-              borderRadius="5px"
-              transition="background-color 0.3s ease"
-              _hover={{
-                color: "white", // Tekst zmienia się na biały
-                backgroundColor: "green",
-
-                _before: { content: "none" }, // Ukrywa before (underline)
-              }}
-              _selected={{
-                _before: {
-                  backgroundColor: "palette.lighter", // Zmiana koloru underline na aktywny
-                },
-              }}
-            >
-              Wsparcie
-            </Box>
-          </Tabs.Trigger>
-        </Link>
-
-        <Link
-          href="#about"
-          _hover={{ textDecoration: "none" }}
-          _focus={{ boxShadow: "none", outline: "none" }}
-        >
-          <Tabs.Trigger value="about" asChild>
-            <Box
-              color="palette.lighter"
-              as="button"
-              px="20px" // Zwiększa obszar w prawo i lewo
-              py="10px" // Zachowuje normalny padding góra/dół
-              borderRadius="5px"
-              transition="background-color 0.3s ease"
-              _hover={{
-                color: "white", // Tekst zmienia się na biały
-                backgroundColor: "green",
-
-                _before: { content: "none" }, // Ukrywa before (underline)
-              }}
-              _selected={{
-                _before: {
-                  backgroundColor: "palette.lighter", // Zmiana koloru underline na aktywny
-                },
-              }}
-            >
-              O Nas
-            </Box>
-          </Tabs.Trigger>
-        </Link>
-      </Tabs.List>
-
-      <Link
-        href="/login"
-        _hover={{ textDecoration: "none" }}
-        _focus={{ boxShadow: "none", outline: "none" }}
-      >
-        <Avatar.Root>
-          <Avatar.Fallback />
-        </Avatar.Root>
-      </Link>
-    </Tabs.Root>
+              <Avatar.Root>
+                <Avatar.Fallback />
+              </Avatar.Root>
+            </Link>
+          </Flex>
+        </Center>
+      </Container>
+    </Box>
   );
-};
+}
+
+export default Nav;

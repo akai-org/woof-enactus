@@ -1,48 +1,48 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
-import L, { ErrorEvent, LocationEvent } from "leaflet";
-import { useEffect, useRef } from "react";
+import { LatLngExpression } from "leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
+import MapMarker from "./MapMarker";
 
-function Map() {
-  const mapRef = useRef<L.Map | null>(null);
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import { Data } from "./types";
 
-  useEffect(() => {
-    const map = L.map("map", { zoomControl: false }).locate({
-      setView: true,
-    });
+/* 
+  NOTE: Except for its children, MapContainer props are immutable:
+  changing them after they have been set a first time will have no effect on the Map instance or its container.
+*/
 
-    mapRef.current = map;
+const DEFAULT_POSITION: LatLngExpression = [52.40379, 16.94935];
+const DEFAULT_ZOOM = 11;
 
-    const onLocationFound = (_: LocationEvent) => {
-      if (mapRef.current) {
-        mapRef.current.setZoom(12);
-      }
-    };
+type MapProps = {
+  children?: React.ReactNode;
+  data: Data[];
+};
 
-    const onLocationError = (_: ErrorEvent) => {
-      if (mapRef.current) {
-        mapRef.current.setView([52.40379, 16.94935], 15);
-      }
-    };
+function Map({ children, data }: MapProps) {
+  return (
+    <MapContainer
+      center={DEFAULT_POSITION}
+      zoom={DEFAULT_ZOOM}
+      zoomControl={true}
+      minZoom={6}
+      maxZoom={18}
+      style={{ minHeight: "80vh" }}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <MarkerClusterGroup showCoverageOnHover={false}>
+        {data.map(item => (
+          <MapMarker markerData={item} key={item.uuid} />
+        ))}
+      </MarkerClusterGroup>
 
-    map.once("locationfound", onLocationFound);
-    map.once("locationerror", onLocationError);
-
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
-
-    return () => {
-      if (mapRef.current) {
-        mapRef.current.stopLocate();
-        mapRef.current.remove();
-      }
-    };
-  }, []);
-
-  return <Box id="map" width="100%" minHeight="60vh" />;
+      {children}
+    </MapContainer>
+  );
 }
 
 export default Map;
