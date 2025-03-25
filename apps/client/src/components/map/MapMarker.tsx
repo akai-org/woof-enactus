@@ -4,9 +4,10 @@ import { LatLngExpression, icon } from "leaflet";
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
 import { Data } from "./types";
-import { Box, Link, List, Text } from "@chakra-ui/react";
+import { Box, Link as ChakraLink, List, Text } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
 import Btn from "../Btn";
+import Link from "next/link";
 
 type MapMarkerProps = {
   markerData: Data;
@@ -42,16 +43,20 @@ function MapMarker({ markerData }: MapMarkerProps) {
               <List.Indicator asChild>
                 <MdLocalPhone />
               </List.Indicator>
-              <Link href={`tel:${profile.phone}`}>{profile.phone}</Link>
+              <ChakraLink href={`tel:${profile.phone}`}>
+                {profile.phone}
+              </ChakraLink>
             </List.Item>
             <List.Item>
               <List.Indicator asChild>
                 <MdLanguage />
               </List.Indicator>
-              <Link href={profile.website}>{profile.website}</Link>
+              <ChakraLink href={profile.website}>{profile.website}</ChakraLink>
             </List.Item>
           </List.Root>
-          <Btn>Szczegóły</Btn>
+          <Link passHref href={`/partnerzy/${markerData.uuid}`}>
+            <Btn>Szczegóły</Btn>
+          </Link>
         </Box>
       </Popup>
     </Marker>
