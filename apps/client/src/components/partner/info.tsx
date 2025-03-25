@@ -40,7 +40,7 @@ export default function PartnerInfo() {
       <VStack gap={4} align="start">
         <Card.Root w="full">
           <Card.Header p={[2, 4]}>
-            <Flex align="center" gap={2} color="palette.darker">
+            <Flex align="center" gap={2} color="brand.700">
               <FaPhoneVolume size={30} />
               <Heading size={["2xl", "4xl"]}>Szczegóły placówki</Heading>
             </Flex>
@@ -72,7 +72,7 @@ export default function PartnerInfo() {
                   w="full"
                   maxW={400}
                   mx="auto"
-                  bg={i < 5 ? "palette.main" : "palette.lighter"}
+                  bg={i < 5 ? "brand.700" : "brand.500"}
                   color="white"
                   rounded="md"
                   p={2}
@@ -104,7 +104,7 @@ export default function PartnerInfo() {
                   <List.Item
                     key={animal}
                     ml={5}
-                    _marker={{ color: "palette.main" }}
+                    _marker={{ color: "brand.700" }}
                   >
                     {animal}
                   </List.Item>
@@ -135,9 +135,11 @@ function InfoBox({
       wrap="wrap"
       {...rest}
     >
-      <Flex align="center" gap={2} color="palette.main" textWrap="nowrap">
+      <Flex align="center" gap={2} color="brand.500" textWrap="nowrap">
         {icon}
-        <Heading size="lg">{title}:</Heading>
+        <Heading size="lg" fontWeight="bold">
+          {title}:
+        </Heading>
       </Flex>
 
       <Box color="black">{children}</Box>

@@ -1,38 +1,38 @@
 import PartnerEvents from "@/components/partner/events";
 import PartnerInfo from "@/components/partner/info";
 import PartnerNeeds from "@/components/partner/needs";
-import { Box, Button, For, Heading, Tabs } from "@chakra-ui/react";
+import { Box, Button, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { RiArrowLeftLine } from "react-icons/ri";
 
 const tabs = [
   {
     id: "stuff",
     label: "Potrzebne rzeczy",
-    color: "palette.darker",
+    color: "brand.700",
     content: <PartnerNeeds />,
   },
   {
     id: "info",
     label: "Informacje",
-    color: "palette.main",
+    color: "brand.600",
     content: <PartnerInfo />,
   },
   {
     id: "events",
     label: "Wydarzenia",
-    color: "palette.lighter",
+    color: "brand.500",
     content: <PartnerEvents />,
   },
 ];
 
 export default function PartnerPage() {
   return (
-    <div>
+    <Container mt={8}>
       <Button variant="outline" size="xs">
         <RiArrowLeftLine />
         Powrót
       </Button>
-      <Heading my={5} size="4xl" color="palette.darker">
+      <Heading my={5} size="4xl" color="brand.700">
         Partner
       </Heading>
       <Tabs.Root variant="outline" defaultValue={tabs[1].id} fitted pb={5}>
@@ -67,6 +67,6 @@ export default function PartnerPage() {
           )}
         </For>
       </Tabs.Root>
-    </div>
+    </Container>
   );
 }
