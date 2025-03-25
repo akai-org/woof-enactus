@@ -13,7 +13,7 @@ export default function PartnerEvents() {
         >
           <div>
             <Card.Header p={2} textAlign={["center", "left"]}>
-              <Card.Title color="palette.darker" fontWeight="bold">
+              <Card.Title color="brand.700" fontWeight="bold">
                 12.12.2000 - Lorem ipsum
               </Card.Title>
             </Card.Header>

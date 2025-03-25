@@ -3,15 +3,15 @@ import { Box, Flex, Heading, Table, Text } from "@chakra-ui/react";
 const categories = {
   always: {
     label: "Zawsze mile widziane",
-    color: "palette.darker",
+    color: "brand.600",
   },
   longTerm: {
     label: "Długoterminowe, zawsze mile widziane",
-    color: "palette.main",
+    color: "brand.500",
   },
   urgent: {
     label: "Potrzebne w najbiższym czasie",
-    color: "palette.accent",
+    color: "accent.yellow",
   },
 };
 
@@ -46,8 +46,8 @@ const items = [
 export default function PartnerNeeds() {
   return (
     <Flex direction="column" p={[2, 10, 20]}>
-      <Heading color="palette.darker">Czego obecnie potrzebujemy?</Heading>
-      <Text color="palette.main">Ostatnia aktualizacja: 12.12.2000 8:00</Text>
+      <Heading color="brand.700">Czego obecnie potrzebujemy?</Heading>
+      <Text color="brand.600">Ostatnia aktualizacja: 12.12.2000 8:00</Text>
       <Box overflowX="auto">
         <Table.Root size="lg" my={10} striped minW="md">
           <Table.Header>
@@ -55,7 +55,7 @@ export default function PartnerNeeds() {
               {["NAZWA", "STAN OBECNY", "KATEGORIA"].map((header, i) => (
                 <Table.ColumnHeader
                   key={i}
-                  color="palette.main"
+                  color="brand.700"
                   textAlign="center"
                   textWrap="nowrap"
                 >
@@ -87,7 +87,7 @@ export default function PartnerNeeds() {
       </Box>
 
       <Box p={5}>
-        <Heading w="full" color="palette.lighter">
+        <Heading w="full" color="brand.500">
           Notatka od nas!
         </Heading>
         <Text>Bardzo dziękujemy za szybką pomoc</Text>
