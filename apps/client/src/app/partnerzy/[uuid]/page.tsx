@@ -3,6 +3,7 @@ import PartnerInfo from "@/components/partner/info";
 import PartnerNeeds from "@/components/partner/needs";
 import { Box, Button, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { RiArrowLeftLine } from "react-icons/ri";
+import { api } from "@/constants";
 
 const tabs = [
   {
@@ -25,7 +26,14 @@ const tabs = [
   },
 ];
 
-export default function PartnerPage() {
+export default async function PartnerPage({
+  params,
+}: {
+  params: Promise<{ uuid: string }>;
+}) {
+  const { uuid } = await params;
+  // const result = await api.partnersControllerGetPartnerByUuid(uuid);
+
   return (
     <Container mt={8}>
       <Button variant="outline" size="xs">
