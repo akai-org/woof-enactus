@@ -11,13 +11,9 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { FaMapMarkerAlt, FaPhoneVolume, FaRegClock } from "react-icons/fa";
+import { Profile } from "../map/types";
 
 const placeholder = {
-  phone: "123456789",
-  email: "placeholder@gmail.com",
-  website: "hauhau.com",
-  address: "1234 Main St, City, State, 12345",
-  transport_acess: "Lorem ipsum",
   workinHours: [
     { label: "Poniedziałek", from: 8, to: 21 },
     { label: "Wtorek", from: 8, to: 21 },
@@ -28,13 +24,9 @@ const placeholder = {
     { label: "Niedziela", from: 8, to: 21 },
   ],
   photo: "https://placehold.co/600x400/png",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, varius nunc. Nullam sit amet odio eu est aliquet euismod. Nullam nec fermentum nunc. Nullam sit amet odio eu est aliquet euismod. Nullam nec fermentum nunc. Nullam sit amet odio eu est aliquet euismod. Nullam nec fermentum nunc.",
-  animals: ["psy", "koty", "chomiki"],
-  attendaceHours: "Codziennie od 12 do 15",
 };
 
-export default function PartnerInfo() {
+export default function PartnerInfo({ data }: { data: Profile }) {
   return (
     <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={4}>
       <VStack gap={4} align="start">
@@ -46,18 +38,18 @@ export default function PartnerInfo() {
             </Flex>
           </Card.Header>
           <Card.Body p={[2, 4]}>
-            <InfoBox title="Główny numer telefonu">{placeholder.phone}</InfoBox>
-            <InfoBox title="Email">{placeholder.email}</InfoBox>
-            <InfoBox title="Strona internetowa">{placeholder.website}</InfoBox>
+            <InfoBox title="Główny numer telefonu">{data.phone}</InfoBox>
+            <InfoBox title="Email">{"BRAK W BAZIE DANYCH"}</InfoBox>
+            <InfoBox title="Strona internetowa">{data.website}</InfoBox>
           </Card.Body>
         </Card.Root>
         <Card.Root w="full">
           <Card.Body p={[2, 4]}>
             <InfoBox icon={<FaMapMarkerAlt />} title="Adres">
-              {placeholder.address}
+              {`${data.street}  ${data.city} ${data.postal}`}
             </InfoBox>
             <InfoBox title="Informacje o dojeździe" direction="column">
-              {placeholder.transport_acess}
+              {data.getToInfo}
             </InfoBox>
           </Card.Body>
         </Card.Root>
@@ -96,11 +88,11 @@ export default function PartnerInfo() {
         <Card.Root w="full">
           <Card.Body p={[2, 4]}>
             <InfoBox title="Opis placówki" direction="column">
-              {placeholder.description}
+              {data.description}
             </InfoBox>
             <InfoBox title="Zwierzęta po naszą opieką" direction="column">
               <List.Root>
-                {placeholder.animals.map(animal => (
+                {data.animals.map(animal => (
                   <List.Item
                     key={animal}
                     ml={5}
@@ -111,9 +103,7 @@ export default function PartnerInfo() {
                 ))}
               </List.Root>
             </InfoBox>
-            <InfoBox title="Godziny przyjęć">
-              {placeholder.attendaceHours}
-            </InfoBox>
+            <InfoBox title="Godziny przyjęć">{data.visitHours}</InfoBox>
           </Card.Body>
         </Card.Root>
       </VStack>
