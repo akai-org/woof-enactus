@@ -27,6 +27,42 @@ const placeholder = {
 };
 
 export default function PartnerInfo({ data }: { data: Profile }) {
+  const mappedOpenHours = Object.keys(data.openHours).reduce(
+    (acc, key) => {
+      if (
+        key !== "id" &&
+        key !== "uuid" &&
+        key !== "profileId" &&
+        key in data.openHours
+      ) {
+        acc[key] = data.openHours[key as keyof Profile["openHours"]].toString();
+      }
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
+
+  const getPolishDay = (day: string) => {
+    switch (day) {
+      case "monday":
+        return "Poniedziałek";
+      case "tuesday":
+        return "Wtorek";
+      case "wednesday":
+        return "Środa";
+      case "thursday":
+        return "Czwartek";
+      case "friday":
+        return "Piątek";
+      case "saturday":
+        return "Sobota";
+      case "sunday":
+        return "Niedziela";
+      default:
+        return "";
+    }
+  };
+
   return (
     <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={4}>
       <VStack gap={4} align="start">
@@ -57,7 +93,7 @@ export default function PartnerInfo({ data }: { data: Profile }) {
           <Card.Body p={[2, 4]}>
             <InfoBox icon={<FaRegClock />} title="Godziny pracy" mb={5} />
             <VStack>
-              {placeholder.workinHours.map((day, i) => (
+              {Object.entries(mappedOpenHours).map(([day, hours], i) => (
                 <Flex
                   key={i}
                   justifyContent="space-between"
@@ -69,10 +105,8 @@ export default function PartnerInfo({ data }: { data: Profile }) {
                   rounded="md"
                   p={2}
                 >
-                  <span>{day.label}</span>
-                  <span>
-                    {day.from} - {day.to}
-                  </span>
+                  <span>{getPolishDay(day)}</span>
+                  <span>{hours}</span>
                 </Flex>
               ))}
             </VStack>
