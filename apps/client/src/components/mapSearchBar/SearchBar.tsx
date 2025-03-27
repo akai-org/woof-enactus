@@ -1,9 +1,26 @@
-import { Container, Input, Group, Flex, IconButton } from "@chakra-ui/react";
+"use client";
+
+import {
+  Container,
+  Input,
+  Group,
+  Flex,
+  IconButton,
+  Text,
+} from "@chakra-ui/react";
 import { IoSearch } from "react-icons/io5";
+import { FaLocationCrosshairs } from "react-icons/fa6";
 import Filters from "./Filters";
 import Legend from "./Legend";
+import { Tooltip } from "../Tooltip";
 
-export default function SearchBar() {
+type SearchBarProps = {
+  onLocate: () => void; 
+};
+
+export default function SearchBar({onLocate}: SearchBarProps) {
+
+
   return (
     <Container padding={4}>
       <Flex
@@ -22,6 +39,15 @@ export default function SearchBar() {
           <IconButton variant="outline">
             <IoSearch />
           </IconButton>
+
+          <Tooltip
+            content="Zlokalizuj mnie"
+            positioning={{ placement: "right-end" }}
+          >
+            <IconButton onClick={onLocate} variant="outline">
+              <FaLocationCrosshairs />
+            </IconButton>
+          </Tooltip>
         </Group>
 
         <Flex

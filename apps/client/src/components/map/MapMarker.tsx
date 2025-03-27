@@ -20,7 +20,7 @@ const customIcon = icon({
 function MapMarker({ markerData }: MapMarkerProps) {
   const { latitude, longitude, name, profile } = markerData;
   const position: LatLngExpression = [latitude, longitude];
-
+  
   return (
     <Marker position={position} icon={customIcon}>
       <Popup>
