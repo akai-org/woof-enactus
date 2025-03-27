@@ -54,7 +54,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
               <ChakraLink href={profile.website}>{profile.website}</ChakraLink>
             </List.Item>
           </List.Root>
-          <Link passHref href={`/partnerzy/${markerData.uuid}`}>
+          <Link passHref href={`/placowki/${markerData.uuid}`}>
             <Btn>Szczegóły</Btn>
           </Link>
         </Box>

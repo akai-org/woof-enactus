@@ -1,10 +1,11 @@
-import { PartnerEvents, PartnerInfo, PartnerNeeds } from "@/components";
 import { Box, Button, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { notFound } from "next/navigation";
 import { Data } from "@/types";
 import { Link } from "@/components/ui/Link";
-
+import PartnerInfo from "@/components/partner/info";
+import PartnerNeeds from "@/components/partner/needs";
+import PartnerEvents from "@/components/partner/events";
 const tabs = [
   {
     id: "stuff",
@@ -40,6 +41,17 @@ export default async function PartnerPage({
 }) {
   const { uuid } = await params;
   const profileData = await getPartnerData(uuid);
+  const tabsToShow = [];
+  switch (profileData.type) {
+    case "VET":
+      tabsToShow.push(tabs[1]);
+      break;
+    case "SHOP":
+      tabsToShow.push(tabs[1]);
+      break;
+    default:
+      tabsToShow.push(tabs[0], tabs[1], tabs[2]);
+  }
 
   return (
     <Container mt={8} maxW="breakpoint-xl">
@@ -59,7 +71,7 @@ export default async function PartnerPage({
       </Heading>
       <Tabs.Root variant="outline" defaultValue={tabs[1].id} fitted pb={5}>
         <Tabs.List>
-          <For each={tabs}>
+          <For each={tabsToShow}>
             {tab => (
               <Tabs.Trigger
                 value={tab.id}
@@ -79,12 +91,12 @@ export default async function PartnerPage({
             )}
           </For>
         </Tabs.List>
-        <For each={tabs}>
+        <For each={tabsToShow}>
           {tab => (
             <Tabs.Content bg={tab.color} value={tab.id} p={[2, undefined, 8]}>
               <Box bg="brand.100" borderRadius="md" p={[3, 8]}>
                 {tab.id == "info" ? (
-                  <PartnerInfo data={profileData.profile} />
+                  <PartnerInfo profileData={profileData} />
                 ) : (
                   tab.content
                 )}
