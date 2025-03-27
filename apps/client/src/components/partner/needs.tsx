@@ -18,36 +18,40 @@ const categories = {
 const items = [
   {
     name: "Karma sucha",
-    availability: "2/10kg",
+    availability: "2 / 10kg",
     category: categories.urgent,
   },
   {
     name: "Karma sucha",
-    availability: "2/10kg",
+    availability: "2 / 10kg",
     category: categories.urgent,
   },
   {
     name: "Karma sucha",
-    availability: "2/10kg",
+    availability: "2 / 10kg",
     category: categories.always,
   },
   {
     name: "Karma sucha",
-    availability: "2/10kg",
+    availability: "2 / 10kg",
     category: categories.urgent,
   },
   {
     name: "Karma sucha",
-    availability: "2/10kg",
+    availability: "2 / 10kg",
     category: categories.longTerm,
   },
 ];
 
 export default function PartnerNeeds() {
   return (
-    <Flex direction="column" p={[2, 10, 20]}>
-      <Heading color="brand.700">Czego obecnie potrzebujemy?</Heading>
-      <Text color="brand.600">Ostatnia aktualizacja: 12.12.2000 8:00</Text>
+    <Flex direction="column" gap="2">
+      <Heading as="h2" size={{ base: "3xl", md: "4xl" }} color="brand.700">
+        Czego obecnie potrzebujemy
+      </Heading>
+      <Text color="brand.600" fontWeight="semibold">
+        Ostatnia aktualizacja: 12.12.2000 8:00
+      </Text>
       <Box overflowX="auto">
         <Table.Root size="lg" my={10} striped minW="md">
           <Table.Header>
