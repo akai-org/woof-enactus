@@ -6,34 +6,25 @@ import {
   Grid,
   Heading,
   Image,
-  Link,
   List,
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { FaMapMarkerAlt, FaPhoneVolume, FaRegClock } from "react-icons/fa";
 import { Data, Profile } from "@/types";
+import { Link } from "@/components";
 
-const getPolishDay = (day: string) => {
-  switch (day) {
-    case "monday":
-      return "Poniedziałek";
-    case "tuesday":
-      return "Wtorek";
-    case "wednesday":
-      return "Środa";
-    case "thursday":
-      return "Czwartek";
-    case "friday":
-      return "Piątek";
-    case "saturday":
-      return "Sobota";
-    case "sunday":
-      return "Niedziela";
-    default:
-      return "";
-  }
+const polishDays: Record<string, string> = {
+  monday: "Poniedziałek",
+  tuesday: "Wtorek",
+  wednesday: "Środa",
+  thursday: "Czwartek",
+  friday: "Piątek",
+  saturday: "Sobota",
+  sunday: "Niedziela",
 };
+
+const getPolishDay = (day: string) => polishDays[day] ?? "";
 
 export default function PartnerInfo({ profileData }: { profileData: Data }) {
   const data = profileData.profile;
@@ -68,20 +59,44 @@ export default function PartnerInfo({ profileData }: { profileData: Data }) {
           </Card.Header>
           <Card.Body>
             <InfoBox title="Główny numer telefonu">
-              <Link color="brand.900" href={`tel:${data.phone}`}>
+              <Link
+                linkProps={{ href: `tel:${data.phone}` }}
+                chakraLinkProps={{
+                  color: "brand.900",
+                }}
+              >
                 {data.phone}
               </Link>
             </InfoBox>
             {type == "VET" && (
               <InfoBox title="Linia nagłego kontaktu">
-                <Link color="brand.900" href={`tel:${data.phone}`}>
+                <Link
+                  linkProps={{ href: `tel:${data.phone}` }}
+                  chakraLinkProps={{
+                    color: "brand.900",
+                  }}
+                >
                   BRAK W BAZIE DANYCH
                 </Link>
               </InfoBox>
             )}
-            <InfoBox title="Email">{"BRAK W BAZIE DANYCH"}</InfoBox>
+            <InfoBox title="Email">
+              <Link
+                linkProps={{ href: "mailto:kontaktwithenactus@gmail.com" }}
+                chakraLinkProps={{
+                  color: "brand.900",
+                }}
+              >
+                kontaktwithenactus@gmail.com
+              </Link>
+            </InfoBox>
             <InfoBox title="Strona internetowa">
-              <Link color="brand.900" href={data.website}>
+              <Link
+                linkProps={{ href: data.website }}
+                chakraLinkProps={{
+                  color: "brand.900",
+                }}
+              >
                 {data.website}
               </Link>
             </InfoBox>
