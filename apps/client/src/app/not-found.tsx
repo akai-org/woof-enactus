@@ -1,5 +1,5 @@
+import { Link } from "@/components";
 import { Button, Flex, Heading } from "@chakra-ui/react";
-import Link from "next/link";
 
 export default function NotFound() {
   return (
@@ -7,8 +7,11 @@ export default function NotFound() {
       <Heading size="3xl" textAlign="center">
         Strony nie znaleziono
       </Heading>
-      <Link href="/" passHref>
-        <Button>Przejdź do strony głównej</Button>
+      <Link
+        linkProps={{ href: "/", passHref: true }}
+        chakraLinkProps={{ unstyled: true }}
+      >
+        <Button as="span">Przejdź do strony głównej</Button>
       </Link>
     </Flex>
   );

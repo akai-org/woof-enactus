@@ -4,10 +4,9 @@ import { LatLngExpression, icon } from "leaflet";
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
 import { Data } from "@/types";
-import { Box, Link as ChakraLink, List, Text } from "@chakra-ui/react";
+import { Box, List, Text } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
-import Btn from "@/components/ui/Btn";
-import Link from "next/link";
+import { Link, Btn } from "@/components";
 
 type MapMarkerProps = {
   markerData: Data;
@@ -43,18 +42,42 @@ function MapMarker({ markerData }: MapMarkerProps) {
               <List.Indicator asChild>
                 <MdLocalPhone />
               </List.Indicator>
-              <ChakraLink href={`tel:${profile.phone}`}>
+              <Link
+                linkProps={{ href: `tel:${profile.phone}` }}
+                chakraLinkProps={{
+                  color: "brand.500",
+                  textDecoration: "none",
+                  _focus: { boxShadow: "none", outline: "none" },
+                }}
+              >
                 {profile.phone}
-              </ChakraLink>
+              </Link>
             </List.Item>
             <List.Item>
               <List.Indicator asChild>
                 <MdLanguage />
               </List.Indicator>
-              <ChakraLink href={profile.website}>{profile.website}</ChakraLink>
+              <Link
+                linkProps={{ href: profile.website }}
+                chakraLinkProps={{
+                  color: "brand.500",
+                  textDecoration: "none",
+                  _focus: { boxShadow: "none", outline: "none" },
+                }}
+              >
+                {profile.website}
+              </Link>
             </List.Item>
           </List.Root>
-          <Link passHref href={`/placowki/${markerData.uuid}`}>
+          <Link
+            linkProps={{ href: `/placowki/${markerData.uuid}` }}
+            chakraLinkProps={{
+              color: "brand.500",
+              textDecoration: "none",
+              _focus: { boxShadow: "none", outline: "none" },
+              fontWeight: "bold",
+            }}
+          >
             <Btn>Szczegóły</Btn>
           </Link>
         </Box>
