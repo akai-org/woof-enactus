@@ -3,6 +3,7 @@ import { Box, Button, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { notFound } from "next/navigation";
 import { Data } from "@/types";
+import { Link } from "@/components/ui/Link";
 
 const tabs = [
   {
@@ -42,9 +43,11 @@ export default async function PartnerPage({
 
   return (
     <Container mt={8} maxW="breakpoint-xl">
-      <Button variant="outline" size="sm">
-        <RiArrowLeftLine />
-        Powrót
+      <Button variant="outline" asChild size="sm">
+        <Link linkProps={{ href: "/" }}>
+          <RiArrowLeftLine />
+          Powrót
+        </Link>
       </Button>
       <Heading
         my={5}

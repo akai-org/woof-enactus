@@ -6,7 +6,7 @@ import { Marker, Popup } from "react-leaflet";
 import { Data } from "@/types";
 import { Box, Link as ChakraLink, List, Text } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
-import Btn from "../Btn";
+import Btn from "@/components/ui/Btn";
 import Link from "next/link";
 
 type MapMarkerProps = {
