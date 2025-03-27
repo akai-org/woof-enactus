@@ -21,4 +21,4 @@ function Link(props: LinkT) {
   );
 }
 
-export { Link };
+export default Link;
