@@ -4,13 +4,14 @@ import AboutUs1 from "@/../public/about-us-1.png";
 import AboutUs2 from "@/../public/about-us-2.png";
 import AboutUs3 from "@/../public/about-us-3.png";
 import AboutUs4 from "@/../public/about-us-4.png";
+import AboutUsBg from "@/../public/about-us-bg.png";
+
+const images = [AboutUs1, AboutUs2, AboutUs3, AboutUs4];
 
 export default function AboutUsPage() {
-  const images = [AboutUs1, AboutUs2, AboutUs3, AboutUs4];
-
   return (
     <Box
-      backgroundImage="url('/about-us-bg.png')"
+      backgroundImage={`url('${AboutUsBg.src}')`}
       backgroundSize="auto"
       bgColor="brand.700"
     >
