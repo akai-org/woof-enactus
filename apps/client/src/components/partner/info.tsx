@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { FaMapMarkerAlt, FaPhoneVolume, FaRegClock } from "react-icons/fa";
-import { Profile } from "@/types";
+import { Data, Profile } from "@/types";
 
 const getPolishDay = (day: string) => {
   switch (day) {
@@ -35,7 +35,10 @@ const getPolishDay = (day: string) => {
   }
 };
 
-export default function PartnerInfo({ data }: { data: Profile }) {
+export default function PartnerInfo({ profileData }: { profileData: Data }) {
+  const data = profileData.profile;
+  const type = profileData.type;
+
   const mappedOpenHours = Object.keys(data.openHours).reduce(
     (acc, key) => {
       if (
@@ -69,6 +72,13 @@ export default function PartnerInfo({ data }: { data: Profile }) {
                 {data.phone}
               </Link>
             </InfoBox>
+            {type == "VET" && (
+              <InfoBox title="Linia nagłego kontaktu">
+                <Link color="brand.900" href={`tel:${data.phone}`}>
+                  BRAK W BAZIE DANYCH
+                </Link>
+              </InfoBox>
+            )}
             <InfoBox title="Email">{"BRAK W BAZIE DANYCH"}</InfoBox>
             <InfoBox title="Strona internetowa">
               <Link color="brand.900" href={data.website}>
@@ -122,7 +132,14 @@ export default function PartnerInfo({ data }: { data: Profile }) {
             <InfoBox title="Opis placówki" direction="column">
               {data.description}
             </InfoBox>
-            <InfoBox title="Zwierzęta po naszą opieką" direction="column">
+            <InfoBox
+              title={
+                type == "VET"
+                  ? "Obsługiwane zwierzęta"
+                  : "Zwierzęta po naszą opieką"
+              }
+              direction="column"
+            >
               <List.Root>
                 {data.animals.map(animal => (
                   <List.Item
