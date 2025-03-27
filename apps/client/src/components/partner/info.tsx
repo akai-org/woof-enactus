@@ -6,24 +6,33 @@ import {
   Grid,
   Heading,
   Image,
+  Link,
   List,
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { FaMapMarkerAlt, FaPhoneVolume, FaRegClock } from "react-icons/fa";
-import { Profile } from "../map/types";
+import { Profile } from "@/types";
 
-const placeholder = {
-  workinHours: [
-    { label: "Poniedziałek", from: 8, to: 21 },
-    { label: "Wtorek", from: 8, to: 21 },
-    { label: "Środa", from: 8, to: 21 },
-    { label: "Czwartek", from: 8, to: 21 },
-    { label: "Piątek", from: 8, to: 21 },
-    { label: "Sobota", from: 8, to: 21 },
-    { label: "Niedziela", from: 8, to: 21 },
-  ],
-  photo: "https://placehold.co/600x400/png",
+const getPolishDay = (day: string) => {
+  switch (day) {
+    case "monday":
+      return "Poniedziałek";
+    case "tuesday":
+      return "Wtorek";
+    case "wednesday":
+      return "Środa";
+    case "thursday":
+      return "Czwartek";
+    case "friday":
+      return "Piątek";
+    case "saturday":
+      return "Sobota";
+    case "sunday":
+      return "Niedziela";
+    default:
+      return "";
+  }
 };
 
 export default function PartnerInfo({ data }: { data: Profile }) {
@@ -42,44 +51,33 @@ export default function PartnerInfo({ data }: { data: Profile }) {
     {} as Record<string, string>,
   );
 
-  const getPolishDay = (day: string) => {
-    switch (day) {
-      case "monday":
-        return "Poniedziałek";
-      case "tuesday":
-        return "Wtorek";
-      case "wednesday":
-        return "Środa";
-      case "thursday":
-        return "Czwartek";
-      case "friday":
-        return "Piątek";
-      case "saturday":
-        return "Sobota";
-      case "sunday":
-        return "Niedziela";
-      default:
-        return "";
-    }
-  };
-
   return (
     <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={4}>
       <VStack gap={4} align="start">
-        <Card.Root w="full">
-          <Card.Header p={[2, 4]}>
+        <Card.Root w="full" borderColor="brand.300">
+          <Card.Header>
             <Flex align="center" gap={2} color="brand.700">
               <FaPhoneVolume size={30} />
-              <Heading size={["2xl", "4xl"]}>Szczegóły placówki</Heading>
+              <Heading as="h2" size={["2xl", "3xl"]}>
+                Szczegóły placówki
+              </Heading>
             </Flex>
           </Card.Header>
-          <Card.Body p={[2, 4]}>
-            <InfoBox title="Główny numer telefonu">{data.phone}</InfoBox>
+          <Card.Body>
+            <InfoBox title="Główny numer telefonu">
+              <Link color="brand.900" href={`tel:${data.phone}`}>
+                {data.phone}
+              </Link>
+            </InfoBox>
             <InfoBox title="Email">{"BRAK W BAZIE DANYCH"}</InfoBox>
-            <InfoBox title="Strona internetowa">{data.website}</InfoBox>
+            <InfoBox title="Strona internetowa">
+              <Link color="brand.900" href={data.website}>
+                {data.website}
+              </Link>
+            </InfoBox>
           </Card.Body>
         </Card.Root>
-        <Card.Root w="full">
+        <Card.Root w="full" borderColor="brand.300">
           <Card.Body p={[2, 4]}>
             <InfoBox icon={<FaMapMarkerAlt />} title="Adres">
               {`${data.street}  ${data.city} ${data.postal}`}
@@ -89,7 +87,7 @@ export default function PartnerInfo({ data }: { data: Profile }) {
             </InfoBox>
           </Card.Body>
         </Card.Root>
-        <Card.Root w="full">
+        <Card.Root w="full" borderColor="brand.300">
           <Card.Body p={[2, 4]}>
             <InfoBox icon={<FaRegClock />} title="Godziny pracy" mb={5} />
             <VStack>
@@ -100,8 +98,8 @@ export default function PartnerInfo({ data }: { data: Profile }) {
                   w="full"
                   maxW={400}
                   mx="auto"
-                  bg={i < 5 ? "brand.700" : "brand.500"}
-                  color="white"
+                  bg={i < 5 ? "brand.600" : "brand.500"}
+                  color="brand.100"
                   rounded="md"
                   p={2}
                 >
@@ -114,13 +112,13 @@ export default function PartnerInfo({ data }: { data: Profile }) {
         </Card.Root>
       </VStack>
       <VStack gap={4} align="start">
-        <Card.Root w="full">
-          <Card.Body p={[2, 4]}>
-            <Image src={placeholder.photo} />
+        <Card.Root w="full" borderColor="brand.300">
+          <Card.Body p={[2, 6]}>
+            <Image src="https://placehold.co/600x400/png" />
           </Card.Body>
         </Card.Root>
-        <Card.Root w="full">
-          <Card.Body p={[2, 4]}>
+        <Card.Root w="full" borderColor="brand.300" flexGrow={1}>
+          <Card.Body p={[2, 4]} gap="4">
             <InfoBox title="Opis placówki" direction="column">
               {data.description}
             </InfoBox>
@@ -166,7 +164,7 @@ function InfoBox({
         </Heading>
       </Flex>
 
-      <Box color="black">{children}</Box>
+      <Box color="brand.900">{children}</Box>
     </Flex>
   );
 }

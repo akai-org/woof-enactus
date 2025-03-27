@@ -132,27 +132,24 @@ function Nav() {
               >
                 <For each={links}>
                   {item => (
-                    <Link
-                      href={item.href}
-                      textDecoration="none"
-                      textStyle="md"
-                      width="max-content"
-                      _focus={{ boxShadow: "none", outline: "none" }}
-                    >
-                      <Tabs.Trigger
-                        value={item.name}
-                        color="brand.500"
-                        as="span"
+                    <Tabs.Trigger value={item.name} asChild>
+                      <Link
+                        color="brand.700"
                         borderRadius="sm"
                         transition="background-color 0.3s ease"
                         _hover={{
                           color: "brand.100",
                           backgroundColor: "brand.500",
                         }}
+                        href={item.href}
+                        textDecoration="none"
+                        textStyle="sm"
+                        width="max-content"
+                        _focus={{ boxShadow: "none", outline: "none" }}
                       >
                         {item.name}
-                      </Tabs.Trigger>
-                    </Link>
+                      </Link>
+                    </Tabs.Trigger>
                   )}
                 </For>
               </Tabs.List>

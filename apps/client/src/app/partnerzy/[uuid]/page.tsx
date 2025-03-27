@@ -1,10 +1,8 @@
-import PartnerEvents from "@/components/partner/events";
-import PartnerInfo from "@/components/partner/info";
-import PartnerNeeds from "@/components/partner/needs";
+import { PartnerEvents, PartnerInfo, PartnerNeeds } from "@/components";
 import { Box, Button, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { RiArrowLeftLine } from "react-icons/ri";
-import { notFound, useRouter } from "next/navigation";
-import { Data } from "@/components/map/types";
+import { notFound } from "next/navigation";
+import { Data } from "@/types";
 
 const tabs = [
   {
@@ -26,9 +24,9 @@ const tabs = [
   },
 ];
 
-async function getPartnerData(uuid: string) {
+async function getPartnerData(uuid: string): Promise<Data> {
   const response = await fetch(
-    `http://localhost:3000/partners/profile/${uuid}`,
+    `${process.env.API_URL}/partners/profile/${uuid}`,
   ).then(res => res.json());
   if (!response.ok) notFound();
   return response.data;
@@ -43,12 +41,17 @@ export default async function PartnerPage({
   const profileData = await getPartnerData(uuid);
 
   return (
-    <Container mt={8}>
-      <Button variant="outline" size="xs">
+    <Container mt={8} maxW="breakpoint-xl">
+      <Button variant="outline" size="sm">
         <RiArrowLeftLine />
         Powrót
       </Button>
-      <Heading my={5} size="4xl" color="brand.700">
+      <Heading
+        my={5}
+        size={{ base: "4xl", md: "5xl" }}
+        as="h1"
+        color="brand.700"
+      >
         {profileData.name}
       </Heading>
       <Tabs.Root variant="outline" defaultValue={tabs[1].id} fitted pb={5}>
@@ -58,14 +61,14 @@ export default async function PartnerPage({
               <Tabs.Trigger
                 value={tab.id}
                 justifyContent="center"
-                py="10"
+                py={{ base: "8", md: "10" }}
                 borderColor={tab.color}
                 _selected={{
-                  color: "white",
+                  color: "brand.100",
                 }}
                 bg={tab.color}
-                color="white"
-                borderTopRadius={30}
+                color="brand.100"
+                borderTopRadius={"4xl"}
                 fontSize={{ base: "sm", md: "lg" }}
               >
                 {tab.label}
@@ -75,8 +78,8 @@ export default async function PartnerPage({
         </Tabs.List>
         <For each={tabs}>
           {tab => (
-            <Tabs.Content bg={tab.color} value={tab.id} p={[2, 4]}>
-              <Box bg="white" borderRadius={20} p={2}>
+            <Tabs.Content bg={tab.color} value={tab.id} p={[2, undefined, 8]}>
+              <Box bg="brand.100" borderRadius="md" p={[3, 8]}>
                 {tab.id == "info" ? (
                   <PartnerInfo data={profileData.profile} />
                 ) : (
