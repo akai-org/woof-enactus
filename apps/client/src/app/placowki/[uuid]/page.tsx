@@ -2,10 +2,8 @@ import { Box, Button, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { notFound } from "next/navigation";
 import { Data } from "@/types";
-import { Link } from "@/components/ui/Link";
-import PartnerInfo from "@/components/partner/info";
-import PartnerNeeds from "@/components/partner/needs";
-import PartnerEvents from "@/components/partner/events";
+import { Link, PartnerInfo, PartnerNeeds, PartnerEvents } from "@/components";
+
 const tabs = [
   {
     id: "stuff",
