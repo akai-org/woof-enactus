@@ -1,6 +1,6 @@
 "use client";
 import { icon, LatLngExpression } from "leaflet";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Marker, useMapEvents } from "react-leaflet";
 
 type LocationProps = {
@@ -12,13 +12,13 @@ const customIcon = icon({
   iconSize: [35, 35],
 });
 
-function Location({ defaultPosition, defaultZoom }: LocationProps) {
+function Location({ defaultPosition }: LocationProps) {
   const [userPosition, setUserPosition] = useState<[number, number] | null>(
     null,
   );
 
   const map = useMapEvents({
-    locationerror: (error) => {
+    locationerror: error => {
       map.setView(defaultPosition, map.getZoom(), { animate: true });
       alert("Nie można znaleźć lokalizacji");
       console.log(error);

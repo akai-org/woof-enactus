@@ -23,45 +23,42 @@ type MapProps = {
 };
 
 function Map({ children, data }: MapProps) {
-
   const [showLocation, setShowLocation] = useState(false);
 
   const handleLocate = () => {
     setShowLocation(true);
   };
 
-
-  return (<>
-  <SearchBar onLocate={handleLocate} />
-  <MapContainer
-      center={DEFAULT_POSITION}
-      zoom={DEFAULT_ZOOM}
-      zoomControl={true}
-      minZoom={6}
-      maxZoom={18}
-      style={{ minHeight: "80vh" }}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {showLocation && (
-        <Location
-          defaultPosition={DEFAULT_POSITION}
-          defaultZoom={DEFAULT_ZOOM}
+  return (
+    <>
+      <SearchBar onLocate={handleLocate} />
+      <MapContainer
+        center={DEFAULT_POSITION}
+        zoom={DEFAULT_ZOOM}
+        zoomControl={true}
+        minZoom={6}
+        maxZoom={18}
+        style={{ minHeight: "80vh" }}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-      )}
-      <MarkerClusterGroup showCoverageOnHover={false}>
-        {data.map(item => (
-          <MapMarker markerData={item} key={item.uuid} />
-        ))}
-      </MarkerClusterGroup>
+        {showLocation && (
+          <Location
+            defaultPosition={DEFAULT_POSITION}
+            defaultZoom={DEFAULT_ZOOM}
+          />
+        )}
+        <MarkerClusterGroup showCoverageOnHover={false}>
+          {data.map(item => (
+            <MapMarker markerData={item} key={item.uuid} />
+          ))}
+        </MarkerClusterGroup>
 
-      {children}
-    </MapContainer>
-  </>
-    
-    
+        {children}
+      </MapContainer>
+    </>
   );
 }
 
