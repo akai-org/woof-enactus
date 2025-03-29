@@ -20,45 +20,47 @@ export class PartnersService {
       let partnerIdsFromName: number[] | null = null;
 
       if (city || street) {
-        const conditions: string[] = [];
-        const params: any[] = [];
+        const similarityQueryProfile: any = {};
 
         if (city) {
-          params.push(city);
-          conditions.push(`similarity(city, $${params.length}) > 0.2`);
+          similarityQueryProfile.city = {
+            similarity: { text: city, threshold: { gt: 0.2 } },
+          };
         }
+
         if (street) {
-          params.push(street);
-          conditions.push(`similarity(street, $${params.length}) > 0.2`);
+          similarityQueryProfile.street = {
+            similarity: { text: street, threshold: { gt: 0.2 } },
+          };
         }
 
-        const profileQuery = `
-          SELECT "partnerId" FROM "PartnerProfile"
-          WHERE ${conditions.join(" AND ")};
-        `;
+        const profileResults = await (
+          this.prisma.partnerProfileTrgm as any
+        ).similarity({
+          query: similarityQueryProfile,
+        });
 
-        const profileResults: Array<{ partnerId: number }> =
-          await this.prisma.$queryRawUnsafe(profileQuery, ...params);
+        partnerIdsFromProfile = profileResults.map(
+          (p: { partnerId: number }) => p.partnerId,
+        );
 
-        partnerIdsFromProfile = profileResults.map(p => p.partnerId);
-
-        if (partnerIdsFromProfile.length === 0) {
+        if (partnerIdsFromProfile && !partnerIdsFromProfile.length) {
           return { ok: true, data: [] };
         }
       }
 
       if (name) {
-        const nameQuery = `
-          SELECT id FROM "Partner"
-          WHERE similarity(name, $1) > 0.2;
-        `;
+        const nameResults = await (this.prisma.partnerTrgm as any).similarity({
+          query: {
+            name: {
+              similarity: { text: name, threshold: { gt: 0.2 } },
+            },
+          },
+        });
 
-        const nameResults: Array<{ id: number }> =
-          await this.prisma.$queryRawUnsafe(nameQuery, name);
+        partnerIdsFromName = nameResults.map((p: { id: number }) => p.id);
 
-        partnerIdsFromName = nameResults.map(p => p.id);
-
-        if (partnerIdsFromName.length === 0) {
+        if (partnerIdsFromName && !partnerIdsFromName.length) {
           return { ok: true, data: [] };
         }
       }
@@ -69,7 +71,7 @@ export class PartnersService {
           : (partnerIdsFromProfile ?? partnerIdsFromName);
 
       const filter: Prisma.PartnerWhereInput = {
-        ...(type && { type }),
+        ...(type && Object.values(PartnerType).includes(type) ? { type } : {}),
         ...(combinedPartnerIds ? { id: { in: combinedPartnerIds } } : {}),
       };
 
