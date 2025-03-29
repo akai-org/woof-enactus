@@ -16,85 +16,77 @@ export class PartnersService {
     type?: PartnerType,
   ): Promise<GetAllPartnersResponse> {
     try {
-      let partners: Array<
-        Partner & {
-          profile?: { city?: string | null; street?: string | null } | null;
+      let partnerIdsFromProfile: number[] | null = null;
+      let partnerIdsFromName: number[] | null = null;
+
+      if (city || street) {
+        const conditions: string[] = [];
+        const params: any[] = [];
+
+        if (city) {
+          params.push(city);
+          conditions.push(`similarity(city, $${params.length}) > 0.2`);
         }
-      >;
+        if (street) {
+          params.push(street);
+          conditions.push(`similarity(street, $${params.length}) > 0.2`);
+        }
 
-      const filter: Prisma.PartnerWhereInput = {};
+        const profileQuery = `
+          SELECT "partnerId" FROM "PartnerProfile"
+          WHERE ${conditions.join(" AND ")};
+        `;
 
-      const enumType = Object.values(PartnerType).includes(type as PartnerType)
-        ? type
-        : undefined;
+        const profileResults: Array<{ partnerId: number }> =
+          await this.prisma.$queryRawUnsafe(profileQuery, ...params);
 
-      if (enumType) {
-        filter.type = enumType;
+        partnerIdsFromProfile = profileResults.map(p => p.partnerId);
+
+        if (partnerIdsFromProfile.length === 0) {
+          return { ok: true, data: [] };
+        }
       }
 
-      let partnerProfileIds: number[] = [];
+      if (name) {
+        const nameQuery = `
+          SELECT id FROM "Partner"
+          WHERE similarity(name, $1) > 0.2;
+        `;
 
-      if (city) {
-        const cityResults = await this.prisma.partnerProfileTrgm.similarity({
-          query: {
-            city: {
-              similarity: { text: city, order: "desc" },
-              word_similarity: { text: city, threshold: { gt: 0.2 } },
-            },
-          },
-        });
-        partnerProfileIds = cityResults.map(
-          (p: { partnerId: number }) => p.partnerId,
-        );
+        const nameResults: Array<{ id: number }> =
+          await this.prisma.$queryRawUnsafe(nameQuery, name);
+
+        partnerIdsFromName = nameResults.map(p => p.id);
+
+        if (partnerIdsFromName.length === 0) {
+          return { ok: true, data: [] };
+        }
       }
 
-      if (street) {
-        const streetResults = await this.prisma.partnerProfileTrgm.similarity({
-          query: {
-            street: {
-              similarity: { text: street, order: "desc" },
-              word_similarity: { text: street, threshold: { gt: 0.2 } },
-            },
-          },
-        });
-        const streetProfileIds = streetResults.map(
-          (p: { partnerId: number }) => p.partnerId,
-        );
-        partnerProfileIds = partnerProfileIds.length
-          ? partnerProfileIds.filter(id => streetProfileIds.includes(id))
-          : streetProfileIds;
-      }
+      const combinedPartnerIds =
+        partnerIdsFromProfile && partnerIdsFromName
+          ? partnerIdsFromProfile.filter(id => partnerIdsFromName!.includes(id))
+          : (partnerIdsFromProfile ?? partnerIdsFromName);
 
-      if (partnerProfileIds.length) {
-        partners = await this.prisma.partner.findMany({
-          where: { id: { in: partnerProfileIds }, ...filter },
-          include: { profile: true },
-        });
-      } else {
-        partners = await this.prisma.partner.findMany({
-          where: filter,
-          include: { profile: true },
-        });
-      }
+      const filter: Prisma.PartnerWhereInput = {
+        ...(type && { type }),
+        ...(combinedPartnerIds ? { id: { in: combinedPartnerIds } } : {}),
+      };
 
-      if (name || enumType) {
-        partners = partners.filter(partner => {
-          const matchName = name ? partner.name.includes(name) : true;
-          const matchType = enumType ? partner.type === enumType : true;
-          return matchName && matchType;
-        });
-      }
+      const partners = await this.prisma.partner.findMany({
+        where: filter,
+        include: { profile: true },
+      });
 
       return {
         ok: true,
         data: partners,
       };
     } catch (e) {
-      const error = e as Error;
       return {
         ok: false,
         message: "Internal server error",
-        error: error.message,
+        error: (e as Error).message,
         data: undefined,
       };
     }
