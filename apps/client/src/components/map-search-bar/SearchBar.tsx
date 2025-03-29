@@ -5,7 +5,7 @@ import { IoSearch } from "react-icons/io5";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import Filters from "./Filters";
 import Legend from "./Legend";
-import { Tooltip } from "../Tooltip";
+import { Tooltip } from "@/components";
 
 type SearchBarProps = {
   onLocate: () => void;
