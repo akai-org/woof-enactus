@@ -24,13 +24,13 @@ export class PartnersService {
 
         if (city) {
           similarityQueryProfile.city = {
-            similarity: { text: city, threshold: { gt: 0.1 } },
+            similarity: { text: city, threshold: { gt: 0.5 } },
           };
         }
 
         if (street) {
           similarityQueryProfile.street = {
-            similarity: { text: street, threshold: { gt: 0.1 } },
+            similarity: { text: street, threshold: { gt: 0.5 } },
           };
         }
 
@@ -53,7 +53,7 @@ export class PartnersService {
         const nameResults = await (this.prisma.partnerTrgm as any).similarity({
           query: {
             name: {
-              similarity: { text: name, threshold: { gt: 0.1 } },
+              similarity: { text: name, threshold: { gt: 0.5 } },
             },
           },
           orderBySimilarity: {
