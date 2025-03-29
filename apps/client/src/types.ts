@@ -12,6 +12,18 @@ type Profile = {
   website: string;
   animals: string[];
   visitHours: string;
+  openHours: {
+    monday: string;
+    tuesday: string;
+    wednesday: string;
+    thursday: string;
+    friday: string;
+    saturday: string;
+    sunday: string;
+    id: number;
+    uuid: string;
+    profileId: number;
+  };
 };
 
 type Data = {

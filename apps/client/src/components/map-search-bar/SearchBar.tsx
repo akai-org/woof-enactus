@@ -26,7 +26,7 @@ export default function SearchBar({ onLocate }: SearchBarProps) {
           marginRight={{ base: "0", md: "10%" }}
           marginY="2"
         >
-          <Input flex="1" placeholder="Enter your email" />
+          <Input flex="1" placeholder="Miasto, ulica, nazwa" />
           <IconButton variant="outline">
             <IoSearch />
           </IconButton>

@@ -1,6 +1,6 @@
 # Woof Enactus
 
-Monorepo for Woof Enactus project. More information can be found in apps/client and apps/server readme files.
+Monorepo for Woof Enactus project. More information can be found in [apps/client](/apps/client/README.md) and [apps/server](apps/server//README.md) readme files.
 
 ## Documentation
 

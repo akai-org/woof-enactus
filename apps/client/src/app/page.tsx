@@ -7,13 +7,15 @@ export default async function Home() {
   const partners = result.data.data;
 
   return (
-    <ClientOnly fallback={<Skeleton />}>
+    <>
       <Container marginTop="8">
         <Heading as="h1" size="4xl" color="brand.700" my="2">
           Znajdź placówki prozwierzęce
         </Heading>
       </Container>
-      <Map data={partners} />
-    </ClientOnly>
+      <ClientOnly fallback={<Skeleton minH="80vh" m={5} />}>
+        <Map data={partners} />
+      </ClientOnly>
+    </>
   );
 }
