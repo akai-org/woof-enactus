@@ -1,14 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { LatLngExpression } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MapMarker from "./MapMarker";
 
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import { Data } from "./types";
+
 import Location from "./Location";
-import { useState } from "react";
-import SearchBar from "../mapSearchBar/SearchBar";
+import { SearchBar } from "@/components";
+
+import { Data } from "@/types";
+
 /* 
   NOTE: Except for its children, MapContainer props are immutable:
   changing them after they have been set a first time will have no effect on the Map instance or its container.

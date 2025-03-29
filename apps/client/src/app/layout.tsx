@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 import { Box } from "@chakra-ui/react";
 
-import Providers from "../providers";
+import Providers from "@/providers";
 import { hkGrotesk, openSans } from "./fonts";
 import { Footer, Nav } from "@/components";
 

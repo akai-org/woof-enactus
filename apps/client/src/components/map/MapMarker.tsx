@@ -3,10 +3,10 @@
 import { LatLngExpression, icon } from "leaflet";
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
-import { Data } from "./types";
-import { Box, Link, List, Text } from "@chakra-ui/react";
+import { Data } from "@/types";
+import { Box, List, Text } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
-import Btn from "../Btn";
+import { Link, Btn } from "@/components";
 
 type MapMarkerProps = {
   markerData: Data;
@@ -42,16 +42,44 @@ function MapMarker({ markerData }: MapMarkerProps) {
               <List.Indicator asChild>
                 <MdLocalPhone />
               </List.Indicator>
-              <Link href={`tel:${profile.phone}`}>{profile.phone}</Link>
+              <Link
+                linkProps={{ href: `tel:${profile.phone}` }}
+                chakraLinkProps={{
+                  color: "brand.500",
+                  textDecoration: "none",
+                  _focus: { boxShadow: "none", outline: "none" },
+                }}
+              >
+                {profile.phone}
+              </Link>
             </List.Item>
             <List.Item>
               <List.Indicator asChild>
                 <MdLanguage />
               </List.Indicator>
-              <Link href={profile.website}>{profile.website}</Link>
+              <Link
+                linkProps={{ href: profile.website }}
+                chakraLinkProps={{
+                  color: "brand.500",
+                  textDecoration: "none",
+                  _focus: { boxShadow: "none", outline: "none" },
+                }}
+              >
+                {profile.website}
+              </Link>
             </List.Item>
           </List.Root>
-          <Btn>Szczegóły</Btn>
+          <Link
+            linkProps={{ href: `/placowki/${markerData.uuid}` }}
+            chakraLinkProps={{
+              color: "brand.500",
+              textDecoration: "none",
+              _focus: { boxShadow: "none", outline: "none" },
+              fontWeight: "bold",
+            }}
+          >
+            <Btn>Szczegóły</Btn>
+          </Link>
         </Box>
       </Popup>
     </Marker>
