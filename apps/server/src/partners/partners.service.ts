@@ -16,85 +16,82 @@ export class PartnersService {
     type?: PartnerType,
   ): Promise<GetAllPartnersResponse> {
     try {
-      let partners: Array<
-        Partner & {
-          profile?: { city?: string | null; street?: string | null } | null;
+      let partnerIdsFromProfile: number[] | null = null;
+      let partnerIdsFromName: number[] | null = null;
+
+      if (city || street) {
+        const similarityQueryProfile: any = {};
+
+        if (city) {
+          similarityQueryProfile.city = {
+            similarity: { text: city, threshold: { gt: 0.5 } },
+          };
         }
-      >;
 
-      const filter: Prisma.PartnerWhereInput = {};
+        if (street) {
+          similarityQueryProfile.street = {
+            similarity: { text: street, threshold: { gt: 0.5 } },
+          };
+        }
 
-      const enumType = Object.values(PartnerType).includes(type as PartnerType)
-        ? type
-        : undefined;
-
-      if (enumType) {
-        filter.type = enumType;
-      }
-
-      let partnerProfileIds: number[] = [];
-
-      if (city) {
-        const cityResults = await this.prisma.partnerProfileTrgm.similarity({
-          query: {
-            city: {
-              similarity: { text: city, order: "desc" },
-              word_similarity: { text: city, threshold: { gt: 0.2 } },
-            },
-          },
+        const profileResults = await (
+          this.prisma.partnerProfileTrgm as any
+        ).similarity({
+          query: similarityQueryProfile,
         });
-        partnerProfileIds = cityResults.map(
+
+        partnerIdsFromProfile = profileResults.map(
           (p: { partnerId: number }) => p.partnerId,
         );
+
+        if (partnerIdsFromProfile && !partnerIdsFromProfile.length) {
+          return { ok: true, data: [] };
+        }
       }
 
-      if (street) {
-        const streetResults = await this.prisma.partnerProfileTrgm.similarity({
+      if (name) {
+        const nameResults = await (this.prisma.partnerTrgm as any).similarity({
           query: {
-            street: {
-              similarity: { text: street, order: "desc" },
-              word_similarity: { text: street, threshold: { gt: 0.2 } },
+            name: {
+              similarity: { text: name, threshold: { gt: 0.5 } },
             },
           },
+          orderBySimilarity: {
+            name: { text: name, sort: "desc" },
+          },
         });
-        const streetProfileIds = streetResults.map(
-          (p: { partnerId: number }) => p.partnerId,
-        );
-        partnerProfileIds = partnerProfileIds.length
-          ? partnerProfileIds.filter(id => streetProfileIds.includes(id))
-          : streetProfileIds;
+
+        partnerIdsFromName = nameResults.map((p: { id: number }) => p.id);
+
+        if (partnerIdsFromName && !partnerIdsFromName.length) {
+          return { ok: true, data: [] };
+        }
       }
 
-      if (partnerProfileIds.length) {
-        partners = await this.prisma.partner.findMany({
-          where: { id: { in: partnerProfileIds }, ...filter },
-          include: { profile: true },
-        });
-      } else {
-        partners = await this.prisma.partner.findMany({
-          where: filter,
-          include: { profile: true },
-        });
-      }
+      const combinedPartnerIds =
+        partnerIdsFromProfile && partnerIdsFromName
+          ? partnerIdsFromProfile.filter(id => partnerIdsFromName!.includes(id))
+          : (partnerIdsFromProfile ?? partnerIdsFromName);
 
-      if (name || enumType) {
-        partners = partners.filter(partner => {
-          const matchName = name ? partner.name.includes(name) : true;
-          const matchType = enumType ? partner.type === enumType : true;
-          return matchName && matchType;
-        });
-      }
+      const filter: Prisma.PartnerWhereInput = {
+        ...(type && Object.values(PartnerType).includes(type) ? { type } : {}),
+        ...(combinedPartnerIds ? { id: { in: combinedPartnerIds } } : {}),
+      };
+
+      const partners = await this.prisma.partner.findMany({
+        where: filter,
+        include: { profile: true },
+      });
 
       return {
         ok: true,
         data: partners,
       };
     } catch (e) {
-      const error = e as Error;
       return {
         ok: false,
         message: "Internal server error",
-        error: error.message,
+        error: (e as Error).message,
         data: undefined,
       };
     }

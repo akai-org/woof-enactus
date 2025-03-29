@@ -21,6 +21,8 @@ model Partner {
   longitude  Float       @default(0)
   profile   PartnerProfile?
   type      PartnerType
+
+   @@index([name(ops: GinTrgmOps)], type: Gin)
 }
 
 model PartnerProfile {
