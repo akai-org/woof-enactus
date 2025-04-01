@@ -61,7 +61,7 @@ async function main() {
   const neededGoodsData: Prisma.NeededGoodsCreateManyInput[] = [];
   for (let i = 0; i < 1000; i++) {
     neededGoodsData.push({
-      partnerId: i,
+      partnerId: i + 1,
       note: faker.lorem.lines(2),
       amountCurrent: 0,
       amountMax: faker.number.int({
@@ -71,6 +71,7 @@ async function main() {
       amountUnit: faker.helpers.arrayElement(["sztuki", "litry"]),
       state: "LOW",
       stateInfo: 'Jakis tam stan typu "Potrzebne pilnie", etc.',
+      name: fakerPL.lorem.words({ min: 1, max: 4 }),
     });
   }
 
