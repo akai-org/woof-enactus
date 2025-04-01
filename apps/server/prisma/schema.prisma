@@ -67,6 +67,7 @@ model NeededGoods {
   uuid            String  @unique @default(uuid())
   partner         Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
   partnerId       Int     @unique
+  name            String
   note            String?
   amountCurrent   Int?
   amountMax       Int
