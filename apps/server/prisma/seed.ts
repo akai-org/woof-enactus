@@ -12,6 +12,7 @@ async function main() {
   await prisma.$executeRaw`ALTER SEQUENCE "Partner_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "PartnerProfile_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "WorkingHours_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "NeededGoods_id_seq" RESTART WITH 1;`;
 
   const partnersData: Prisma.PartnerCreateManyInput[] = [];
   for (let i = 0; i < 1000; i++) {
@@ -57,6 +58,23 @@ async function main() {
     });
   }
 
+  const neededGoodsData: Prisma.NeededGoodsCreateManyInput[] = [];
+  for (let i = 0; i < 1000; i++) {
+    neededGoodsData.push({
+      partnerId: i + 1,
+      note: faker.lorem.lines(2),
+      amountCurrent: 0,
+      amountMax: faker.number.int({
+        min: 0,
+        max: 100,
+      }),
+      amountUnit: faker.helpers.arrayElement(["sztuki", "litry"]),
+      state: "LOW",
+      stateInfo: 'Jakis tam stan typu "Potrzebne pilnie", etc.',
+      name: fakerPL.lorem.words({ min: 1, max: 4 }),
+    });
+  }
+
   const resultProfiles = await prisma.partnerProfile.createMany({
     data: profilesData,
   });
@@ -65,9 +83,14 @@ async function main() {
     data: hoursData,
   });
 
+  const neededGoods = await prisma.neededGoods.createMany({
+    data: neededGoodsData,
+  });
+
   console.log(`Inserted ${resultPartners.count} partners`);
   console.log(`Inserted ${resultProfiles.count} profiles`);
   console.log(`Inserted ${resultHours.count} working hours`);
+  console.log(`Inserted ${neededGoods.count} needed goods`);
 }
 
 main()
@@ -75,6 +98,7 @@ main()
     console.error(e);
     process.exit(1);
   })
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   .finally(async () => {
     await prisma.$disconnect();
   });

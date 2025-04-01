@@ -14,13 +14,14 @@ datasource db {
 }
 
 model Partner {
-  id        Int         @id @default(autoincrement())
-  uuid      String      @unique @default(uuid())
-  name      String
-  latitude  Float       @default(0)
-  longitude  Float       @default(0)
-  profile   PartnerProfile?
-  type      PartnerType
+  id          Int         @id @default(autoincrement())
+  uuid        String      @unique @default(uuid())
+  name        String
+  latitude    Float       @default(0)
+  longitude   Float       @default(0)
+  profile     PartnerProfile?
+  neededGoods NeededGoods[]
+  type        PartnerType
 }
 
 model PartnerProfile {
@@ -43,7 +44,7 @@ model PartnerProfile {
 model WorkingHours {
   id          Int             @id @default(autoincrement())
   uuid        String          @unique @default(uuid())
-  profile     PartnerProfile  @relation(fields: [profileId], references: [id])
+  profile     PartnerProfile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
   profileId   Int             @unique
   monday      String
   tuesday     String
@@ -59,4 +60,24 @@ enum PartnerType {
   ORG
   SHOP
   SHELTER
+}
+
+model NeededGoods {
+  id              Int     @id @default(autoincrement())
+  uuid            String  @unique @default(uuid())
+  partner         Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  partnerId       Int     @unique
+  name            String
+  note            String?
+  amountCurrent   Int?
+  amountMax       Int
+  amountUnit      String?
+  state           GoodsState
+  stateInfo       String?
+}
+
+enum GoodsState {
+  OK
+  MEDIUM
+  LOW
 }
