@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Param, Post, Put, Delete, Query, Res } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Delete,
+  Query,
+  Res,
+} from "@nestjs/common";
 import { PartnersService } from "./partners.service";
 import { Response } from "express";
-import { CreatePartnerDto } from './dto/CreatePartnerDto';
+import { CreatePartnerDto } from "./dto/CreatePartnerDto";
 import UpdatePartnerDto from "./dto/UpdatePartnerDto";
 import { ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { GetAllPartnersResponse } from "../types";
@@ -14,9 +24,9 @@ export class PartnersController {
 
   // GET /partners?city=example&type=example
   @ApiResponse({ type: GetAllPartnersResponse })
-  @ApiQuery({ name: "city", required: false, example: "Warszawa" })
+  @ApiQuery({ name: "city", required: false })
   @ApiQuery({ name: "type", required: false, example: "SHELTER" })
-  @ApiQuery({ name: "name", required: false, example: "Schronisko 1" })
+  @ApiQuery({ name: "name", required: false })
   @ApiQuery({ name: "street", required: false })
   @Get()
   async getAllPartners(
@@ -63,8 +73,8 @@ export class PartnersController {
   }
 
   // GET /partners/profile/:uuid
-  @Get('profile/:uuid')
-  async getPartnerWithProfile(@Param('uuid') uuid: string) {
+  @Get("profile/:uuid")
+  async getPartnerWithProfile(@Param("uuid") uuid: string) {
     return this.partnersService.findOneWithProfile(uuid);
   }
 }
