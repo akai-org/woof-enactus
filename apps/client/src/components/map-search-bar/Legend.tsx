@@ -1,3 +1,4 @@
+import { legendItems } from "@/constants/legend";
 import {
   Box,
   Button,
@@ -51,17 +52,7 @@ export default function Legend() {
                 <IoClose />
               </Popover.CloseTrigger>
               <VStack align="self-start" gap={4}>
-                <For
-                  each={[
-                    { name: "Schroniska", color: "brand.700" },
-                    {
-                      name: "Organizacje prozwierzęce",
-                      color: "brand.400",
-                    },
-                    { name: "Weterynaria", color: "accent.yellow" },
-                    { name: "Sklepy zoologiczne", color: "brand.500" },
-                  ]}
-                >
+                <For each={legendItems}>
                   {value => (
                     <Flex align="center" gap={4} key={value.name}>
                       <Box boxSize={4} rounded="sm" bg={value.color} />

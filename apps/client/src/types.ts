@@ -36,4 +36,11 @@ type Data = {
   profile: Profile;
 };
 
-export type { Data, Profile };
+type Legend = {
+  name: string;
+  color: string;
+  markerPath: string;
+  type: Data["type"];
+};
+
+export type { Data, Profile, Legend };
