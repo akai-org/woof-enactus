@@ -12,6 +12,8 @@ type Profile = {
   website: string;
   animals: string[];
   visitHours: string;
+  email: string;
+  image: string; // url
   openHours: {
     monday: string;
     tuesday: string;

@@ -46,7 +46,12 @@ async function main() {
       phone: fakerPL.phone.number(),
       website: faker.internet.url(),
       email: faker.internet.email(),
-      image: faker.image.avatar(),
+      image: faker.image.urlPicsumPhotos({
+        grayscale: false,
+        blur: 0,
+        width: 600,
+        height: 400,
+      }),
     });
     hoursData.push({
       profileId: i + 1,
