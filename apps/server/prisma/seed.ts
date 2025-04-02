@@ -45,6 +45,8 @@ async function main() {
       visitHours: "Pon-Pt 10:30 - 14:00",
       phone: fakerPL.phone.number(),
       website: faker.internet.url(),
+      email: faker.internet.email(),
+      image: faker.image.avatar(),
     });
     hoursData.push({
       profileId: i + 1,
