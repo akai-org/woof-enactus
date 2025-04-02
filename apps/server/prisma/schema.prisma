@@ -39,6 +39,8 @@ model PartnerProfile {
   animals     String[]
   visitHours  String?
   openHours   WorkingHours?
+  email       String?
+  image       String?
 }
 
 model WorkingHours {
