@@ -7,22 +7,26 @@ import { Data } from "@/types";
 import { Box, List, Text } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
 import { Link, Btn } from "@/components";
+import { legendItems } from "@/constants/legend";
 
 type MapMarkerProps = {
   markerData: Data;
 };
 
-const customIcon = icon({
-  iconUrl: "marker-icon.svg",
-  iconSize: [35, 35],
-});
+const createIcon = (type: Data["type"]) => {
+  const markerPath = legendItems.find(item => item.type === type)?.markerPath;
+  return icon({
+    iconUrl: markerPath ?? "",
+    iconSize: [35, 35],
+  });
+};
 
 function MapMarker({ markerData }: MapMarkerProps) {
-  const { latitude, longitude, name, profile } = markerData;
+  const { latitude, longitude, name, profile, type } = markerData;
   const position: LatLngExpression = [latitude, longitude];
 
   return (
-    <Marker position={position} icon={customIcon}>
+    <Marker position={position} icon={createIcon(type)}>
       <Popup>
         <Box
           display={"flex"}
