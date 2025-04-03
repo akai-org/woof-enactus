@@ -1,5 +1,6 @@
 import { PrismaClient, Prisma } from "@prisma/client";
 import { faker, fakerPL } from "@faker-js/faker";
+import slugify from "slugify";
 
 const prisma = new PrismaClient();
 
@@ -21,12 +22,24 @@ async function main() {
       type: faker.helpers.arrayElement(["VET", "ORG", "SHOP", "SHELTER"]),
       latitude: faker.location.latitude({ min: 50, max: 54, precision: 5 }),
       longitude: faker.location.longitude({ min: 15, max: 23, precision: 5 }),
+      slug: `temp-${i}`,
     });
   }
 
   const resultPartners = await prisma.partner.createMany({
     data: partnersData,
   });
+
+  // getch all and generate slug
+  const allPartners = await prisma.partner.findMany();
+  const updatePromises = allPartners.map((partner) => {
+    const generatedSlug = `${slugify(partner.name, { lower: true })}-${partner.id}`;
+    return prisma.partner.update({
+      where: { id: partner.id },
+      data: { slug: generatedSlug },
+    });
+  });
+  await Promise.all(updatePromises);
 
   const profilesData: Prisma.PartnerProfileCreateManyInput[] = [];
   const hoursData: Prisma.WorkingHoursCreateManyInput[] = [];
