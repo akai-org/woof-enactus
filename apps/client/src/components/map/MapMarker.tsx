@@ -1,13 +1,14 @@
 "use client";
 
-import { LatLngExpression, icon } from "leaflet";
+import { icon } from "leaflet";
+import type { LatLngExpression } from "leaflet";
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
-import { Data } from "@/types";
+import type { Data } from "@/types";
 import { Box, List, Text } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
 import { Link, Btn } from "@/components";
-import { legendItems } from "@/constants/legend";
+import { legendItems } from "@/constants";
 
 type MapMarkerProps = {
   markerData: Data;

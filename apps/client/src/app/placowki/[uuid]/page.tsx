@@ -1,8 +1,8 @@
 import { Box, Button, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { notFound } from "next/navigation";
-import { Data } from "@/types";
 import { Link, PartnerInfo, PartnerNeeds, PartnerEvents } from "@/components";
+import { getPartner } from "@/api";
 
 const tabs = [
   {
@@ -24,21 +24,16 @@ const tabs = [
   },
 ];
 
-async function getPartnerData(uuid: string): Promise<Data> {
-  const response = await fetch(
-    `${process.env.API_URL}/partners/profile/${uuid}`,
-  ).then(res => res.json());
-  if (!response.ok) notFound();
-  return response.data;
-}
-
 export default async function PartnerPage({
   params,
 }: {
   params: Promise<{ uuid: string }>;
 }) {
   const { uuid } = await params;
-  const profileData = await getPartnerData(uuid);
+  const profileData = await getPartner(uuid);
+
+  if (!profileData) notFound();
+
   const tabsToShow = [];
   switch (profileData.type) {
     case "VET":

@@ -1,11 +1,11 @@
 "use client";
 
-import { LatLngExpression } from "leaflet";
+import type { LatLngExpression } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MapMarker from "./MapMarker";
 
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import { Data } from "@/types";
+import type { Data } from "@/types";
 
 /* 
   NOTE: Except for its children, MapContainer props are immutable:

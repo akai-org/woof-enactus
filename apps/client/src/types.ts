@@ -43,4 +43,11 @@ type Legend = {
   type: Data["type"];
 };
 
-export type { Data, Profile, Legend };
+type PartnersSearchParams = {
+  name: string;
+  city: string;
+  street: string;
+  type: Data["type"];
+};
+
+export type { Data, Profile, Legend, PartnersSearchParams };
