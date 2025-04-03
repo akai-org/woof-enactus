@@ -4,17 +4,17 @@ import { icon } from "leaflet";
 import type { LatLngExpression } from "leaflet";
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
-import type { Data } from "@/types";
+import type { PartnerData } from "@/types";
 import { Box, List, Text } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
 import { Link, Btn } from "@/components";
 import { legendItems } from "@/constants";
 
 type MapMarkerProps = {
-  markerData: Data;
+  markerData: PartnerData;
 };
 
-const createIcon = (type: Data["type"]) => {
+const createIcon = (type: PartnerData["type"]) => {
   const markerPath = legendItems.find(item => item.type === type)?.markerPath;
   return icon({
     iconUrl: markerPath ?? "",

@@ -5,7 +5,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import MapMarker from "./MapMarker";
 
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import type { Data } from "@/types";
+import type { PartnerData } from "@/types";
 
 /* 
   NOTE: Except for its children, MapContainer props are immutable:
@@ -17,7 +17,7 @@ const DEFAULT_ZOOM = 11;
 
 type MapProps = {
   children?: React.ReactNode;
-  data: Data[];
+  data: PartnerData[];
 };
 
 function Map({ children, data }: MapProps) {
@@ -35,8 +35,8 @@ function Map({ children, data }: MapProps) {
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <MarkerClusterGroup showCoverageOnHover={false}>
-        {data.map(item => (
-          <MapMarker markerData={item} key={item.uuid} />
+        {data.map(partner => (
+          <MapMarker markerData={partner} key={partner.uuid} />
         ))}
       </MarkerClusterGroup>
 

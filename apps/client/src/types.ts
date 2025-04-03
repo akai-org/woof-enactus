@@ -1,5 +1,5 @@
 // TEMPORARY
-type Profile = {
+type PartnerProfile = {
   id: number;
   uuid: string;
   partnerId: number;
@@ -26,28 +26,39 @@ type Profile = {
   };
 };
 
-type Data = {
+type PartnerData = {
   id: number;
   uuid: string;
   name: string;
   latitude: number;
   longitude: number;
   type: "SHELTER" | "VET" | "ORG" | "SHOP";
-  profile: Profile;
+  profile: PartnerProfile;
 };
 
 type Legend = {
   name: string;
   color: string;
   markerPath: string;
-  type: Data["type"];
+  type: PartnerData["type"];
 };
 
-type PartnersSearchParams = {
+type PartnersParams = {
   name: string;
   city: string;
   street: string;
-  type: Data["type"];
+  type: PartnerData["type"];
 };
 
-export type { Data, Profile, Legend, PartnersSearchParams };
+type ServerResponse<T> = {
+  ok: boolean;
+  data: T;
+};
+
+export type {
+  PartnerData,
+  PartnerProfile,
+  Legend,
+  PartnersParams,
+  ServerResponse,
+};
