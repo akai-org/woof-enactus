@@ -140,6 +140,8 @@ export class PartnersService {
               phone: body.phone,
               website: body.website,
               animals: body.animals,
+              email: body.email,
+              image: body.image,
               visitHours: body.visitHours,
               openHours: {
                 create: {
