@@ -1,6 +1,6 @@
+import { legendItems } from "@/constants";
 import {
   Button,
-  Checkbox,
   CheckboxGroup,
   Fieldset,
   For,
@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { IoClose, IoFilterSharp } from "react-icons/io5";
+import { Checkbox } from "@/components";
 
 export default function Filters() {
   return (
@@ -53,22 +54,11 @@ export default function Filters() {
               <Fieldset.Root paddingTop={6}>
                 <CheckboxGroup>
                   <Fieldset.Content>
-                    <For
-                      each={[
-                        "Schroniska",
-                        "Organizacje prozwierzęce",
-                        "Weterynaria",
-                        "Sklepy zoologiczne",
-                      ]}
-                    >
-                      {value => (
-                        <Checkbox.Root key={value} value={value}>
-                          <Checkbox.HiddenInput />
-                          <Checkbox.Control>
-                            <Checkbox.Indicator />
-                          </Checkbox.Control>
-                          <Checkbox.Label>{value}</Checkbox.Label>
-                        </Checkbox.Root>
+                    <For each={legendItems}>
+                      {({ name }) => (
+                        <Checkbox key={name} value={name}>
+                          {name}
+                        </Checkbox>
                       )}
                     </For>
                   </Fieldset.Content>
