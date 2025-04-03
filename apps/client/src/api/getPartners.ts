@@ -1,16 +1,22 @@
-import type { Data, PartnersSearchParams } from "@/types";
+import type { PartnerData, PartnersParams, ServerResponse } from "@/types";
 
+// TODO: add logger, improve error handling
 export default async function getPartners(
-  params?: Partial<PartnersSearchParams>,
-): Promise<Data[] | null> {
-  const searchParams = new URLSearchParams(params);
+  params?: Partial<PartnersParams>,
+): Promise<PartnerData[] | null> {
+  try {
+    const searchParams = new URLSearchParams(params);
 
-  const res = await fetch(
-    `${process.env.API_URL}/partners?${searchParams}`,
-  ).then(res => res.json());
+    const res = await fetch(`${process.env.API_URL}/partners?${searchParams}`);
+    const { data, ok }: ServerResponse<PartnerData[]> = await res.json();
 
-  if (!res.ok) {
+    if (!res.ok || !ok) {
+      throw new Error();
+    }
+
+    return data;
+  } catch {
+    console.error("error in getPartners");
     return null;
   }
-  return res.data;
 }

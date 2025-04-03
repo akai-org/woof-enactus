@@ -1,4 +1,4 @@
-import getPartner from "./getPartner";
+import getPartnerProfile from "./getPartnerProfile";
 import getPartners from "./getPartners";
 
-export { getPartner, getPartners };
+export { getPartnerProfile, getPartners };

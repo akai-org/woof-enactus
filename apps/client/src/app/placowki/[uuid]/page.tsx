@@ -2,7 +2,7 @@ import { Box, Button, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { notFound } from "next/navigation";
 import { Link, PartnerInfo, PartnerNeeds, PartnerEvents } from "@/components";
-import { getPartner } from "@/api";
+import { getPartnerProfile } from "@/api";
 
 const tabs = [
   {
@@ -30,7 +30,7 @@ export default async function PartnerPage({
   params: Promise<{ uuid: string }>;
 }) {
   const { uuid } = await params;
-  const profileData = await getPartner(uuid);
+  const profileData = await getPartnerProfile(uuid);
 
   if (!profileData) notFound();
 
