@@ -1,10 +1,11 @@
 import { Map, SearchBar } from "@/components";
-import { api } from "@/constants/partnersApi";
+import { getPartners } from "@/api";
 import { ClientOnly, Container, Skeleton, Heading } from "@chakra-ui/react";
+import { notFound } from "next/navigation";
 
 export default async function Home() {
-  const result = await api.partnersControllerGetAllPartners();
-  const partners = result.data.data;
+  const partners = await getPartners();
+  if (!partners) notFound();
 
   return (
     <>
