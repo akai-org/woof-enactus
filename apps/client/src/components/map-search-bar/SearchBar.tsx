@@ -1,3 +1,5 @@
+"use client";
+
 import { Container, Input, Group, Flex, IconButton } from "@chakra-ui/react";
 import { IoSearch } from "react-icons/io5";
 import Filters from "./Filters";

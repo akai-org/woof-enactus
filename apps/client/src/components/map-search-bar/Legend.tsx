@@ -1,4 +1,4 @@
-import { legendItems } from "@/constants/legend";
+import { legendItems } from "@/constants";
 import {
   Box,
   Button,
