@@ -40,10 +40,10 @@ export class PartnersController {
     return res.status(result.ok ? 200 : 400).json(result);
   }
 
-  // GET /partners/:uuid
-  @Get(":uuid")
-  async getPartnerByUuid(@Param("uuid") uuid: string, @Res() res: Response) {
-    const result = await this.partnersService.findOne(uuid);
+  // GET /partners/:slug
+  @Get(":slug")
+  async getPartnerBySlug(@Param("slug") slug: string, @Res() res: Response) {
+    const result = await this.partnersService.findOne(slug);
     return res.status(result.ok ? 200 : 404).json(result);
   }
 
@@ -54,27 +54,27 @@ export class PartnersController {
     return res.status(result.ok ? 201 : 500).json(result);
   }
 
-  // PUT /partners/:uuid
-  @Put(":uuid")
+  // PUT /partners/:slug
+  @Put(":slug")
   async updatePartner(
-    @Param("uuid") uuid: string,
+    @Param("slug") slug: string,
     @Body() body: UpdatePartnerDto,
     @Res() res: Response,
   ) {
-    const result = await this.partnersService.update(uuid, body);
+    const result = await this.partnersService.update(slug, body);
     return res.status(result.ok ? 200 : 500).json(result);
   }
 
   // DELETE /partners/:uuid
-  @Delete(":uuid")
-  async deletePartner(@Param("uuid") uuid: string, @Res() res: Response) {
-    const result = await this.partnersService.delete(uuid);
+  @Delete(":slug")
+  async deletePartner(@Param("slug") slug: string, @Res() res: Response) {
+    const result = await this.partnersService.delete(slug);
     return res.status(result.ok ? 200 : 500).json(result);
   }
 
   // GET /partners/profile/:uuid
-  @Get("profile/:uuid")
-  async getPartnerWithProfile(@Param("uuid") uuid: string) {
-    return this.partnersService.findOneWithProfile(uuid);
+  @Get("profile/:slug")
+  async getPartnerWithProfile(@Param("slug") slug: string) {
+    return this.partnersService.findOneWithProfile(slug);
   }
 }
