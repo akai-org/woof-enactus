@@ -24,21 +24,36 @@ const tabs = [
   },
 ];
 
-async function getPartnerData(uuid: string): Promise<Data> {
+async function getPartnerData(slug: string): Promise<Data> {
   const response = await fetch(
-    `${process.env.API_URL}/partners/profile/${uuid}`,
+    `${process.env.API_URL}/partners/profile/${slug}`,
   ).then(res => res.json());
+
   if (!response.ok) notFound();
   return response.data;
 }
 
+export async function generateStaticParams() {
+  const partners = await fetch(`${process.env.API_URL}/partners`).then(res =>
+    res.json(),
+  );
+
+  return partners.data.map((p: { slug: string }) => ({
+    slug: p.slug,
+  }));
+}
+
+export const dynamic = "auto";
+export const revalidate = 7200; // 2 hours
+
 export default async function PartnerPage({
   params,
 }: {
-  params: Promise<{ uuid: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { uuid } = await params;
-  const profileData = await getPartnerData(uuid);
+  const { slug } = await params;
+  const profileData = await getPartnerData(slug);
+
   const tabsToShow = [];
   switch (profileData.type) {
     case "VET":
