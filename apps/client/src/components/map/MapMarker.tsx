@@ -70,7 +70,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
             </List.Item>
           </List.Root>
           <Link
-            linkProps={{ href: `/placowki/${markerData.uuid}` }}
+            linkProps={{ href: `/placowki/${markerData.slug}` }}
             chakraLinkProps={{
               color: "brand.500",
               textDecoration: "none",
