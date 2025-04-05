@@ -31,6 +31,7 @@ type Profile = {
 type Data = {
   id: number;
   uuid: string;
+  slug: string;
   name: string;
   latitude: number;
   longitude: number;

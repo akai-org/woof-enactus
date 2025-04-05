@@ -17,6 +17,7 @@ model Partner {
   id          Int         @id @default(autoincrement())
   uuid        String      @unique @default(uuid())
   name        String
+  slug        String      @unique
   latitude    Float       @default(0)
   longitude   Float       @default(0)
   profile     PartnerProfile?
