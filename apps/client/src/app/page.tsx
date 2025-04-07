@@ -9,8 +9,16 @@ export default async function Home({
 }: {
   searchParams: Promise<HomeSearchParams>;
 }) {
-  const { type } = await searchParams;
-  const partners = await getPartners({ type });
+  const { type, query } = await searchParams;
+
+  const city = query?.split(",")[0];
+  const street = query?.split(",")[1];
+  const params = {
+    ...(city && { city }),
+    ...(street && { street }),
+  };
+
+  const partners = await getPartners({ type, ...params });
 
   if (!partners) notFound();
 

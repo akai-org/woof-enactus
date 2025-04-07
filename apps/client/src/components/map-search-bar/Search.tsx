@@ -39,7 +39,7 @@ export default function Search() {
   return (
     <Group w="full" marginRight={{ base: "0", md: "10%" }} marginY="2" attached>
       <Input
-        placeholder="Ulica, miasto"
+        placeholder="Miasto, ulica"
         value={value}
         onChange={e => {
           setValue(e.currentTarget.value);
