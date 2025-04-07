@@ -1,17 +1,58 @@
 import { legendItems } from "@/constants";
 import {
   Button,
-  CheckboxGroup,
   Fieldset,
   For,
   Popover,
   Portal,
+  VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { IoClose, IoFilterSharp } from "react-icons/io5";
 import { Checkbox } from "@/components";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import type { PartnerType } from "@/types";
+
+const PARTNER_TYPE_SEARCH_PARAM = "type";
 
 export default function Filters() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const prevTypes = useMemo(() => {
+    const types = searchParams.get(PARTNER_TYPE_SEARCH_PARAM);
+    return types ? types.split(",") : [];
+  }, [searchParams]);
+
+  const updateSearchParam = useCallback(
+    (updatedType: string[], paramName: string) => {
+      const params = new URLSearchParams(searchParams);
+      if (updatedType.length > 0) {
+        params.set(paramName, updatedType.join(","));
+      } else {
+        params.delete(paramName);
+      }
+      replace(`${pathname}?${params.toString()}`);
+    },
+    [pathname, replace, searchParams],
+  );
+
+  const handleFilterChange = useCallback(
+    (isChecked: boolean, partnerType: PartnerType) => {
+      let typeParam = [...prevTypes];
+
+      if (isChecked && !typeParam.includes(partnerType)) {
+        typeParam.push(partnerType);
+      } else if (!isChecked) {
+        typeParam = typeParam.filter(type => type !== partnerType);
+      }
+
+      updateSearchParam(typeParam, PARTNER_TYPE_SEARCH_PARAM);
+    },
+    [prevTypes, updateSearchParam],
+  );
+
   return (
     <Popover.Root positioning={{ placement: "bottom-end" }}>
       <Popover.Trigger asChild>
@@ -52,17 +93,24 @@ export default function Filters() {
                 <IoClose />
               </Popover.CloseTrigger>
               <Fieldset.Root paddingTop={6}>
-                <CheckboxGroup>
+                <VStack>
                   <Fieldset.Content>
                     <For each={legendItems}>
-                      {({ name }) => (
-                        <Checkbox key={name} value={name}>
+                      {({ name, type }) => (
+                        <Checkbox
+                          key={name}
+                          value={name}
+                          onCheckedChange={details =>
+                            handleFilterChange(!!details.checked, type)
+                          }
+                          defaultChecked={prevTypes.includes(type)}
+                        >
                           {name}
                         </Checkbox>
                       )}
                     </For>
                   </Fieldset.Content>
-                </CheckboxGroup>
+                </VStack>
               </Fieldset.Root>
             </Popover.Body>
           </Popover.Content>

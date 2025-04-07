@@ -26,13 +26,15 @@ type PartnerProfile = {
   };
 };
 
+type PartnerType = "SHELTER" | "VET" | "ORG" | "SHOP";
+
 type PartnerData = {
   id: number;
   uuid: string;
   name: string;
   latitude: number;
   longitude: number;
-  type: "SHELTER" | "VET" | "ORG" | "SHOP";
+  type: PartnerType;
   profile: PartnerProfile;
 };
 
@@ -40,19 +42,25 @@ type Legend = {
   name: string;
   color: string;
   markerPath: string;
-  type: PartnerData["type"];
+  type: PartnerType;
 };
 
 type PartnersParams = {
   name: string;
   city: string;
   street: string;
-  type: PartnerData["type"];
+  type: string; // e.g. "VET,SHELTER,ORG"
 };
 
-type ServerResponse<T> = {
+type GenericServerResponse<T> = {
   ok: boolean;
   data: T;
+  message: string;
+  error: string;
+};
+
+type PartnerPageParams = {
+  uuid: string;
 };
 
 export type {
@@ -60,5 +68,7 @@ export type {
   PartnerProfile,
   Legend,
   PartnersParams,
-  ServerResponse,
+  GenericServerResponse,
+  PartnerType,
+  PartnerPageParams,
 };
