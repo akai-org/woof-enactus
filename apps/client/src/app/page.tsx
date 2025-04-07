@@ -2,15 +2,15 @@ import { Map, SearchBar } from "@/components";
 import { getPartners } from "@/api";
 import { ClientOnly, Container, Skeleton, Heading } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
-import type { PartnersParams } from "@/types";
+import type { HomeSearchParams } from "@/types";
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<PartnersParams>;
+  searchParams: Promise<HomeSearchParams>;
 }) {
-  const resolvedSearchParams = await searchParams;
-  const partners = await getPartners(resolvedSearchParams);
+  const { type } = await searchParams;
+  const partners = await getPartners({ type });
 
   if (!partners) notFound();
 

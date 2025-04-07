@@ -63,6 +63,11 @@ type PartnerPageParams = {
   uuid: string;
 };
 
+type HomeSearchParams = {
+  query: string; // e.g. "city,street"
+  type: string; // e.g. "VET,SHELTER,ORG"
+};
+
 export type {
   PartnerData,
   PartnerProfile,
@@ -71,4 +76,5 @@ export type {
   GenericServerResponse,
   PartnerType,
   PartnerPageParams,
+  HomeSearchParams,
 };
