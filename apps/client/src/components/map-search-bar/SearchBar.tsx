@@ -1,9 +1,9 @@
 "use client";
 
-import { Container, Input, Group, Flex, IconButton } from "@chakra-ui/react";
-import { IoSearch } from "react-icons/io5";
+import { Container, Flex } from "@chakra-ui/react";
 import Filters from "./Filters";
 import Legend from "./Legend";
+import Search from "./Search";
 
 export default function SearchBar() {
   return (
@@ -14,18 +14,7 @@ export default function SearchBar() {
         flexDir={{ base: "column", md: "row" }}
         gap="2"
       >
-        <Group
-          attached
-          w="full"
-          marginRight={{ base: "0", md: "10%" }}
-          marginY="2"
-        >
-          <Input flex="1" placeholder="Miasto, ulica, nazwa" />
-          <IconButton variant="outline">
-            <IoSearch />
-          </IconButton>
-        </Group>
-
+        <Search />
         <Flex
           gap="2"
           justifyContent="space-between"
