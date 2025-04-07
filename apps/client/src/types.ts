@@ -63,10 +63,10 @@ type PartnerPageParams = {
   uuid: string;
 };
 
-type HomeSearchParams = {
+type HomeSearchParams = Partial<{
   query: string; // e.g. "city,street"
   type: string; // e.g. "VET,SHELTER,ORG"
-};
+}>;
 
 export type {
   PartnerData,
