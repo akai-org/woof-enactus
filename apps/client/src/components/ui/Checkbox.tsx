@@ -17,7 +17,6 @@ export default function Checkbox(props: CheckboxProps) {
       {...rest}
       variant="solid"
       colorPalette="yellow"
-      defaultChecked
     >
       <ChakraCheckbox.HiddenInput ref={ref} {...inputProps} />
       <ChakraCheckbox.Control color="white">

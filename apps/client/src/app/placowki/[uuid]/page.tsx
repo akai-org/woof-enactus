@@ -3,6 +3,7 @@ import { RiArrowLeftLine } from "react-icons/ri";
 import { notFound } from "next/navigation";
 import { Link, PartnerInfo, PartnerNeeds, PartnerEvents } from "@/components";
 import { getPartnerProfile } from "@/api";
+import type { PartnerPageParams } from "@/types";
 
 const tabs = [
   {
@@ -27,7 +28,7 @@ const tabs = [
 export default async function PartnerPage({
   params,
 }: {
-  params: Promise<{ uuid: string }>;
+  params: Promise<PartnerPageParams>;
 }) {
   const { uuid } = await params;
   const profileData = await getPartnerProfile(uuid);
