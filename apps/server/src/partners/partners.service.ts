@@ -16,7 +16,7 @@ export class PartnersService {
     name?: string,
     city?: string,
     street?: string,
-    type?: PartnerType,
+    types?: PartnerType[],
   ): Promise<GetAllPartnersResponse> {
     try {
       let partnerIdsFromProfile: number[] | null = null;
@@ -77,7 +77,14 @@ export class PartnersService {
           : (partnerIdsFromProfile ?? partnerIdsFromName);
 
       const filter: Prisma.PartnerWhereInput = {
-        ...(type && Object.values(PartnerType).includes(type) ? { type } : {}),
+        ...(types && types.length
+          ? {
+              type: {
+                in: types.filter(t => Object.values(PartnerType).includes(t)),
+              },
+            }
+          : {}),
+
         ...(combinedPartnerIds ? { id: { in: combinedPartnerIds } } : {}),
       };
 
