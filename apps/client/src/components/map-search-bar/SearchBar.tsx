@@ -1,11 +1,9 @@
 "use client";
 
-import { Container, Input, Group, Flex, IconButton } from "@chakra-ui/react";
-import { IoSearch } from "react-icons/io5";
-import { FaLocationCrosshairs } from "react-icons/fa6";
+import { Container, Flex } from "@chakra-ui/react";
 import Filters from "./Filters";
 import Legend from "./Legend";
-import { Tooltip } from "@/components";
+import Search from "./Search";
 
 type SearchBarProps = {
   onLocate: () => void;
@@ -20,27 +18,7 @@ export default function SearchBar({ onLocate }: SearchBarProps) {
         flexDir={{ base: "column", md: "row" }}
         gap="2"
       >
-        <Group
-          attached
-          w="full"
-          marginRight={{ base: "0", md: "10%" }}
-          marginY="2"
-        >
-          <Input flex="1" placeholder="Miasto, ulica, nazwa" />
-          <IconButton variant="outline">
-            <IoSearch />
-          </IconButton>
-
-          <Tooltip
-            content="Zlokalizuj mnie"
-            positioning={{ placement: "right-end" }}
-          >
-            <IconButton onClick={onLocate} variant="outline">
-              <FaLocationCrosshairs />
-            </IconButton>
-          </Tooltip>
-        </Group>
-
+        <Search onLocate={onLocate} />
         <Flex
           gap="2"
           justifyContent="space-between"

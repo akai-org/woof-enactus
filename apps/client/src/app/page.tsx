@@ -1,10 +1,27 @@
 import { Map } from "@/components";
-import { api } from "@/constants/partnersApi";
-import { ClientOnly, Container, Skeleton, Heading } from "@chakra-ui/react";
+import { getPartners } from "@/api";
 
-export default async function Home() {
-  const result = await api.partnersControllerGetAllPartners();
-  const partners = result.data.data;
+import { ClientOnly, Container, Skeleton, Heading } from "@chakra-ui/react";
+import { notFound } from "next/navigation";
+import type { HomeSearchParams } from "@/types";
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<HomeSearchParams>;
+}) {
+  const { type, query } = await searchParams;
+
+  const city = query?.split(",")[0];
+  const street = query?.split(",")[1];
+  const params = {
+    ...(city && { city }),
+    ...(street && { street }),
+  };
+
+  const partners = await getPartners({ type, ...params });
+
+  if (!partners) notFound();
 
   return (
     <>
@@ -13,7 +30,7 @@ export default async function Home() {
           Znajdź placówki prozwierzęce
         </Heading>
       </Container>
-      <ClientOnly fallback={<Skeleton minH="80vh" m={5} />}>
+      <ClientOnly fallback={<Skeleton minH="70vh" />}>
         <Map data={partners} />
       </ClientOnly>
     </>

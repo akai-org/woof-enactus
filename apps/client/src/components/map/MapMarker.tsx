@@ -1,28 +1,33 @@
 "use client";
 
-import { LatLngExpression, icon } from "leaflet";
+import { icon } from "leaflet";
+import type { LatLngExpression } from "leaflet";
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
-import { Data } from "@/types";
+import type { PartnerData, PartnerType } from "@/types";
 import { Box, List, Text } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
 import { Link, Button } from "@/components";
+import { legendItems } from "@/constants";
 
 type MapMarkerProps = {
-  markerData: Data;
+  markerData: PartnerData;
 };
 
-const customIcon = icon({
-  iconUrl: "marker-icon.svg",
-  iconSize: [35, 35],
-});
+const createIcon = (type: PartnerType) => {
+  const markerPath = legendItems.find(item => item.type === type)?.markerPath;
+  return icon({
+    iconUrl: markerPath ?? "",
+    iconSize: [35, 35],
+  });
+};
 
 function MapMarker({ markerData }: MapMarkerProps) {
-  const { latitude, longitude, name, profile } = markerData;
+  const { latitude, longitude, name, profile, type } = markerData;
   const position: LatLngExpression = [latitude, longitude];
 
   return (
-    <Marker position={position} icon={customIcon}>
+    <Marker position={position} icon={createIcon(type)}>
       <Popup>
         <Box
           display={"flex"}
@@ -78,7 +83,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
               fontWeight: "bold",
             }}
           >
-            <Button>Szczegóły</Button>
+            <Button as="span">Szczegóły</Button>
           </Link>
         </Box>
       </Popup>

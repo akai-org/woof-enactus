@@ -1,8 +1,13 @@
-import { Box, Button, Container, For, Heading, Tabs } from "@chakra-ui/react";
-import { RiArrowLeftLine } from "react-icons/ri";
+import { Box, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
-import { Data } from "@/types";
-import { Link, PartnerInfo, PartnerNeeds, PartnerEvents } from "@/components";
+import {
+  PartnerInfo,
+  PartnerNeeds,
+  PartnerEvents,
+  GoBackButton,
+} from "@/components";
+import { getPartnerProfile } from "@/api";
+import type { PartnerPageParams } from "@/types";
 
 const tabs = [
   {
@@ -24,15 +29,6 @@ const tabs = [
   },
 ];
 
-async function getPartnerData(slug: string): Promise<Data> {
-  const response = await fetch(
-    `${process.env.API_URL}/partners/profile/${slug}`,
-  ).then(res => res.json());
-
-  if (!response.ok) notFound();
-  return response.data;
-}
-
 export async function generateStaticParams() {
   const partners = await fetch(`${process.env.API_URL}/partners`).then(res =>
     res.json(),
@@ -49,10 +45,12 @@ export const revalidate = 7200; // 2 hours
 export default async function PartnerPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<PartnerPageParams>;
 }) {
   const { slug } = await params;
-  const profileData = await getPartnerData(slug);
+  const profileData = await getPartnerProfile(slug);
+
+  if (!profileData) notFound();
 
   const tabsToShow = [];
   switch (profileData.type) {
@@ -68,12 +66,7 @@ export default async function PartnerPage({
 
   return (
     <Container mt={8} maxW="breakpoint-xl">
-      <Button variant="outline" asChild size="sm">
-        <Link linkProps={{ href: "/" }}>
-          <RiArrowLeftLine />
-          Powrót
-        </Link>
-      </Button>
+      <GoBackButton />
       <Heading
         my={5}
         size={{ base: "4xl", md: "5xl" }}

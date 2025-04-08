@@ -8,10 +8,10 @@ import {
   Portal,
   Text,
   Container,
-  Avatar,
   Tabs,
   Icon,
   Center,
+  Button,
 } from "@chakra-ui/react";
 import { IoMenu } from "react-icons/io5";
 import { Link } from "@/components";
@@ -92,6 +92,9 @@ function Nav() {
                           </Link>
                         )}
                       </For>
+                      <Button bgColor="brand.700">
+                        Zaloguj się jako placówka
+                      </Button>
                     </Drawer.Body>
                     <Drawer.Footer>
                       <Link
@@ -134,7 +137,7 @@ function Nav() {
                 borderBottom="none"
                 minWidth="50%"
                 display="flex"
-                gap="10"
+                gap="5"
               >
                 <For each={links}>
                   {item => (
@@ -165,17 +168,12 @@ function Nav() {
           </Flex>
 
           <Flex flex="1" justifyContent="flex-end">
-            <Link
-              linkProps={{ href: "/login" }}
-              chakraLinkProps={{
-                textDecoration: "none",
-                _focus: { boxShadow: "none", outline: "none" },
-              }}
+            <Button
+              bgColor="brand.700"
+              display={{ base: "none", md: "initial" }}
             >
-              <Avatar.Root>
-                <Avatar.Fallback />
-              </Avatar.Root>
-            </Link>
+              Zaloguj się jako placówka
+            </Button>
           </Flex>
         </Center>
       </Container>

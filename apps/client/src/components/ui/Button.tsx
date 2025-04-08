@@ -1,4 +1,4 @@
-import { Button as ChakraBtn, ButtonProps } from "@chakra-ui/react";
+import { Button as ChakraButton, type ButtonProps } from "@chakra-ui/react";
 import { MdArrowRightAlt } from "react-icons/md";
 
 function Button({
@@ -6,7 +6,7 @@ function Button({
   ...props
 }: ButtonProps & React.RefAttributes<HTMLButtonElement>) {
   return (
-    <ChakraBtn
+    <ChakraButton
       ref={ref}
       variant={"solid"}
       fontFamily={"heading"}
@@ -16,7 +16,7 @@ function Button({
       {...props}
     >
       {props.children} <MdArrowRightAlt />
-    </ChakraBtn>
+    </ChakraButton>
   );
 }
 
