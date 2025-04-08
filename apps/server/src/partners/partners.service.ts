@@ -4,6 +4,9 @@ import { CreatePartnerDto } from "./dto/CreatePartnerDto";
 import UpdatePartnerDto from "./dto/UpdatePartnerDto";
 import { PrismaService } from "../prisma/prisma.service";
 import { Partner, PartnerType, Prisma } from "@prisma/client";
+import slugify from "slugify";
+import { CreateNeededGoodsDto } from "./dto/CreateNeededGoodsDto";
+import { UpdateNeededGoodsDto } from "./dto/UpdateNeededGoodsDto";
 
 @Injectable()
 export class PartnersService {
@@ -97,10 +100,10 @@ export class PartnersService {
     }
   }
 
-  async findOne(uuid: string): Promise<GenericResponse> {
+  async findOne(slug: string): Promise<GenericResponse> {
     try {
       const partner = await this.prisma.partner.findUnique({
-        where: { uuid },
+        where: { slug },
       });
 
       if (!partner) {
@@ -128,6 +131,7 @@ export class PartnersService {
           //TODO latitude and logitude remain 0 for now;
           latitude: 0,
           longitude: 0,
+          slug: `temp-${Date.now()}`, // temporary unique value
           profile: {
             create: {
               description: body.description,
@@ -138,6 +142,8 @@ export class PartnersService {
               phone: body.phone,
               website: body.website,
               animals: body.animals,
+              email: body.email,
+              image: body.image,
               visitHours: body.visitHours,
               openHours: {
                 create: {
@@ -155,7 +161,14 @@ export class PartnersService {
         },
       });
 
-      return { ok: true, data: newPartner };
+      const generatedSlug = `${slugify(newPartner.name, { lower: true })}-${newPartner.id}`;
+
+      const partnerWithSlug = await this.prisma.partner.update({
+        where: { id: newPartner.id },
+        data: { slug: generatedSlug },
+      });
+
+      return { ok: true, data: partnerWithSlug };
     } catch (e: any) {
       const error = e as Error;
       return {
@@ -167,25 +180,35 @@ export class PartnersService {
   }
 
   async update(
-    uuid: string,
+    slug: string,
     updateDto: UpdatePartnerDto,
   ): Promise<GenericResponse> {
     try {
-      const updatedPartner = await this.prisma.partner.update({
-        where: { uuid },
+      let updatedPartner = await this.prisma.partner.update({
+        where: { slug },
         data: updateDto,
       });
+
+      // If the name is being updated, recalculate the slug.
+      if (updateDto.name) {
+        const newSlug = `${slugify(updateDto.name, { lower: true })}-${updatedPartner.id}`;
+        updatedPartner = await this.prisma.partner.update({
+          where: { id: updatedPartner.id },
+          data: { slug: newSlug },
+        });
+      }
+
       return { ok: true, data: updatedPartner };
     } catch (e: any) {
       return { ok: false, message: "Error updating partner", error: e.message };
     }
   }
 
-  async delete(uuid: string): Promise<GenericResponse> {
+  async delete(slug: string): Promise<GenericResponse> {
     try {
       // Find the partner along with its profile
       const partner = await this.prisma.partner.findUnique({
-        where: { uuid },
+        where: { slug },
         include: { profile: true },
       });
 
@@ -206,7 +229,7 @@ export class PartnersService {
 
       // Now delete the partner record.
       const deletedPartner = await this.prisma.partner.delete({
-        where: { uuid },
+        where: { slug },
       });
 
       return { ok: true, data: deletedPartner };
@@ -215,10 +238,10 @@ export class PartnersService {
     }
   }
 
-  async findOneWithProfile(uuid: string): Promise<GenericResponse> {
+  async findOneWithProfile(slug: string): Promise<GenericResponse> {
     try {
       const partner = await this.prisma.partner.findUnique({
-        where: { uuid },
+        where: { slug },
         include: {
           profile: {
             include: {
@@ -235,6 +258,132 @@ export class PartnersService {
       return { ok: true, data: partner };
     } catch (e: any) {
       return { ok: false, message: "Internal server error", error: e.message };
+    }
+  }
+
+  // === Needed Goods CRUD integrated into PartnersService ===
+
+  async findNeededGoodsForPartner(slug: string): Promise<GenericResponse> {
+    try {
+      const partnerResult = await this.findOne(slug);
+      if (!partnerResult.ok || !partnerResult.data) {
+        return { ok: false, message: "Partner not found", data: undefined };
+      }
+      const partner = partnerResult.data as Partner;
+      const goods = await this.prisma.neededGoods.findMany({
+        where: { partnerId: partner.id },
+      });
+      return { ok: true, data: goods };
+    } catch (e: any) {
+      return {
+        ok: false,
+        message: "Error retrieving needed goods",
+        error: e.message,
+      };
+    }
+  }
+
+  async createNeededGoodsForPartner(
+    slug: string,
+    body: CreateNeededGoodsDto,
+  ): Promise<GenericResponse> {
+    try {
+      const partnerResult = await this.findOne(slug);
+      if (!partnerResult.ok || !partnerResult.data) {
+        return { ok: false, message: "Partner not found", data: undefined };
+      }
+      const partner = partnerResult.data as Partner;
+      const newGood = await this.prisma.neededGoods.create({
+        data: {
+          name: body.name,
+          note: body.note,
+          amountCurrent: body.amountCurrent,
+          amountMax: body.amountMax,
+          amountUnit: body.amountUnit,
+          state: body.state,
+          stateInfo: body.stateInfo,
+          partnerId: partner.id,
+        },
+      });
+      return { ok: true, data: newGood };
+    } catch (e: any) {
+      return {
+        ok: false,
+        message: "Error creating needed goods",
+        error: e.message,
+      };
+    }
+  }
+
+  async updateNeededGoodsForPartner(
+    slug: string,
+    goodUuid: string,
+    updateDto: UpdateNeededGoodsDto,
+  ): Promise<GenericResponse> {
+    try {
+      const partnerResult = await this.findOne(slug);
+      if (!partnerResult.ok || !partnerResult.data) {
+        return { ok: false, message: "Partner not found", data: undefined };
+      }
+      const partner = partnerResult.data as Partner;
+      // Ensure the needed goods record belongs to the partner
+      const good = await this.prisma.neededGoods.findUnique({
+        where: { uuid: goodUuid },
+      });
+      if (!good || good.partnerId !== partner.id) {
+        return {
+          ok: false,
+          message: "Needed goods not found for this partner",
+          data: undefined,
+        };
+      }
+      // Update needed goods (do not allow updating partnerId)
+      const { partnerId, ...dataToUpdate } = updateDto;
+      const updatedGood = await this.prisma.neededGoods.update({
+        where: { uuid: goodUuid },
+        data: dataToUpdate,
+      });
+      return { ok: true, data: updatedGood };
+    } catch (e: any) {
+      return {
+        ok: false,
+        message: "Error updating needed goods",
+        error: e.message,
+      };
+    }
+  }
+
+  async deleteNeededGoodsForPartner(
+    slug: string,
+    goodUuid: string,
+  ): Promise<GenericResponse> {
+    try {
+      const partnerResult = await this.findOne(slug);
+      if (!partnerResult.ok || !partnerResult.data) {
+        return { ok: false, message: "Partner not found", data: undefined };
+      }
+      const partner = partnerResult.data as Partner;
+      // Ensure the needed goods record belongs to the partner
+      const good = await this.prisma.neededGoods.findUnique({
+        where: { uuid: goodUuid },
+      });
+      if (!good || good.partnerId !== partner.id) {
+        return {
+          ok: false,
+          message: "Needed goods not found for this partner",
+          data: undefined,
+        };
+      }
+      const deletedGood = await this.prisma.neededGoods.delete({
+        where: { uuid: goodUuid },
+      });
+      return { ok: true, data: deletedGood };
+    } catch (e: any) {
+      return {
+        ok: false,
+        message: "Error deleting needed goods",
+        error: e.message,
+      };
     }
   }
 }

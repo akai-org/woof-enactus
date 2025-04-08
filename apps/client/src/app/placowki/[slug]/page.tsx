@@ -29,6 +29,19 @@ const tabs = [
   },
 ];
 
+export async function generateStaticParams() {
+  const partners = await fetch(`${process.env.API_URL}/partners`).then(res =>
+    res.json(),
+  );
+
+  return partners.data.map((p: { slug: string }) => ({
+    slug: p.slug,
+  }));
+}
+
+export const dynamic = "auto";
+export const revalidate = 7200; // 2 hours
+
 export default async function PartnerPage({
   params,
 }: {

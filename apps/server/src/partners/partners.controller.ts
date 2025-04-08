@@ -16,6 +16,8 @@ import UpdatePartnerDto from "./dto/UpdatePartnerDto";
 import { ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { GetAllPartnersResponse } from "../types";
 import { PartnerType } from "@prisma/client";
+import { CreateNeededGoodsDto } from "./dto/CreateNeededGoodsDto";
+import { UpdateNeededGoodsDto } from "./dto/UpdateNeededGoodsDto";
 
 @ApiTags("partners")
 @Controller("partners")
@@ -40,10 +42,10 @@ export class PartnersController {
     return res.status(result.ok ? 200 : 400).json(result);
   }
 
-  // GET /partners/:uuid
-  @Get(":uuid")
-  async getPartnerByUuid(@Param("uuid") uuid: string, @Res() res: Response) {
-    const result = await this.partnersService.findOne(uuid);
+  // GET /partners/:slug
+  @Get(":slug")
+  async getPartnerBySlug(@Param("slug") slug: string, @Res() res: Response) {
+    const result = await this.partnersService.findOne(slug);
     return res.status(result.ok ? 200 : 404).json(result);
   }
 
@@ -54,27 +56,74 @@ export class PartnersController {
     return res.status(result.ok ? 201 : 500).json(result);
   }
 
-  // PUT /partners/:uuid
-  @Put(":uuid")
+  // PUT /partners/:slug
+  @Put(":slug")
   async updatePartner(
-    @Param("uuid") uuid: string,
+    @Param("slug") slug: string,
     @Body() body: UpdatePartnerDto,
     @Res() res: Response,
   ) {
-    const result = await this.partnersService.update(uuid, body);
+    const result = await this.partnersService.update(slug, body);
     return res.status(result.ok ? 200 : 500).json(result);
   }
 
-  // DELETE /partners/:uuid
-  @Delete(":uuid")
-  async deletePartner(@Param("uuid") uuid: string, @Res() res: Response) {
-    const result = await this.partnersService.delete(uuid);
+  // DELETE /partners/:slug
+  @Delete(":slug")
+  async deletePartner(@Param("slug") slug: string, @Res() res: Response) {
+    const result = await this.partnersService.delete(slug);
     return res.status(result.ok ? 200 : 500).json(result);
   }
 
-  // GET /partners/profile/:uuid
-  @Get("profile/:uuid")
-  async getPartnerWithProfile(@Param("uuid") uuid: string) {
-    return this.partnersService.findOneWithProfile(uuid);
+  // GET /partners/profile/:slug
+  @Get("profile/:slug")
+  async getPartnerWithProfile(@Param("slug") slug: string) {
+    return this.partnersService.findOneWithProfile(slug);
+  }
+
+  // GET /partners/:slug/needed-goods
+  @Get(":slug/needed-goods")
+  async getNeededGoodsForPartner(
+    @Param("slug") slug: string,
+    @Res() res: Response,
+  ) {
+    const result = await this.partnersService.findNeededGoodsForPartner(slug);
+    return res.status(result.ok ? 200 : 500).json(result);
+  }
+
+  // POST /partners/:slug/needed-goods
+  @Post(":slug/needed-goods")
+  async createNeededGoodsForPartner(
+    @Param("slug") slug: string,
+    @Body() body: CreateNeededGoodsDto,
+    @Res() res: Response,
+  ) {
+    const result = await this.partnersService.createNeededGoodsForPartner(
+      slug,
+      body,
+    );
+    return res.status(result.ok ? 201 : 500).json(result);
+  }
+
+  // PUT /partners/:slug/needed-goods/update/:goodUuid
+  @Put(":slug/needed-goods/update/:goodUuid")
+  async updateNeededGoodsForPartner(
+    @Param("slug") slug: string,
+    @Param("goodUuid") goodUuid: string,
+    @Body() body: UpdateNeededGoodsDto,
+    @Res() res: Response
+  ) {
+    const result = await this.partnersService.updateNeededGoodsForPartner(slug, goodUuid, body);
+    return res.status(result.ok ? 200 : 500).json(result);
+  }
+
+  // DELETE /partners/:slug/needed-goods/delete/:goodUuid
+  @Delete(":slug/needed-goods/delete/:goodUuid")
+  async deleteNeededGoodsForPartner(
+    @Param("slug") slug: string,
+    @Param("goodUuid") goodUuid: string,
+    @Res() res: Response
+  ) {
+    const result = await this.partnersService.deleteNeededGoodsForPartner(slug, goodUuid);
+    return res.status(result.ok ? 200 : 500).json(result);
   }
 }

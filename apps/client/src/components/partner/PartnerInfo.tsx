@@ -92,7 +92,7 @@ export default function PartnerInfo({
                   color: "brand.900",
                 }}
               >
-                kontaktwithenactus@gmail.com
+                {data.email}
               </Link>
             </InfoBox>
             <InfoBox title="Strona internetowa">
@@ -144,7 +144,7 @@ export default function PartnerInfo({
       <VStack gap={4} align="start">
         <Card.Root w="full" borderColor="brand.300">
           <Card.Body p={[2, 6]}>
-            <Image src="https://placehold.co/600x400/png" />
+            <Image src={data.image} alt="" />
           </Card.Body>
         </Card.Root>
         <Card.Root w="full" borderColor="brand.300" flexGrow={1}>
