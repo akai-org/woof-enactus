@@ -22,6 +22,7 @@ const eslintConfig = [
           caughtErrorsIgnorePattern: "^_$",
         },
       ],
+      "@typescript-eslint/consistent-type-imports": "error",
     },
   },
 ];

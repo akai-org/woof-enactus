@@ -1,5 +1,5 @@
 import { system } from "./theme";
-import { api } from "./partnersApi";
+import { legendItems } from "./legend";
 import { toaster } from "./toaster";
 
-export { system, api, toaster };
+export { system, legendItems, toaster };

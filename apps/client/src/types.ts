@@ -1,5 +1,5 @@
 // TEMPORARY
-type Profile = {
+type PartnerProfile = {
   id: number;
   uuid: string;
   partnerId: number;
@@ -28,15 +28,57 @@ type Profile = {
   };
 };
 
-type Data = {
+type PartnerType = "SHELTER" | "VET" | "ORG" | "SHOP";
+
+type PartnerData = {
   id: number;
   uuid: string;
   slug: string;
   name: string;
   latitude: number;
   longitude: number;
-  type: "SHELTER" | "VET" | "ORG" | "SHOP";
-  profile: Profile;
+  type: PartnerType;
+  profile: PartnerProfile;
 };
 
-export type { Data, Profile };
+type Legend = {
+  name: string;
+  color: string;
+  markerPath: string;
+  type: PartnerType;
+};
+
+// type for GET /partners endpoint in src/api
+type PartnersParams = {
+  name: string;
+  city: string;
+  street: string;
+  type: string; // e.g. "VET,SHELTER,ORG"
+};
+
+type GenericServerResponse<T> = {
+  ok: boolean;
+  data: T;
+  message: string;
+  error: string;
+};
+
+type PartnerPageParams = {
+  slug: string;
+};
+
+type HomeSearchParams = Partial<{
+  query: string; // e.g. "city,street"
+  type: string; // e.g. "VET,SHELTER,ORG"
+}>;
+
+export type {
+  PartnerData,
+  PartnerProfile,
+  Legend,
+  PartnersParams,
+  GenericServerResponse,
+  PartnerType,
+  PartnerPageParams,
+  HomeSearchParams,
+};

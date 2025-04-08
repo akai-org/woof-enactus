@@ -1,15 +1,16 @@
 "use client";
 
 import { useCallback, useMemo, useState, useRef } from "react";
-import { LatLngExpression } from "leaflet";
+import type { LatLngExpression } from "leaflet";
+
 import { MapContainer, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+import type { PartnerData } from "@/types";
 
 import MapMarker from "./MapMarker";
 import Location from "./Location";
 import type { LocationHandle } from "./Location";
 import { SearchBar } from "../map-search-bar";
-import { Data } from "@/types";
 
 /* 
   NOTE: Except for its children, MapContainer props are immutable:
@@ -21,7 +22,7 @@ const DEFAULT_ZOOM = 11;
 
 type MapProps = {
   children?: React.ReactNode;
-  data: Data[];
+  data: PartnerData[];
 };
 
 function Map({ children, data }: MapProps) {

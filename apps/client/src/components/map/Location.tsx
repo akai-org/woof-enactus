@@ -1,7 +1,8 @@
 "use client";
 
 import { toaster } from "@/constants";
-import { icon, LatLngExpression } from "leaflet";
+import type { LatLngExpression } from "leaflet";
+import { icon } from "leaflet";
 import { useEffect, useState, useImperativeHandle, useCallback } from "react";
 
 import { Marker, useMapEvents } from "react-leaflet";
