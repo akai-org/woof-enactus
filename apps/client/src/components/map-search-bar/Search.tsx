@@ -1,11 +1,17 @@
 import { Group, IconButton, Input } from "@chakra-ui/react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
+import { FaLocationCrosshairs } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
+import { Tooltip } from "@/components";
 
 const PARTNER_ADDRESS_SEARCH_PARAM = "query";
 
-export default function Search() {
+type SearchProps = {
+  onLocate: () => void;
+};
+
+export default function Search({ onLocate }: SearchProps) {
   const { replace } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -48,6 +54,15 @@ export default function Search() {
       <IconButton variant="outline" onClick={handleSearchSubmit}>
         <IoSearch />
       </IconButton>
+
+      <Tooltip
+        content="Zlokalizuj mnie"
+        positioning={{ placement: "right-end" }}
+      >
+        <IconButton onClick={onLocate} variant="outline">
+          <FaLocationCrosshairs />
+        </IconButton>
+      </Tooltip>
     </Group>
   );
 }

@@ -1,5 +1,6 @@
-import { Map, SearchBar } from "@/components";
+import { Map } from "@/components";
 import { getPartners } from "@/api";
+
 import { ClientOnly, Container, Skeleton, Heading } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import type { HomeSearchParams } from "@/types";
@@ -28,17 +29,8 @@ export default async function Home({
         <Heading as="h1" size="4xl" color="brand.700" my="2">
           Znajdź placówki prozwierzęce
         </Heading>
-        <ClientOnly
-          fallback={
-            <Container padding={4}>
-              <Skeleton h={10} />
-            </Container>
-          }
-        >
-          <SearchBar />
-        </ClientOnly>
       </Container>
-      <ClientOnly fallback={<Skeleton minH="80vh" m={5} />}>
+      <ClientOnly fallback={<Skeleton minH="70vh" />}>
         <Map data={partners} />
       </ClientOnly>
     </>
