@@ -1,17 +1,14 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useRef } from "react";
 import { LatLngExpression } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
-import MapMarker from "./MapMarker";
-
 import MarkerClusterGroup from "react-leaflet-markercluster";
 
-import type { LocationHandle } from "./Location";
+import MapMarker from "./MapMarker";
 import Location from "./Location";
-import { useRef } from "react";
-import { SearchBar } from "@/components";
-
+import type { LocationHandle } from "./Location";
+import { SearchBar } from "../map-search-bar";
 import { Data } from "@/types";
 
 /* 
@@ -31,9 +28,10 @@ function Map({ children, data }: MapProps) {
   const [showLocation, setShowLocation] = useState(false);
   const locationRef = useRef<LocationHandle>(null);
 
-  const memoizedMarkers = useMemo(() => {
-    return data.map(item => <MapMarker markerData={item} key={item.uuid} />);
-  }, [data]);
+  const memoizedMarkers = useMemo(
+    () => data.map(item => <MapMarker markerData={item} key={item.uuid} />),
+    [data],
+  );
 
   const handleLocate = useCallback(() => {
     if (showLocation) {
