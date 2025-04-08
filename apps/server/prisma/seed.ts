@@ -23,6 +23,7 @@ async function main() {
       latitude: faker.location.latitude({ min: 50, max: 54, precision: 5 }),
       longitude: faker.location.longitude({ min: 15, max: 23, precision: 5 }),
       slug: `temp-${i}`,
+      partnerAccountId: i + 1,
     });
   }
 
@@ -32,7 +33,7 @@ async function main() {
 
   // getch all and generate slug
   const allPartners = await prisma.partner.findMany();
-  const updatePromises = allPartners.map((partner) => {
+  const updatePromises = allPartners.map(partner => {
     const generatedSlug = `${slugify(partner.name, { lower: true })}-${partner.id}`;
     return prisma.partner.update({
       where: { id: partner.id },
