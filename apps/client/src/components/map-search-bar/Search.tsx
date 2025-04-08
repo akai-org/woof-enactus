@@ -50,8 +50,17 @@ export default function Search({ onLocate }: SearchProps) {
         onChange={e => {
           setValue(e.currentTarget.value);
         }}
+        borderColor="brand.300"
+        color="brand.700"
+        _placeholder={{ color: "brand.700" }}
       />
-      <IconButton variant="outline" onClick={handleSearchSubmit}>
+
+      <IconButton
+        variant="outline"
+        onClick={handleSearchSubmit}
+        borderLeft={0}
+        borderRight={0}
+      >
         <IoSearch />
       </IconButton>
 
@@ -59,7 +68,12 @@ export default function Search({ onLocate }: SearchProps) {
         content="Zlokalizuj mnie"
         positioning={{ placement: "right-end" }}
       >
-        <IconButton onClick={onLocate} variant="outline">
+        <IconButton
+          onClick={onLocate}
+          variant="outline"
+          borderTopLeftRadius={0}
+          borderBottomLeftRadius={0}
+        >
           <FaLocationCrosshairs />
         </IconButton>
       </Tooltip>

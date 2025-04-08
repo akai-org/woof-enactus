@@ -83,7 +83,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
               fontWeight: "bold",
             }}
           >
-            <Button>Szczegóły</Button>
+            <Button as="span">Szczegóły</Button>
           </Link>
         </Box>
       </Popup>
