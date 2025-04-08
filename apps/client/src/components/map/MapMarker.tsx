@@ -6,7 +6,7 @@ import { Marker, Popup } from "react-leaflet";
 import { Data } from "@/types";
 import { Box, List, Text } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
-import { Link, Btn } from "@/components";
+import { Link, Button } from "@/components";
 
 type MapMarkerProps = {
   markerData: Data;
@@ -78,7 +78,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
               fontWeight: "bold",
             }}
           >
-            <Btn>Szczegóły</Btn>
+            <Button>Szczegóły</Button>
           </Link>
         </Box>
       </Popup>
