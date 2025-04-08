@@ -5,7 +5,11 @@ import Filters from "./Filters";
 import Legend from "./Legend";
 import Search from "./Search";
 
-export default function SearchBar() {
+type SearchBarProps = {
+  onLocate: () => void;
+};
+
+export default function SearchBar({ onLocate }: SearchBarProps) {
   return (
     <Container padding={4}>
       <Flex
@@ -14,7 +18,7 @@ export default function SearchBar() {
         flexDir={{ base: "column", md: "row" }}
         gap="2"
       >
-        <Search />
+        <Search onLocate={onLocate} />
         <Flex
           gap="2"
           justifyContent="space-between"
