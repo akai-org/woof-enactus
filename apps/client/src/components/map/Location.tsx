@@ -1,15 +1,17 @@
 "use client";
 
+import { toaster } from "@/constants";
 import { icon, LatLngExpression } from "leaflet";
-import { useEffect, useState, useImperativeHandle } from "react";
+import { useEffect, useState, useImperativeHandle, useCallback } from "react";
 
 import { Marker, useMapEvents } from "react-leaflet";
-import { toaster } from "@/components/ui/toaster"
+
+export type LocationHandle = { centerUser: () => void };
 
 type LocationProps = {
   defaultPosition: LatLngExpression;
   defaultZoom: number;
-  ref?: React.Ref<{ center_user: () => void }>;
+  ref?: React.Ref<LocationHandle>;
 };
 
 const customIcon = icon({
@@ -18,40 +20,41 @@ const customIcon = icon({
 });
 
 const Location = ({ defaultPosition, defaultZoom, ref }: LocationProps) => {
-  const [userPosition, setUserPosition] = useState<[number, number] | null>(null);
+  const [userPosition, setUserPosition] = useState<LatLngExpression | null>(
+    null,
+  );
 
   const map = useMapEvents({
-    locationerror: error => {
+    locationerror: _ => {
       map.setView(defaultPosition, map.getZoom(), { animate: true });
 
       toaster.create({
         title: "Odmówiono dostępu do lokalizacji",
         description: "Nie możemy znaleźć Twojej lokalizacji",
         type: "error",
-      })
-      
-      console.log(error);
+      });
     },
-    locationfound: (event) => {
-      const userLatLng = [event.latlng.lat, event.latlng.lng] as [number, number];
+    locationfound: event => {
+      const userLatLng: LatLngExpression = [event.latlng.lat, event.latlng.lng];
       setUserPosition(userLatLng);
       map.setView(userLatLng, 13, { animate: true });
     },
   });
 
-  const center_user = () => {
+  const centerUser = useCallback(() => {
     if (userPosition) {
       map.setView(userPosition, 13, { animate: true });
-    }else{
+    } else {
       toaster.create({
         title: "Pozwól nam na pobranie Twojej lokalizacji",
-        description: "Aby znaleść najbliższe placówki prozwierzęce, musimy znać Twoją lokalizację",  
-      })
-      
+        description:
+          "Aby znaleźć najbliższe placówki prozwierzęce, musimy znać Twoją lokalizację",
+      });
     }
-  };
+  }, [map, userPosition]);
+
   useImperativeHandle(ref, () => ({
-    center_user,
+    centerUser,
   }));
 
   useEffect(() => {
@@ -62,7 +65,9 @@ const Location = ({ defaultPosition, defaultZoom, ref }: LocationProps) => {
     };
   }, [map]);
 
-  return userPosition ? <Marker position={userPosition} icon={customIcon} /> : null;
+  return userPosition ? (
+    <Marker position={userPosition} icon={customIcon} />
+  ) : null;
 };
 
 export default Location;

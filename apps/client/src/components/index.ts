@@ -5,7 +5,7 @@ import Footer from "./Footer";
 
 import { SearchBar } from "./map-search-bar";
 import { PartnerEvents, PartnerInfo, PartnerNeeds } from "./partner";
-import { Button, Link, Tooltip } from "./ui";
+import { Button, Link, Tooltip, Toaster } from "./ui";
 
 export {
   Map,
@@ -18,4 +18,5 @@ export {
   Link,
   Button,
   Tooltip,
+  Toaster,
 };
