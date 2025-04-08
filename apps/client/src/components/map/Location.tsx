@@ -1,7 +1,8 @@
 "use client";
 
 import { icon, LatLngExpression } from "leaflet";
-import { useEffect, useState, forwardRef, useImperativeHandle } from "react";
+import { useEffect, useState, useImperativeHandle } from "react";
+
 import { Marker, useMapEvents } from "react-leaflet";
 import { toaster } from "@/components/ui/toaster"
 
@@ -17,12 +18,10 @@ const customIcon = icon({
 });
 
 const Location = ({ defaultPosition, defaultZoom, ref }: LocationProps) => {
-
-
   const [userPosition, setUserPosition] = useState<[number, number] | null>(null);
 
   const map = useMapEvents({
-    locationerror: (error) => {
+    locationerror: error => {
       map.setView(defaultPosition, map.getZoom(), { animate: true });
 
       toaster.create({
