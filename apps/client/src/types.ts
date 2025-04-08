@@ -48,6 +48,7 @@ type Legend = {
   type: PartnerType;
 };
 
+// type for GET /partners endpoint in src/api
 type PartnersParams = {
   name: string;
   city: string;
