@@ -1,24 +1,19 @@
 "use client";
 
-import {
-  Container,
-  Input,
-  Group,
-  Flex,
-  IconButton,
-  Text,
-} from "@chakra-ui/react";
+import { Container, Input, Group, Flex, IconButton } from "@chakra-ui/react";
 import { IoSearch } from "react-icons/io5";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import Filters from "./Filters";
 import Legend from "./Legend";
-import { Tooltip } from "@/components/ui/tooltip"
+
+import { Tooltip } from "@/components";
 
 type SearchBarProps = {
-  onLocate: () => void; 
+  onLocate: () => void;
 };
 
-export default function SearchBar({onLocate}: SearchBarProps) {
+
+export default function SearchBar({ onLocate }: SearchBarProps) {
   return (
     <Container padding={4}>
       <Flex
@@ -33,7 +28,7 @@ export default function SearchBar({onLocate}: SearchBarProps) {
           marginRight={{ base: "0", md: "10%" }}
           marginY="2"
         >
-          <Input flex="1" placeholder="Enter your email" />
+          <Input flex="1" placeholder="Miasto, ulica, nazwa" />
           <IconButton variant="outline">
             <IoSearch />
           </IconButton>

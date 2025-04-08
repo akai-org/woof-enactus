@@ -10,11 +10,11 @@ import {
   Container,
   Avatar,
   Tabs,
-  Link,
   Icon,
   Center,
 } from "@chakra-ui/react";
 import { IoMenu } from "react-icons/io5";
+import { Link } from "@/components";
 
 const links = [
   {
@@ -81,10 +81,12 @@ function Nav() {
                       <For each={links}>
                         {item => (
                           <Link
-                            href={item.href}
-                            textDecoration="none"
-                            textStyle={"md"}
-                            _focus={{ boxShadow: "none", outline: "none" }}
+                            linkProps={{ href: item.href }}
+                            chakraLinkProps={{
+                              textDecoration: "none",
+                              textStyle: "md",
+                              _focus: { boxShadow: "none", outline: "none" },
+                            }}
                           >
                             {item.name}
                           </Link>
@@ -93,12 +95,14 @@ function Nav() {
                     </Drawer.Body>
                     <Drawer.Footer>
                       <Link
-                        href="/"
-                        textDecoration="none"
-                        color="brand.500"
-                        textStyle={"xl"}
-                        fontWeight="bold"
-                        textTransform={"uppercase"}
+                        linkProps={{ href: "/" }}
+                        chakraLinkProps={{
+                          textDecoration: "none",
+                          color: "brand.500",
+                          textStyle: "xl",
+                          fontWeight: "bold",
+                          textTransform: "uppercase",
+                        }}
                       >
                         Haumaps
                       </Link>
@@ -108,13 +112,15 @@ function Nav() {
               </Portal>
             </Drawer.Root>
             <Link
-              href="/"
-              textDecoration="none"
-              color="brand.500"
-              textStyle="3xl"
-              fontWeight="bold"
-              textTransform={"uppercase"}
-              _focus={{ boxShadow: "none", outline: "none" }}
+              linkProps={{ href: "/" }}
+              chakraLinkProps={{
+                textDecoration: "none",
+                color: "brand.500",
+                textStyle: "3xl",
+                fontWeight: "bold",
+                textTransform: "uppercase",
+                _focus: { boxShadow: "none", outline: "none" },
+              }}
             >
               Haumaps
             </Link>
@@ -132,27 +138,26 @@ function Nav() {
               >
                 <For each={links}>
                   {item => (
-                    <Link
-                      href={item.href}
-                      textDecoration="none"
-                      textStyle="md"
-                      width="max-content"
-                      _focus={{ boxShadow: "none", outline: "none" }}
-                    >
-                      <Tabs.Trigger
-                        value={item.name}
-                        color="brand.500"
-                        as="span"
-                        borderRadius="sm"
-                        transition="background-color 0.3s ease"
-                        _hover={{
-                          color: "brand.100",
-                          backgroundColor: "brand.500",
+                    <Tabs.Trigger value={item.name} asChild>
+                      <Link
+                        linkProps={{ href: item.href }}
+                        chakraLinkProps={{
+                          color: "brand.700",
+                          borderRadius: "sm",
+                          transition: "background-color 0.3s ease",
+                          _hover: {
+                            color: "brand.100",
+                            backgroundColor: "brand.500",
+                          },
+                          textDecoration: "none",
+                          textStyle: "sm",
+                          width: "max-content",
+                          _focus: { boxShadow: "none", outline: "none" },
                         }}
                       >
                         {item.name}
-                      </Tabs.Trigger>
-                    </Link>
+                      </Link>
+                    </Tabs.Trigger>
                   )}
                 </For>
               </Tabs.List>
@@ -161,9 +166,11 @@ function Nav() {
 
           <Flex flex="1" justifyContent="flex-end">
             <Link
-              href="/login"
-              textDecoration="none"
-              _focus={{ boxShadow: "none", outline: "none" }}
+              linkProps={{ href: "/login" }}
+              chakraLinkProps={{
+                textDecoration: "none",
+                _focus: { boxShadow: "none", outline: "none" },
+              }}
             >
               <Avatar.Root>
                 <Avatar.Fallback />
