@@ -2,11 +2,11 @@ import type { PartnerData, GenericServerResponse } from "@/types";
 
 // TODO: add logger, improve error handling
 export default async function getPartnerProfile(
-  partnerUuid: string,
+  partnerSlug: string,
 ): Promise<PartnerData | null> {
   try {
     const res = await fetch(
-      `${process.env.API_URL}/partners/profile/${partnerUuid}`,
+      `${process.env.API_URL}/partners/profile/${partnerSlug}`,
     );
     const { data, ok }: GenericServerResponse<PartnerData> = await res.json();
 

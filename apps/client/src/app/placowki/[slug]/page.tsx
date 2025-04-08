@@ -47,8 +47,8 @@ export default async function PartnerPage({
 }: {
   params: Promise<PartnerPageParams>;
 }) {
-  const { uuid } = await params;
-  const profileData = await getPartnerProfile(uuid);
+  const { slug } = await params;
+  const profileData = await getPartnerProfile(slug);
 
   if (!profileData) notFound();
 

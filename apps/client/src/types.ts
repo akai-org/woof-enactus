@@ -63,7 +63,7 @@ type GenericServerResponse<T> = {
 };
 
 type PartnerPageParams = {
-  uuid: string;
+  slug: string;
 };
 
 type HomeSearchParams = Partial<{
