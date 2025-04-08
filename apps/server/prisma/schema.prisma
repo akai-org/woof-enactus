@@ -17,6 +17,7 @@ model Partner {
   id          Int         @id @default(autoincrement())
   uuid        String      @unique @default(uuid())
   name        String
+  slug        String      @unique
   latitude    Float       @default(0)
   longitude   Float       @default(0)
   profile     PartnerProfile?
@@ -39,6 +40,8 @@ model PartnerProfile {
   animals     String[]
   visitHours  String?
   openHours   WorkingHours?
+  email       String?
+  image       String?
 }
 
 model WorkingHours {
@@ -66,7 +69,7 @@ model NeededGoods {
   id              Int     @id @default(autoincrement())
   uuid            String  @unique @default(uuid())
   partner         Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
-  partnerId       Int     @unique
+  partnerId       Int
   name            String
   note            String?
   amountCurrent   Int?

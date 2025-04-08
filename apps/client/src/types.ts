@@ -12,6 +12,8 @@ type PartnerProfile = {
   website: string;
   animals: string[];
   visitHours: string;
+  email: string;
+  image: string; // url
   openHours: {
     monday: string;
     tuesday: string;
@@ -31,6 +33,7 @@ type PartnerType = "SHELTER" | "VET" | "ORG" | "SHOP";
 type PartnerData = {
   id: number;
   uuid: string;
+  slug: string;
   name: string;
   latitude: number;
   longitude: number;
