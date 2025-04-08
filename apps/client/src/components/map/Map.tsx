@@ -7,7 +7,7 @@ import MapMarker from "./MapMarker";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Data } from "./types";
 import Location from "./Location";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import SearchBar from "../mapSearchBar/SearchBar";
 /* 
   NOTE: Except for its children, MapContainer props are immutable:
@@ -25,11 +25,15 @@ type MapProps = {
 function Map({ children, data }: MapProps) {
 
   const [showLocation, setShowLocation] = useState(false);
+  const locationRef = useRef<any>(null);
 
   const handleLocate = () => {
-    setShowLocation(true);
+    if(showLocation){
+      locationRef.current.center_user();
+    }else{
+      setShowLocation(true);
+    }
   };
-
 
   return (<>
   <SearchBar onLocate={handleLocate} />
@@ -47,6 +51,7 @@ function Map({ children, data }: MapProps) {
       />
       {showLocation && (
         <Location
+          ref={locationRef}
           defaultPosition={DEFAULT_POSITION}
           defaultZoom={DEFAULT_ZOOM}
         />
