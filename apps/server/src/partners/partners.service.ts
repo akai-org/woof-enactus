@@ -73,7 +73,7 @@ export class PartnersService {
 
       const combinedPartnerIds =
         partnerIdsFromProfile && partnerIdsFromName
-          ? partnerIdsFromProfile.filter(id => partnerIdsFromName!.includes(id))
+          ? partnerIdsFromProfile.filter(id => partnerIdsFromName.includes(id))
           : (partnerIdsFromProfile ?? partnerIdsFromName);
 
       const filter: Prisma.PartnerWhereInput = {
@@ -128,7 +128,9 @@ export class PartnersService {
         data: {
           name: body.name,
           type: body.type,
-          //TODO latitude and logitude remain 0 for now;
+          // TODO for now set to 0
+          partnerAccountId: 0,
+          // TODO latitude and logitude remain 0 for now;
           latitude: 0,
           longitude: 0,
           slug: `temp-${Date.now()}`, // temporary unique value
@@ -200,7 +202,11 @@ export class PartnersService {
 
       return { ok: true, data: updatedPartner };
     } catch (e: any) {
-      return { ok: false, message: "Error updating partner", error: e.message };
+      return {
+        ok: false,
+        message: "Error updating partner",
+        error: (e as Error).message,
+      };
     }
   }
 
@@ -234,7 +240,11 @@ export class PartnersService {
 
       return { ok: true, data: deletedPartner };
     } catch (e: any) {
-      return { ok: false, message: "Error deleting partner", error: e.message };
+      return {
+        ok: false,
+        message: "Error deleting partner",
+        error: (e as Error).message,
+      };
     }
   }
 
@@ -257,7 +267,11 @@ export class PartnersService {
 
       return { ok: true, data: partner };
     } catch (e: any) {
-      return { ok: false, message: "Internal server error", error: e.message };
+      return {
+        ok: false,
+        message: "Internal server error",
+        error: (e as Error).message,
+      };
     }
   }
 
@@ -278,7 +292,7 @@ export class PartnersService {
       return {
         ok: false,
         message: "Error retrieving needed goods",
-        error: e.message,
+        error: (e as Error).message,
       };
     }
   }
@@ -310,7 +324,7 @@ export class PartnersService {
       return {
         ok: false,
         message: "Error creating needed goods",
-        error: e.message,
+        error: (e as Error).message,
       };
     }
   }
@@ -338,6 +352,7 @@ export class PartnersService {
         };
       }
       // Update needed goods (do not allow updating partnerId)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { partnerId, ...dataToUpdate } = updateDto;
       const updatedGood = await this.prisma.neededGoods.update({
         where: { uuid: goodUuid },
@@ -348,7 +363,7 @@ export class PartnersService {
       return {
         ok: false,
         message: "Error updating needed goods",
-        error: e.message,
+        error: (e as Error).message,
       };
     }
   }
@@ -382,7 +397,7 @@ export class PartnersService {
       return {
         ok: false,
         message: "Error deleting needed goods",
-        error: e.message,
+        error: (e as Error).message,
       };
     }
   }

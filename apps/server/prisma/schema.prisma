@@ -13,16 +13,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model PartnerAccount {
+  id          Int       @id @default(autoincrement())
+  uuid        String    @unique @default(uuid())
+  username    String    @unique
+  password    String
+  partner     Partner?
+}
+
 model Partner {
-  id          Int         @id @default(autoincrement())
-  uuid        String      @unique @default(uuid())
-  name        String
-  slug        String      @unique
-  latitude    Float       @default(0)
-  longitude   Float       @default(0)
-  profile     PartnerProfile?
-  neededGoods NeededGoods[]
-  type        PartnerType
+  id                Int             @id @default(autoincrement())
+  uuid              String          @unique @default(uuid())
+  name              String
+  slug              String          @unique
+  latitude          Float           @default(0)
+  longitude         Float           @default(0)
+  profile           PartnerProfile?
+  neededGoods       NeededGoods[]
+  type              PartnerType
+  partnerAccountId  Int             @unique
+  partnerAccount    PartnerAccount  @relation(fields: [partnerAccountId], references: [id], onDelete: Cascade)
 }
 
 model PartnerProfile {
