@@ -7,6 +7,7 @@ import MapMarker from "./MapMarker";
 
 import MarkerClusterGroup from "react-leaflet-markercluster";
 
+import type { LocationHandle } from "./Location";
 import Location from "./Location";
 import { useRef } from "react";
 import { SearchBar } from "@/components";
@@ -28,16 +29,15 @@ type MapProps = {
 
 function Map({ children, data }: MapProps) {
   const [showLocation, setShowLocation] = useState(false);
-  const locationRef = useRef<any>(null);
+  const locationRef = useRef<LocationHandle>(null);
 
   const handleLocate = () => {
-    if(showLocation){
-      locationRef.current.center_user();
-    }else{
+    if (showLocation) {
+      locationRef.current?.centerUser();
+    } else {
       setShowLocation(true);
     }
   };
-
 
   return (
     <>
@@ -48,7 +48,7 @@ function Map({ children, data }: MapProps) {
         zoomControl={true}
         minZoom={6}
         maxZoom={18}
-        style={{ minHeight: "80vh" }}
+        style={{ minHeight: "70vh" }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

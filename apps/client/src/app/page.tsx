@@ -1,7 +1,6 @@
 import { Map } from "@/components";
 import { api } from "@/constants/partnersApi";
 import { ClientOnly, Container, Skeleton, Heading } from "@chakra-ui/react";
-import { Toaster } from "@/components/ui/toaster";
 
 export default async function Home() {
   const result = await api.partnersControllerGetAllPartners();
@@ -16,7 +15,6 @@ export default async function Home() {
       </Container>
       <ClientOnly fallback={<Skeleton minH="80vh" m={5} />}>
         <Map data={partners} />
-        <Toaster />
       </ClientOnly>
     </>
   );
