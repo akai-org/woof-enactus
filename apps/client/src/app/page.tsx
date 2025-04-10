@@ -19,7 +19,7 @@ export default async function Home({
     ...(street && { street }),
   };
 
-  const partners = await getPartners({ type, ...params });
+  const partners = await getPartners({ types: type, ...params });
 
   if (!partners) notFound();
 

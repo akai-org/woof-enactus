@@ -66,7 +66,7 @@ type PartnersParams = {
   name: string;
   city: string;
   street: string;
-  type: string; // e.g. "VET,SHELTER,ORG"
+  types: string; // e.g. "VET,SHELTER,ORG"
 };
 
 type GenericServerResponse<T> = {
