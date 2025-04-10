@@ -24,13 +24,30 @@ export default async function PartnerNeeds({ slug }: Props) {
   const needs = await getPartnerNeeds(slug);
   if (!needs) return NotFound();
 
+  const newest = new Date(
+    needs.reduce((latest, current) => {
+      return new Date(current.createdAt) > new Date(latest.createdAt)
+        ? current
+        : latest;
+    }).createdAt,
+  );
+  const newestDate = newest.toLocaleString("pl-PL", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Europe/Warsaw",
+  });
+
   return (
     <Flex direction="column" gap="2">
       <Heading as="h2" size={{ base: "3xl", md: "4xl" }} color="brand.700">
         Czego obecnie potrzebujemy
       </Heading>
       <Text color="brand.600" fontWeight="semibold">
-        Ostatnia aktualizacja: 12.12.2000 8:00
+        Ostatnia aktualizacja: {newestDate}
       </Text>
       <Table.Root size="lg" my={10} striped minW="md" hideBelow="md">
         <Table.Header>
@@ -86,7 +103,7 @@ export default async function PartnerNeeds({ slug }: Props) {
                     boxSize={4}
                     rounded={5}
                   />
-                  {need.note}
+                  {need.stateInfo}
                 </Flex>
               </Accordion.ItemBody>
             </Accordion.ItemContent>
