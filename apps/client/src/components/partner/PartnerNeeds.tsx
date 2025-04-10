@@ -10,48 +10,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-const categories = {
-  always: {
-    label: "Zawsze mile widziane",
-    color: "brand.600",
-  },
-  longTerm: {
-    label: "Długoterminowe, zawsze mile widziane",
-    color: "brand.500",
-  },
-  urgent: {
-    label: "Potrzebne w najbiższym czasie",
-    color: "accent.yellow",
-  },
+const colors = {
+  OK: "brand.600",
+  MEDIUM: "brand.500",
+  LOW: "accent.yellow",
 };
-
-const items = [
-  {
-    name: "Karma sucha",
-    availability: "2 / 10kg",
-    category: categories.urgent,
-  },
-  {
-    name: "Karma sucha",
-    availability: "2 / 10kg",
-    category: categories.urgent,
-  },
-  {
-    name: "Karma sucha",
-    availability: "2 / 10kg",
-    category: categories.always,
-  },
-  {
-    name: "Karma sucha",
-    availability: "2 / 10kg",
-    category: categories.urgent,
-  },
-  {
-    name: "Karma sucha",
-    availability: "2 / 10kg",
-    category: categories.longTerm,
-  },
-];
 
 type Props = {
   slug: string;
@@ -85,19 +48,19 @@ export default async function PartnerNeeds({ slug }: Props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {items.map((item, i) => (
+          {needs.map((need, i) => (
             <Table.Row key={i}>
-              <Table.Cell>{item.name}</Table.Cell>
-              <Table.Cell>{item.availability}</Table.Cell>
+              <Table.Cell textAlign="center">{need.name}</Table.Cell>
+              <Table.Cell textAlign="center">{`${need.amountCurrent} / ${need.amountMax} ${need.amountUnit}`}</Table.Cell>
               <Table.Cell>
-                <Flex alignItems="center" gap={2}>
+                <Flex justify="center" alignItems="center" gap={2}>
                   <Box
-                    bg={item.category.color}
+                    bg={colors[need.state]}
                     minW={4}
                     boxSize={4}
                     rounded={5}
                   />
-                  {item.category.label}
+                  {need.stateInfo}
                 </Flex>
               </Table.Cell>
             </Table.Row>
@@ -105,24 +68,25 @@ export default async function PartnerNeeds({ slug }: Props) {
         </Table.Body>
       </Table.Root>
       <Accordion.Root collapsible defaultValue={["0"]} hideFrom="md">
-        {items.map((item, index) => (
-          <Accordion.Item key={index} value={index.toString()}>
+        {needs.map((need, i) => (
+          <Accordion.Item key={i} value={i.toString()}>
             <Accordion.ItemTrigger>
-              <Span>{item.name}</Span>
-              <Box bg={item.category.color} minW={4} boxSize={4} rounded={5} />
+              <Span>{need.name}</Span>
+              <Box bg={colors[need.state]} minW={4} boxSize={4} rounded={5} />
               <Accordion.ItemIndicator />
             </Accordion.ItemTrigger>
             <Accordion.ItemContent>
               <Accordion.ItemBody>
-                Stan obecny: {item.availability}
+                Stan obecny:{" "}
+                {`${need.amountCurrent} / ${need.amountMax} ${need.amountUnit}`}
                 <Flex alignItems="center" gap={2}>
                   <Box
-                    bg={item.category.color}
+                    bg={colors[need.state]}
                     minW={4}
                     boxSize={4}
                     rounded={5}
                   />
-                  {item.category.label}
+                  {need.note}
                 </Flex>
               </Accordion.ItemBody>
             </Accordion.ItemContent>
