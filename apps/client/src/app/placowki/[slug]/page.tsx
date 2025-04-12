@@ -14,7 +14,6 @@ const tabs = [
     id: "stuff",
     label: "Potrzebne rzeczy",
     color: "brand.700",
-    content: <PartnerNeeds />,
   },
   {
     id: "info",
@@ -25,7 +24,6 @@ const tabs = [
     id: "events",
     label: "Wydarzenia",
     color: "brand.500",
-    content: <PartnerEvents />,
   },
 ];
 
@@ -101,11 +99,9 @@ export default async function PartnerPage({
           {tab => (
             <Tabs.Content bg={tab.color} value={tab.id} p={[2, undefined, 8]}>
               <Box bg="brand.100" borderRadius="md" p={[3, 8]}>
-                {tab.id == "info" ? (
-                  <PartnerInfo profileData={profileData} />
-                ) : (
-                  tab.content
-                )}
+                {tab.id == "info" && <PartnerInfo profileData={profileData} />}
+                {tab.id == "stuff" && <PartnerNeeds slug={slug} />}
+                {tab.id == "events" && <PartnerEvents />}
               </Box>
             </Tabs.Content>
           )}
