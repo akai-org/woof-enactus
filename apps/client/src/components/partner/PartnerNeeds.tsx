@@ -7,6 +7,7 @@ import {
   Heading,
   Span,
   Table,
+  HStack,
   Text,
 } from "@chakra-ui/react";
 
@@ -49,27 +50,44 @@ export default async function PartnerNeeds({ slug }: Props) {
       <Text color="brand.600" fontWeight="semibold">
         Ostatnia aktualizacja: {newestDate}
       </Text>
-      <Table.Root size="lg" my={10} striped minW="md" hideBelow="md">
+      <Table.Root
+        size="lg"
+        my={10}
+        minW="md"
+        hideBelow="md"
+        borderColor="brand.300"
+        borderWidth={1}
+      >
         <Table.Header>
           <Table.Row>
-            {["NAZWA", "STAN OBECNY", "KATEGORIA"].map((header, i) => (
+            {["Nazwa", "Stan obecny", "Kategoria"].map((header, i) => (
               <Table.ColumnHeader
                 key={i}
                 color="brand.700"
                 textAlign="center"
                 textWrap="nowrap"
+                fontWeight="semibold"
+                p="6"
               >
-                {header}
+                {header.toUpperCase()}
               </Table.ColumnHeader>
             ))}
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {needs.map((need, i) => (
-            <Table.Row key={i}>
-              <Table.Cell textAlign="center">{need.name}</Table.Cell>
-              <Table.Cell textAlign="center">{`${need.amountCurrent} / ${need.amountMax} ${need.amountUnit}`}</Table.Cell>
-              <Table.Cell>
+            <Table.Row
+              key={i}
+              bgColor={i % 2 === 0 ? "brand.300" : "brand.100"}
+            >
+              <Table.Cell p="6" textAlign="center">
+                {need.name}
+              </Table.Cell>
+              <Table.Cell
+                p="6"
+                textAlign="center"
+              >{`${need.amountCurrent} / ${need.amountMax} ${need.amountUnit}`}</Table.Cell>
+              <Table.Cell p="6">
                 <Flex justify="center" alignItems="center" gap={2}>
                   <Box
                     bg={colors[need.state]}
@@ -84,19 +102,34 @@ export default async function PartnerNeeds({ slug }: Props) {
           ))}
         </Table.Body>
       </Table.Root>
-      <Accordion.Root collapsible defaultValue={["0"]} hideFrom="md">
+      <Accordion.Root
+        collapsible
+        defaultValue={["0"]}
+        hideFrom="md"
+        borderWidth={1}
+        borderColor="brand.300"
+        borderRadius="sm"
+        mt="6"
+      >
         {needs.map((need, i) => (
-          <Accordion.Item key={i} value={i.toString()}>
-            <Accordion.ItemTrigger>
-              <Span>{need.name}</Span>
-              <Box bg={colors[need.state]} minW={4} boxSize={4} rounded={5} />
+          <Accordion.Item
+            key={i}
+            value={i.toString()}
+            bgColor={i % 2 === 0 ? "brand.300" : "brand.100"}
+            py="2"
+          >
+            <Accordion.ItemTrigger justifyContent="space-between" px="2">
+              <HStack>
+                <Span>{need.name}</Span>
+                <Box bg={colors[need.state]} minW={4} boxSize={4} rounded={5} />
+              </HStack>
               <Accordion.ItemIndicator />
             </Accordion.ItemTrigger>
-            <Accordion.ItemContent>
+            <Accordion.ItemContent px="2">
               <Accordion.ItemBody>
                 Stan obecny:{" "}
                 {`${need.amountCurrent} / ${need.amountMax} ${need.amountUnit}`}
-                <Flex alignItems="center" gap={2}>
+                <Flex alignItems="center" gap={2} mt="2">
                   <Box
                     bg={colors[need.state]}
                     minW={4}
@@ -111,8 +144,20 @@ export default async function PartnerNeeds({ slug }: Props) {
         ))}
       </Accordion.Root>
 
-      <Box p={5}>
-        <Heading w="full" color="brand.500">
+      <Box
+        p={{ md: "8", base: "4" }}
+        borderRadius="sm"
+        borderColor="brand.300"
+        borderWidth={1}
+        width="100%"
+        mt="8"
+      >
+        <Heading
+          as="h3"
+          size={{ md: "2xl", base: "xl" }}
+          color="brand.500"
+          mb="2"
+        >
           Notatka od nas!
         </Heading>
         <Text>Bardzo dziękujemy za szybką pomoc</Text>
