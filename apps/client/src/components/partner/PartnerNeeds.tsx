@@ -26,10 +26,10 @@ export default async function PartnerNeeds({ slug }: Props) {
 
   const newest = new Date(
     needs.reduce((latest, current) => {
-      return new Date(current.createdAt) > new Date(latest.createdAt)
+      return new Date(current.updatedAt) > new Date(latest.updatedAt)
         ? current
         : latest;
-    }).createdAt,
+    }).updatedAt,
   );
   const newestDate = newest.toLocaleString("pl-PL", {
     year: "numeric",

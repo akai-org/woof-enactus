@@ -1,4 +1,4 @@
-import type { PartnerData, GenericServerResponse, PartnerNeed } from "@/types";
+import type { GenericServerResponse, PartnerNeed } from "@/types";
 
 // TODO: add logger, improve error handling
 export default async function getPartnerNeeds(
