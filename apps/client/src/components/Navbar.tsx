@@ -174,7 +174,7 @@ function Nav() {
               display={{ base: "none", md: "initial" }}
               asChild
             >
-              <NextLink href="/login">Zaloguj się jako placówka</NextLink>
+              <NextLink href="/zaloguj-sie">Zaloguj się jako placówka</NextLink>
             </Button>
           </Flex>
         </Center>
