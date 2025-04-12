@@ -46,6 +46,7 @@ type PartnerNeed = {
   amountMax: number;
   amountUnit: string;
   createdAt: string;
+  updatedAt: string;
   id: number;
   name: string;
   note: string;
