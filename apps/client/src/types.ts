@@ -41,19 +41,21 @@ type PartnerData = {
   profile: PartnerProfile;
 };
 
-type PartnerNeed = {
-  amountCurrent: number;
-  amountMax: number;
-  amountUnit: string;
-  createdAt: string;
-  updatedAt: string;
-  id: number;
-  name: string;
+type PartnerNeeds = {
+  goods: {
+    amountCurrent: number;
+    amountMax: number;
+    amountUnit: string;
+    createdAt: string;
+    updatedAt: string;
+    id: number;
+    name: string;
+    partnerId: number;
+    state: "OK" | "MEDIUM" | "LOW";
+    stateInfo: string;
+    uuid: number;
+  }[];
   note: string;
-  partnerId: number;
-  state: "OK" | "MEDIUM" | "LOW";
-  stateInfo: string;
-  uuid: number;
 };
 
 type Legend = {
@@ -94,7 +96,7 @@ export type {
   PartnersParams,
   GenericServerResponse,
   PartnerType,
-  PartnerNeed,
+  PartnerNeeds,
   PartnerPageParams,
   HomeSearchParams,
 };
