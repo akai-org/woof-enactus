@@ -276,11 +276,25 @@ export class PartnersService {
       if (!partnerResult.ok || !partnerResult.data) {
         return { ok: false, message: "Partner not found", data: undefined };
       }
+
       const partner = partnerResult.data as Partner;
-      const goods = await this.prisma.neededGoods.findMany({
-        where: { partnerId: partner.id },
-      });
-      return { ok: true, data: goods };
+
+      const [goods, meta] = await Promise.all([
+        this.prisma.neededGoods.findMany({
+          where: { partnerId: partner.id },
+        }),
+        this.prisma.neededGoodsMeta.findUnique({
+          where: { partnerId: partner.id },
+        }),
+      ]);
+
+      return {
+        ok: true,
+        data: {
+          note: meta?.note ?? null,
+          goods,
+        },
+      };
     } catch (e: any) {
       return {
         ok: false,
@@ -299,11 +313,12 @@ export class PartnersService {
       if (!partnerResult.ok || !partnerResult.data) {
         return { ok: false, message: "Partner not found", data: undefined };
       }
+
       const partner = partnerResult.data as Partner;
+
       const newGood = await this.prisma.neededGoods.create({
         data: {
           name: body.name,
-          note: body.note,
           amountCurrent: body.amountCurrent,
           amountMax: body.amountMax,
           amountUnit: body.amountUnit,
@@ -312,6 +327,18 @@ export class PartnersService {
           partnerId: partner.id,
         },
       });
+
+      if (body.note) {
+        await this.prisma.neededGoodsMeta.upsert({
+          where: { partnerId: partner.id },
+          update: { note: body.note },
+          create: {
+            partnerId: partner.id,
+            note: body.note,
+          },
+        });
+      }
+
       return { ok: true, data: newGood };
     } catch (e: any) {
       return {
