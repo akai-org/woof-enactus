@@ -1,9 +1,15 @@
-import { Container, Input, Group, Flex, IconButton } from "@chakra-ui/react";
-import { IoSearch } from "react-icons/io5";
+"use client";
+
+import { Container, Flex } from "@chakra-ui/react";
 import Filters from "./Filters";
 import Legend from "./Legend";
+import Search from "./Search";
 
-export default function SearchBar() {
+type SearchBarProps = {
+  onLocate: () => void;
+};
+
+export default function SearchBar({ onLocate }: SearchBarProps) {
   return (
     <Container padding={4}>
       <Flex
@@ -12,18 +18,7 @@ export default function SearchBar() {
         flexDir={{ base: "column", md: "row" }}
         gap="2"
       >
-        <Group
-          attached
-          w="full"
-          marginRight={{ base: "0", md: "10%" }}
-          marginY="2"
-        >
-          <Input flex="1" placeholder="Miasto, ulica, nazwa" />
-          <IconButton variant="outline">
-            <IoSearch />
-          </IconButton>
-        </Group>
-
+        <Search onLocate={onLocate} />
         <Flex
           gap="2"
           justifyContent="space-between"

@@ -29,7 +29,8 @@ model Partner {
   latitude    Float           @default(0)
   longitude   Float           @default(0)
   profile     PartnerProfile?
-  neededGoods NeededGoods[]
+  neededGoods      NeededGoods[]
+  neededGoodsMeta  NeededGoodsMeta?
   type        PartnerType
   account     PartnerAccount? @relation(fields: [accountId], references: [id])
   accountId   Int?            @unique
@@ -75,18 +76,29 @@ enum PartnerType {
   SHELTER
 }
 
+
+
 model NeededGoods {
-  id            Int        @id @default(autoincrement())
-  uuid          String     @unique @default(uuid())
-  partner       Partner    @relation(fields: [partnerId], references: [id], onDelete: Cascade)
-  partnerId     Int
+  id            Int      @id @default(autoincrement())
+  uuid          String   @unique @default(uuid())
+  partner       Partner  @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  partnerId     Int      @unique
   name          String
-  note          String?
   amountCurrent Int?
   amountMax     Int
   amountUnit    String?
   state         GoodsState
   stateInfo     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model NeededGoodsMeta {
+  id        Int     @id @default(autoincrement())
+  uuid      String  @unique @default(uuid())
+  partner   Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  partnerId Int     @unique
+  note      String?
 }
 
 enum GoodsState {

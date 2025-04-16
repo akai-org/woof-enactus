@@ -8,6 +8,7 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.workingHours.deleteMany();
   await prisma.partnerProfile.deleteMany();
+  await prisma.neededGoods.deleteMany();
   await prisma.partner.deleteMany();
 
   await prisma.$executeRaw`ALTER SEQUENCE "Partner_id_seq" RESTART WITH 1;`;
@@ -80,21 +81,32 @@ async function main() {
   }
 
   const neededGoodsData: Prisma.NeededGoodsCreateManyInput[] = [];
-  for (let i = 0; i < 1000; i++) {
-    neededGoodsData.push({
-      partnerId: i + 1,
-      note: faker.lorem.lines(2),
-      amountCurrent: 0,
-      amountMax: faker.number.int({
-        min: 0,
-        max: 100,
-      }),
-      amountUnit: faker.helpers.arrayElement(["sztuki", "litry"]),
-      state: "LOW",
-      stateInfo: 'Jakis tam stan typu "Potrzebne pilnie", etc.',
-      name: fakerPL.lorem.words({ min: 1, max: 4 }),
+  for (let partnerId = 1; partnerId <= 1000; partnerId++) {
+    const numberOfGoods = faker.number.int({ min: 1, max: 15 });
+    for (let j = 0; j < numberOfGoods; j++) {
+      neededGoodsData.push({
+        partnerId: partnerId,
+        amountCurrent: 0,
+        amountMax: faker.number.int({ min: 0, max: 100 }),
+        amountUnit: faker.helpers.arrayElement(["sztuki", "litry"]),
+        state: "LOW",
+        stateInfo: 'Jakis tam stan typu "Potrzebne pilnie", etc.',
+        name: fakerPL.lorem.words({ min: 1, max: 4 }),
+      });
+    }
+  }
+  const neededGoodsMetaData: Prisma.NeededGoodsMetaCreateManyInput[] = [];
+
+  for (let partnerId = 1; partnerId <= 1000; partnerId++) {
+    neededGoodsMetaData.push({
+      partnerId,
+      note: faker.lorem.paragraphs({ min: 1, max: 2 }),
     });
   }
+
+  const resultNeededGoodsMeta = await prisma.neededGoodsMeta.createMany({
+    data: neededGoodsMetaData,
+  });
 
   const resultProfiles = await prisma.partnerProfile.createMany({
     data: profilesData,
