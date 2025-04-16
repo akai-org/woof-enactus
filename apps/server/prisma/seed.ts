@@ -33,7 +33,7 @@ async function main() {
 
   // getch all and generate slug
   const allPartners = await prisma.partner.findMany();
-  const updatePromises = allPartners.map((partner) => {
+  const updatePromises = allPartners.map(partner => {
     const generatedSlug = `${slugify(partner.name, { lower: true })}-${partner.id}`;
     return prisma.partner.update({
       where: { id: partner.id },
@@ -85,7 +85,6 @@ async function main() {
     for (let j = 0; j < numberOfGoods; j++) {
       neededGoodsData.push({
         partnerId: partnerId,
-        note: faker.lorem.lines(2),
         amountCurrent: 0,
         amountMax: faker.number.int({ min: 0, max: 100 }),
         amountUnit: faker.helpers.arrayElement(["sztuki", "litry"]),
@@ -95,6 +94,18 @@ async function main() {
       });
     }
   }
+  const neededGoodsMetaData: Prisma.NeededGoodsMetaCreateManyInput[] = [];
+
+  for (let partnerId = 1; partnerId <= 1000; partnerId++) {
+    neededGoodsMetaData.push({
+      partnerId,
+      note: faker.lorem.paragraphs({ min: 1, max: 2 }),
+    });
+  }
+
+  const resultNeededGoodsMeta = await prisma.neededGoodsMeta.createMany({
+    data: neededGoodsMetaData,
+  });
 
   const resultProfiles = await prisma.partnerProfile.createMany({
     data: profilesData,
