@@ -14,32 +14,32 @@ datasource db {
 }
 
 model PartnerAccount {
-  id          Int       @id @default(autoincrement())
-  uuid        String    @unique @default(uuid())
-  username    String    @unique
-  password    String
-  partner     Partner?
+  id       Int      @id @default(autoincrement())
+  uuid     String   @unique @default(uuid())
+  username String   @unique
+  password String
+  partner  Partner?
 }
 
 model Partner {
-  id                Int             @id @default(autoincrement())
-  uuid              String          @unique @default(uuid())
-  name              String
-  slug              String          @unique
-  latitude          Float           @default(0)
-  longitude         Float           @default(0)
-  profile           PartnerProfile?
-  neededGoods       NeededGoods[]
-  type              PartnerType
-  partnerAccountId  Int             @unique
-  partnerAccount    PartnerAccount  @relation(fields: [partnerAccountId], references: [id], onDelete: Cascade)
+  id          Int             @id @default(autoincrement())
+  uuid        String          @unique @default(uuid())
+  name        String
+  slug        String          @unique
+  latitude    Float           @default(0)
+  longitude   Float           @default(0)
+  profile     PartnerProfile?
+  neededGoods NeededGoods[]
+  type        PartnerType
+  account     PartnerAccount? @relation(fields: [accountId], references: [id])
+  accountId   Int?            @unique
 }
 
 model PartnerProfile {
-  id          Int     @id @default(autoincrement())
-  uuid        String  @unique @default(uuid())
-  partner     Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
-  partnerId   Int     @unique
+  id          Int           @id @default(autoincrement())
+  uuid        String        @unique @default(uuid())
+  partner     Partner       @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  partnerId   Int           @unique
   description String?
   getToInfo   String?
   city        String?
@@ -55,17 +55,17 @@ model PartnerProfile {
 }
 
 model WorkingHours {
-  id          Int             @id @default(autoincrement())
-  uuid        String          @unique @default(uuid())
-  profile     PartnerProfile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  profileId   Int             @unique
-  monday      String
-  tuesday     String
-  wednesday   String
-  thursday    String
-  friday      String
-  saturday    String
-  sunday      String
+  id        Int            @id @default(autoincrement())
+  uuid      String         @unique @default(uuid())
+  profile   PartnerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId Int            @unique
+  monday    String
+  tuesday   String
+  wednesday String
+  thursday  String
+  friday    String
+  saturday  String
+  sunday    String
 }
 
 enum PartnerType {
@@ -76,17 +76,17 @@ enum PartnerType {
 }
 
 model NeededGoods {
-  id              Int     @id @default(autoincrement())
-  uuid            String  @unique @default(uuid())
-  partner         Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
-  partnerId       Int
-  name            String
-  note            String?
-  amountCurrent   Int?
-  amountMax       Int
-  amountUnit      String?
-  state           GoodsState
-  stateInfo       String?
+  id            Int        @id @default(autoincrement())
+  uuid          String     @unique @default(uuid())
+  partner       Partner    @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  partnerId     Int
+  name          String
+  note          String?
+  amountCurrent Int?
+  amountMax     Int
+  amountUnit    String?
+  state         GoodsState
+  stateInfo     String?
 }
 
 enum GoodsState {
