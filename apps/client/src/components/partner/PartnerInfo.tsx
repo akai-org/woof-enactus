@@ -53,7 +53,7 @@ export default function PartnerInfo({
   return (
     <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={4}>
       <VStack gap={4} align="start">
-        <Card.Root w="full" borderColor="brand.300">
+        <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
           <Card.Header>
             <Flex align="center" gap={2} color="brand.700">
               <FaPhoneVolume size={30} />
@@ -107,7 +107,7 @@ export default function PartnerInfo({
             </InfoBox>
           </Card.Body>
         </Card.Root>
-        <Card.Root w="full" borderColor="brand.300">
+        <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
           <Card.Body p={[2, 4]}>
             <InfoBox icon={<FaMapMarkerAlt />} title="Adres">
               {`${data.street}  ${data.city} ${data.postal}`}
@@ -117,7 +117,7 @@ export default function PartnerInfo({
             </InfoBox>
           </Card.Body>
         </Card.Root>
-        <Card.Root w="full" borderColor="brand.300">
+        <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
           <Card.Body p={[2, 4]}>
             <InfoBox icon={<FaRegClock />} title="Godziny pracy" mb={5} />
             <VStack>
@@ -142,12 +142,17 @@ export default function PartnerInfo({
         </Card.Root>
       </VStack>
       <VStack gap={4} align="start">
-        <Card.Root w="full" borderColor="brand.300">
+        <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
           <Card.Body p={[2, 6]}>
             <Image src={data.image} alt="" />
           </Card.Body>
         </Card.Root>
-        <Card.Root w="full" borderColor="brand.300" flexGrow={1}>
+        <Card.Root
+          w="full"
+          borderColor="brand.300"
+          flexGrow={1}
+          borderWidth={2}
+        >
           <Card.Body p={[2, 4]} gap="4">
             <InfoBox title="Opis placówki" direction="column">
               {data.description}
