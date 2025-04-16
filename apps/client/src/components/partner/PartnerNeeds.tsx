@@ -1,4 +1,4 @@
-import getPartnerNeeds from "@/api/getPartnerNeeds";
+import { getPartnerNeeds } from "@/api";
 import NotFound from "@/app/not-found";
 import {
   Accordion,
@@ -26,7 +26,7 @@ export default async function PartnerNeeds({ slug }: Props) {
   if (!needs) return NotFound();
 
   const newest = new Date(
-    needs.reduce((latest, current) => {
+    needs.goods.reduce((latest, current) => {
       return new Date(current.updatedAt) > new Date(latest.updatedAt)
         ? current
         : latest;
@@ -75,7 +75,7 @@ export default async function PartnerNeeds({ slug }: Props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {needs.map((need, i) => (
+          {needs.goods.map((need, i) => (
             <Table.Row
               key={i}
               bgColor={i % 2 === 0 ? "brand.300" : "brand.100"}
@@ -111,7 +111,7 @@ export default async function PartnerNeeds({ slug }: Props) {
         borderRadius="sm"
         mt="6"
       >
-        {needs.map((need, i) => (
+        {needs.goods.map((need, i) => (
           <Accordion.Item
             key={i}
             value={i.toString()}
@@ -160,7 +160,7 @@ export default async function PartnerNeeds({ slug }: Props) {
         >
           Notatka od nas!
         </Heading>
-        <Text>Bardzo dziękujemy za szybką pomoc</Text>
+        <Text>{needs.note ?? `Bardzo dziękujemy za szybką pomoc`}</Text>
       </Box>
     </Flex>
   );
