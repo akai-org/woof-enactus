@@ -22,7 +22,11 @@ export class AuthGuard implements CanActivate {
     try {
       const jwtPayload = this.jwtService.decode<JwtPayload>(token);
       if (jwtPayload.type != "auth") {
-        throw new UnauthorizedException("Invalid token type");
+        throw new Error("Invalid token type");
+      }
+
+      if (jwtPayload.exp < Date.now()) {
+        throw new Error("Token expired");
       }
       const payload: Omit<PartnerAccount, "password"> =
         await this.jwtService.verifyAsync(token, {
@@ -30,8 +34,8 @@ export class AuthGuard implements CanActivate {
         });
 
       request["user"] = payload;
-    } catch {
-      throw new UnauthorizedException();
+    } catch (e) {
+      throw new UnauthorizedException((e as Error).message);
     }
     return true;
   }

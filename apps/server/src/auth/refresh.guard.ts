@@ -24,6 +24,9 @@ export class RefreshGuard implements CanActivate {
       if (jwtPayload.type != "refresh") {
         throw new Error("Invalid token type");
       }
+      if (jwtPayload.exp < Date.now()) {
+        throw new Error("Token expired");
+      }
       const payload: Omit<PartnerAccount, "password"> =
         await this.jwtService.verifyAsync(token, {
           secret: process.env.JWT_SECRET,

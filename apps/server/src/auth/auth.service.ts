@@ -26,7 +26,7 @@ export class AuthService {
       sub: account.uuid,
       username: account.username,
       type: "auth",
-      exp: Date.now() + 900, // Teraz + 15 minut
+      exp: Date.now() + 900000, // Teraz + 15 minut
     };
     const authToken: string = await this.jwtService.signAsync(authPayload);
 
@@ -34,7 +34,7 @@ export class AuthService {
       sub: account.uuid,
       username: account.username,
       type: "refresh",
-      exp: Date.now() + 604800, // Teraz + 7 dni
+      exp: Date.now() + 604800000, // Teraz + 7 dni
     };
     const refreshToken: string =
       await this.jwtService.signAsync(refreshPayload);
@@ -95,7 +95,7 @@ export class AuthService {
       sub: account.uuid,
       username: account.username,
       type: "auth",
-      exp: Date.now() + 900, // Teraz + 15 minut
+      exp: Date.now() + 900000, // Teraz + 15 minut
     };
     const authToken: string = await this.jwtService.signAsync(authPayload);
 
