@@ -1,9 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import type { GetAllPartnersResponse, GenericResponse } from "../types/index";
 import { CreatePartnerDto } from "./dto/CreatePartnerDto";
 import UpdatePartnerDto from "./dto/UpdatePartnerDto";
 import { PrismaService } from "../prisma/prisma.service";
-import { Partner, PartnerType, Prisma } from "@prisma/client";
+import { Partner, PartnerAccount, PartnerType, Prisma } from "@prisma/client";
 import slugify from "slugify";
 import { CreateNeededGoodsDto } from "./dto/CreateNeededGoodsDto";
 import { UpdateNeededGoodsDto } from "./dto/UpdateNeededGoodsDto";
@@ -121,15 +121,17 @@ export class PartnersService {
     }
   }
 
-  async create(body: CreatePartnerDto): Promise<GenericResponse> {
+  async create(
+    user: PartnerAccount,
+    body: CreatePartnerDto,
+  ): Promise<GenericResponse> {
     try {
       // Create a partner with nested profile and working hours
       const newPartner = await this.prisma.partner.create({
         data: {
           name: body.name,
           type: body.type,
-          // TODO for now set to 0
-          partnerAccountId: 0,
+          accountId: user.id,
           // TODO latitude and logitude remain 0 for now;
           latitude: 0,
           longitude: 0,
@@ -149,13 +151,13 @@ export class PartnersService {
               visitHours: body.visitHours,
               openHours: {
                 create: {
-                  monday: body.monday,
-                  tuesday: body.tuesday,
-                  wednesday: body.wednesday,
-                  thursday: body.thursday,
-                  friday: body.friday,
-                  saturday: body.saturday,
-                  sunday: body.sunday,
+                  monday: body.monday || "Brak danych",
+                  tuesday: body.tuesday || "Brak danych",
+                  wednesday: body.wednesday || "Brak danych",
+                  thursday: body.thursday || "Brak danych",
+                  friday: body.friday || "Brak danych",
+                  saturday: body.saturday || "Brak danych",
+                  sunday: body.sunday || "Brak danych",
                 },
               },
             },
@@ -173,6 +175,7 @@ export class PartnersService {
       return { ok: true, data: partnerWithSlug };
     } catch (e: any) {
       const error = e as Error;
+      Logger.error(error.message);
       return {
         ok: false,
         message: "Error creating partner",

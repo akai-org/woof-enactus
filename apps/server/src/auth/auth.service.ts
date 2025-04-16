@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { AccountsService } from "src/accounts/accounts.service";
-import { GenericResponse } from "src/types";
+import { GenericResponse, JwtPayload } from "src/types";
 import * as bcrypt from "bcrypt";
 import { PrismaService } from "../prisma/prisma.service";
 
@@ -16,25 +16,42 @@ export class AuthService {
   async signIn(
     username: string,
     pass: string,
-  ): Promise<GenericResponse<string>> {
+  ): Promise<GenericResponse<Record<string, string>>> {
     const account = (await this.accountsService.findOne(username)).data;
     if (!account || !bcrypt.compareSync(pass, account.password)) {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: account.uuid, username: account.username };
-    const token: string = await this.jwtService.signAsync(payload);
+    const authPayload: JwtPayload = {
+      sub: account.uuid,
+      username: account.username,
+      type: "auth",
+      exp: Date.now() + 900, // Teraz + 15 minut
+    };
+    const authToken: string = await this.jwtService.signAsync(authPayload);
 
-    const res: GenericResponse<string> = {
+    const refreshPayload: JwtPayload = {
+      sub: account.uuid,
+      username: account.username,
+      type: "refresh",
+      exp: Date.now() + 604800, // Teraz + 7 dni
+    };
+    const refreshToken: string =
+      await this.jwtService.signAsync(refreshPayload);
+
+    const res: GenericResponse<Record<string, string>> = {
       ok: true,
-      data: token,
+      data: {
+        accessToken: authToken,
+        refreshToken: refreshToken,
+      },
     };
 
     return res;
   }
 
   async signUp(username: string, password: string): Promise<GenericResponse> {
-    const userExists = (await this.accountsService.findOne(username)).ok;
+    const userExists = await this.accountsService.findOne(username);
     if (userExists) {
       const res: GenericResponse = {
         ok: false,
@@ -64,5 +81,31 @@ export class AuthService {
       };
       return res;
     }
+  }
+
+  async refresh(
+    username: string,
+  ): Promise<GenericResponse<Record<string, string>>> {
+    const account = (await this.accountsService.findOne(username)).data;
+    if (!account) {
+      throw new UnauthorizedException();
+    }
+
+    const authPayload: JwtPayload = {
+      sub: account.uuid,
+      username: account.username,
+      type: "auth",
+      exp: Date.now() + 900, // Teraz + 15 minut
+    };
+    const authToken: string = await this.jwtService.signAsync(authPayload);
+
+    const res: GenericResponse<Record<string, string>> = {
+      ok: true,
+      data: {
+        authToken: authToken,
+      },
+    };
+
+    return res;
   }
 }

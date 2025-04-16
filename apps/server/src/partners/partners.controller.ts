@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   Res,
+  UseGuards,
 } from "@nestjs/common";
 import { PartnersService } from "./partners.service";
 import { Response } from "express";
@@ -15,9 +16,11 @@ import { CreatePartnerDto } from "./dto/CreatePartnerDto";
 import UpdatePartnerDto from "./dto/UpdatePartnerDto";
 import { ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { GetAllPartnersResponse } from "../types";
-import { PartnerType } from "@prisma/client";
+import { PartnerAccount, PartnerType } from "@prisma/client";
 import { CreateNeededGoodsDto } from "./dto/CreateNeededGoodsDto";
 import { UpdateNeededGoodsDto } from "./dto/UpdateNeededGoodsDto";
+import { AuthGuard } from "src/auth/auth.guard";
+import { User } from "src/utils/user.decorator";
 
 @ApiTags("partners")
 @Controller("partners")
@@ -51,8 +54,13 @@ export class PartnersController {
 
   // POST /partners
   @Post()
-  async createPartner(@Body() body: CreatePartnerDto, @Res() res: Response) {
-    const result = await this.partnersService.create(body);
+  @UseGuards(AuthGuard)
+  async createPartner(
+    @Body() body: CreatePartnerDto,
+    @User() user: PartnerAccount,
+    @Res() res: Response,
+  ) {
+    const result = await this.partnersService.create(user, body);
     return res.status(result.ok ? 201 : 500).json(result);
   }
 
@@ -110,9 +118,13 @@ export class PartnersController {
     @Param("slug") slug: string,
     @Param("goodUuid") goodUuid: string,
     @Body() body: UpdateNeededGoodsDto,
-    @Res() res: Response
+    @Res() res: Response,
   ) {
-    const result = await this.partnersService.updateNeededGoodsForPartner(slug, goodUuid, body);
+    const result = await this.partnersService.updateNeededGoodsForPartner(
+      slug,
+      goodUuid,
+      body,
+    );
     return res.status(result.ok ? 200 : 500).json(result);
   }
 
@@ -121,9 +133,12 @@ export class PartnersController {
   async deleteNeededGoodsForPartner(
     @Param("slug") slug: string,
     @Param("goodUuid") goodUuid: string,
-    @Res() res: Response
+    @Res() res: Response,
   ) {
-    const result = await this.partnersService.deleteNeededGoodsForPartner(slug, goodUuid);
+    const result = await this.partnersService.deleteNeededGoodsForPartner(
+      slug,
+      goodUuid,
+    );
     return res.status(result.ok ? 200 : 500).json(result);
   }
 }
