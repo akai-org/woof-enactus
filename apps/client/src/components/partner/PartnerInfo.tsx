@@ -2,16 +2,16 @@ import {
   Box,
   Card,
   Flex,
-  FlexProps,
+  type FlexProps,
   Grid,
   Heading,
   Image,
   List,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { FaMapMarkerAlt, FaPhoneVolume, FaRegClock } from "react-icons/fa";
-import { Data, Profile } from "@/types";
+import type { PartnerData, PartnerProfile } from "@/types";
 import { Link } from "@/components";
 
 const polishDays: Record<string, string> = {
@@ -26,7 +26,11 @@ const polishDays: Record<string, string> = {
 
 const getPolishDay = (day: string) => polishDays[day] ?? "";
 
-export default function PartnerInfo({ profileData }: { profileData: Data }) {
+export default function PartnerInfo({
+  profileData,
+}: {
+  profileData: PartnerData;
+}) {
   const data = profileData.profile;
   const type = profileData.type;
 
@@ -38,7 +42,8 @@ export default function PartnerInfo({ profileData }: { profileData: Data }) {
         key !== "profileId" &&
         key in data.openHours
       ) {
-        acc[key] = data.openHours[key as keyof Profile["openHours"]].toString();
+        acc[key] =
+          data.openHours[key as keyof PartnerProfile["openHours"]].toString();
       }
       return acc;
     },
@@ -82,7 +87,7 @@ export default function PartnerInfo({ profileData }: { profileData: Data }) {
             )}
             <InfoBox title="Email">
               <Link
-                linkProps={{ href: "mailto:kontaktwithenactus@gmail.com" }}
+                linkProps={{ href: `mailto:${data.email}` }}
                 chakraLinkProps={{
                   color: "brand.900",
                 }}

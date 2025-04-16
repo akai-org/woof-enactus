@@ -30,7 +30,7 @@ export class PartnersController {
   // GET /partners?city=example&type=example
   @ApiResponse({ type: GetAllPartnersResponse })
   @ApiQuery({ name: "city", required: false })
-  @ApiQuery({ name: "type", required: false, example: "SHELTER" })
+  @ApiQuery({ name: "types", required: false, example: "SHELTER,ORG" })
   @ApiQuery({ name: "name", required: false })
   @ApiQuery({ name: "street", required: false })
   @Get()
@@ -39,9 +39,18 @@ export class PartnersController {
     @Query("name") name?: string,
     @Query("city") city?: string,
     @Query("street") street?: string,
-    @Query("type") type?: PartnerType,
+    @Query("types") typesRaw?: string,
   ) {
-    const result = await this.partnersService.findAll(name, city, street, type);
+    const types = typesRaw
+      ? (typesRaw.split(",").filter(t => t in PartnerType) as PartnerType[])
+      : undefined;
+
+    const result = await this.partnersService.findAll(
+      name,
+      city,
+      street,
+      types,
+    );
     return res.status(result.ok ? 200 : 400).json(result);
   }
 

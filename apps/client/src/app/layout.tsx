@@ -5,7 +5,7 @@ import { Box } from "@chakra-ui/react";
 
 import Providers from "@/providers";
 import { hkGrotesk, openSans } from "./fonts";
-import { Footer, Nav } from "@/components";
+import { Footer, Nav, Toaster } from "@/components";
 
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/styles";
@@ -32,6 +32,7 @@ export default function RootLayout({
           <Nav />
           <Box flex={1}>{children}</Box>
           <Footer />
+          <Toaster />
         </Providers>
       </body>
     </html>
