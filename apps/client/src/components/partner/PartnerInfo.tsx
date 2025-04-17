@@ -6,13 +6,13 @@ import {
   Grid,
   Heading,
   Image,
+  Link,
   List,
   VStack,
 } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 import { FaMapMarkerAlt, FaPhoneVolume, FaRegClock } from "react-icons/fa";
 import type { PartnerData, PartnerProfile } from "@/types";
-import { Link } from "@/components";
 
 const polishDays: Record<string, string> = {
   monday: "Poniedziałek",
@@ -64,44 +64,24 @@ export default function PartnerInfo({
           </Card.Header>
           <Card.Body>
             <InfoBox title="Główny numer telefonu">
-              <Link
-                linkProps={{ href: `tel:${data.phone}` }}
-                chakraLinkProps={{
-                  color: "brand.900",
-                }}
-              >
+              <Link color="brand.900" href={`tel:${data.phone}`}>
                 {data.phone}
               </Link>
             </InfoBox>
             {type == "VET" && (
               <InfoBox title="Linia nagłego kontaktu">
-                <Link
-                  linkProps={{ href: `tel:${data.phone}` }}
-                  chakraLinkProps={{
-                    color: "brand.900",
-                  }}
-                >
+                <Link color="brand.900" href={`tel:${data.phone}`}>
                   BRAK W BAZIE DANYCH
                 </Link>
               </InfoBox>
             )}
             <InfoBox title="Email">
-              <Link
-                linkProps={{ href: `mailto:${data.email}` }}
-                chakraLinkProps={{
-                  color: "brand.900",
-                }}
-              >
+              <Link color="brand.900" href={`mailto:${data.email}`}>
                 {data.email}
               </Link>
             </InfoBox>
             <InfoBox title="Strona internetowa">
-              <Link
-                linkProps={{ href: data.website }}
-                chakraLinkProps={{
-                  color: "brand.900",
-                }}
-              >
+              <Link color="brand.900" href={`mailto:${data.website}`}>
                 {data.website}
               </Link>
             </InfoBox>

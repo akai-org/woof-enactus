@@ -12,9 +12,10 @@ import {
   Icon,
   Center,
   Button,
+  Link,
 } from "@chakra-ui/react";
 import { IoMenu } from "react-icons/io5";
-import { Link } from "@/components";
+import NextLink from "next/link";
 
 const links = [
   {
@@ -80,15 +81,8 @@ function Nav() {
                     <Drawer.Body display="flex" flexDirection="column" gap={8}>
                       <For each={links}>
                         {item => (
-                          <Link
-                            linkProps={{ href: item.href }}
-                            chakraLinkProps={{
-                              textDecoration: "none",
-                              textStyle: "md",
-                              _focus: { boxShadow: "none", outline: "none" },
-                            }}
-                          >
-                            {item.name}
+                          <Link asChild>
+                            <NextLink href={item.href}>{item.name}</NextLink>
                           </Link>
                         )}
                       </For>
@@ -98,16 +92,13 @@ function Nav() {
                     </Drawer.Body>
                     <Drawer.Footer>
                       <Link
-                        linkProps={{ href: "/" }}
-                        chakraLinkProps={{
-                          textDecoration: "none",
-                          color: "brand.500",
-                          textStyle: "xl",
-                          fontWeight: "bold",
-                          textTransform: "uppercase",
-                        }}
+                        asChild
+                        color="brand.500"
+                        textStyle="xl"
+                        fontWeight="bold"
+                        textTransform="uppercase"
                       >
-                        Haumaps
+                        <NextLink href="/">Haumaps</NextLink>
                       </Link>
                     </Drawer.Footer>
                   </Drawer.Content>
@@ -115,17 +106,13 @@ function Nav() {
               </Portal>
             </Drawer.Root>
             <Link
-              linkProps={{ href: "/" }}
-              chakraLinkProps={{
-                textDecoration: "none",
-                color: "brand.500",
-                textStyle: "3xl",
-                fontWeight: "bold",
-                textTransform: "uppercase",
-                _focus: { boxShadow: "none", outline: "none" },
-              }}
+              asChild
+              color="brand.500"
+              textStyle="3xl"
+              fontWeight="bold"
+              textTransform="uppercase"
             >
-              Haumaps
+              <NextLink href="/">Haumaps</NextLink>
             </Link>
           </Flex>
 
@@ -143,22 +130,18 @@ function Nav() {
                   {item => (
                     <Tabs.Trigger value={item.name} asChild>
                       <Link
-                        linkProps={{ href: item.href }}
-                        chakraLinkProps={{
-                          color: "brand.700",
-                          borderRadius: "sm",
-                          transition: "background-color 0.3s ease",
-                          _hover: {
-                            color: "brand.100",
-                            backgroundColor: "brand.500",
-                          },
-                          textDecoration: "none",
-                          textStyle: "sm",
-                          width: "max-content",
-                          _focus: { boxShadow: "none", outline: "none" },
+                        asChild
+                        color="brand.700"
+                        borderRadius="sm"
+                        transition="background-color 0.3s ease"
+                        _hover={{
+                          color: "brand.100",
+                          backgroundColor: "brand.500",
                         }}
+                        fontSize="sm"
+                        width="max-content"
                       >
-                        {item.name}
+                        <NextLink href={item.href}>{item.name}</NextLink>
                       </Link>
                     </Tabs.Trigger>
                   )}

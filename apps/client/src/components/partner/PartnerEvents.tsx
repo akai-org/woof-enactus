@@ -42,13 +42,7 @@ export default function PartnerEvents() {
 
           <Flex direction="column" alignItems="center" gap={4}>
             <Image src="https://placehold.co/600x400/png" />
-            <Button
-              paddingInline="4"
-              variant="solid"
-              backgroundColor="accent.gray"
-              color="brand.900"
-              fontWeight="semibold"
-            >
+            <Button variant="gray" size="lg">
               Przypomnij mi o wydarzeniu!
             </Button>
           </Flex>
