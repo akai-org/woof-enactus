@@ -37,13 +37,18 @@ const buttonRecipe = defineRecipe({
 });
 
 const linkRecipe = defineRecipe({
-  base: {
-    _focus: { boxShadow: "none", outline: "none" },
-    _hover: {
-      textDecoration: "none",
-      textDecorationColor: "red.400",
+  variants: {
+    visual: {
+      noHoverUnderline: {
+        _focus: { boxShadow: "none", outline: "none" },
+        _hover: {
+          textDecoration: "none",
+          textDecorationColor: "red.400",
+        },
+      },
     },
   },
+  defaultVariants: { visual: "noHoverUnderline" },
 });
 
 const customConfig = defineConfig({
