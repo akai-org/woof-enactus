@@ -11,7 +11,7 @@ import "react-leaflet-markercluster/styles";
 import "../style.css";
 
 export const metadata: Metadata = {
-  title: "Haumaps",
+  title: "HauMaps",
   description: "Baza danych organizacji pomocy zwierzętom",
 };
 

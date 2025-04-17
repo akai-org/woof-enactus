@@ -63,7 +63,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
             </List.Item>
           </List.Root>
           <Button variant="cta" asChild>
-            <Link asChild textDecoration="none">
+            <Link asChild>
               <NextLink href={`/placowki/${markerData.slug}`}>
                 <Text as="span" color="brand.100">
                   Szczegóły

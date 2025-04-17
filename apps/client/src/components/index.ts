@@ -1,7 +1,6 @@
 import { Map } from "./map";
 
-import Nav from "./Navbar";
-import Footer from "./Footer";
+import { Footer, Nav } from "./layout";
 
 import { SearchBar } from "./map-search-bar";
 import { PartnerEvents, PartnerInfo, PartnerNeeds } from "./partner";
