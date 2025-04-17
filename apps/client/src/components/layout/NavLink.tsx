@@ -34,6 +34,7 @@ function NavLink({ name, href }: NavLinkProps) {
       width="full"
       textAlign="center"
       _hover={activeStyles}
+      _focusVisible={{ ...activeStyles, opacity: 0.65 }}
       {...(pathname === href && activeStyles)}
     >
       <NextLink href={href}>{name}</NextLink>
