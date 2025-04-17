@@ -24,6 +24,7 @@ async function main() {
       latitude: faker.location.latitude({ min: 50, max: 54, precision: 5 }),
       longitude: faker.location.longitude({ min: 15, max: 23, precision: 5 }),
       slug: `temp-${i}`,
+      accountId: i + 1,
     });
   }
 
