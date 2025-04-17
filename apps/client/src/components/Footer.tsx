@@ -1,6 +1,5 @@
-import { Box, Container, Flex, Icon, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Icon, Link, Text } from "@chakra-ui/react";
 import { FiFacebook, FiInstagram, FiLinkedin } from "react-icons/fi";
-import { Link } from "@/components";
 
 function Footer() {
   return (
@@ -15,13 +14,9 @@ function Footer() {
         >
           <Flex flex="1" justifyContent="flex-start">
             <Link
-              linkProps={{ href: "mailto:kontaktwithenactus@gmail.com" }}
-              chakraLinkProps={{
-                color: "brand.500",
-                textDecoration: "none",
-                _focus: { boxShadow: "none", outline: "none" },
-                fontWeight: "bold",
-              }}
+              color="brand.500"
+              fontWeight="bold"
+              href="mailto:kontaktwithenactus@gmail.com"
             >
               kontaktwithenactus@gmail.com
             </Link>
@@ -35,15 +30,9 @@ function Footer() {
 
           <Flex flex="1" justifyContent="flex-end" gap="4">
             <Link
-              linkProps={{
-                href: "https://facebook.com",
-              }}
-              chakraLinkProps={{
-                target: "_blank",
-                rel: "noopener noreferrer",
-                textDecoration: "none",
-                _focus: { boxShadow: "none", outline: "none" },
-              }}
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Icon color={"brand.500"} size="xl">
                 <FiFacebook />
@@ -51,15 +40,9 @@ function Footer() {
             </Link>
 
             <Link
-              linkProps={{
-                href: "https://instagram.com",
-              }}
-              chakraLinkProps={{
-                target: "_blank",
-                rel: "noopener noreferrer",
-                textDecoration: "none",
-                _focus: { boxShadow: "none", outline: "none" },
-              }}
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Icon color={"brand.500"} size="xl">
                 <FiInstagram />
@@ -67,15 +50,9 @@ function Footer() {
             </Link>
 
             <Link
-              linkProps={{
-                href: "https://linkedin.com",
-              }}
-              chakraLinkProps={{
-                target: "_blank",
-                rel: "noopener noreferrer",
-                textDecoration: "none",
-                _focus: { boxShadow: "none", outline: "none" },
-              }}
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Icon color={"brand.500"} size="xl">
                 <FiLinkedin />
