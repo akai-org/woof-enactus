@@ -17,6 +17,7 @@ import {
 import { IoMenu } from "react-icons/io5";
 import NextLink from "next/link";
 import NavLink from "./NavLink";
+import { Logo } from "@/components";
 
 const links = [
   {
@@ -58,7 +59,10 @@ function Nav() {
               fontWeight="bold"
               textTransform="uppercase"
             >
-              <NextLink href="/">HauMaps</NextLink>
+              <NextLink href="/">
+                <Logo />
+                HauMaps
+              </NextLink>
             </Link>
           </Flex>
 

@@ -4,7 +4,7 @@ import { Footer, Nav } from "./layout";
 
 import { SearchBar } from "./map-search-bar";
 import { PartnerEvents, PartnerInfo, PartnerNeeds } from "./partner";
-import { Checkbox, Tooltip, GoBackButton, Toaster } from "./ui";
+import { Checkbox, Tooltip, GoBackButton, Toaster, Logo } from "./ui";
 
 export {
   Map,
@@ -18,4 +18,5 @@ export {
   GoBackButton,
   Tooltip,
   Toaster,
+  Logo,
 };
