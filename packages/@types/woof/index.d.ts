@@ -60,3 +60,64 @@ interface JwtPayload {
   exp: number;
   type: JwtType;
 }
+
+interface DatabaseEntity {
+  id: number;
+  uuid: string;
+}
+
+interface WorkingHours extends DatabaseEntity {
+  monday: string;
+  tuesday: string;
+  wednesday: string;
+  thursday: string;
+  friday: string;
+  saturday: string;
+  sunday: string;
+}
+
+interface PartnerProfile extends DatabaseEntity {
+  description?: string;
+  getToInfo?: string;
+  city?: string;
+  street?: string;
+  postal?: string;
+  phone?: string;
+  website?: string;
+  animals: string[];
+  visitHours?: string;
+  openHours?: WorkingHours;
+  email?: string;
+  image?: string;
+}
+
+interface Partner extends DatabaseEntity {
+  name: string;
+  slug: string;
+  latitude: number;
+  longitude: number;
+  profile?: PartnerProfile;
+  neededGoods: NeededGoods[];
+  neededGoodsMeta?: NeededGoodsMeta;
+  type: PartnerType;
+}
+
+interface PartnerAccount extends DatabaseEntity {
+  username: string;
+  partner?: Partner;
+}
+
+interface NeededGoods extends DatabaseEntity {
+  name: string;
+  amountCurrent?: number;
+  amountMax: number;
+  amountUnit?: string;
+  state: GoodsState;
+  stateInfo: String;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface NeededGoodsMeta extends DatabaseEntity {
+  note?: string;
+}
