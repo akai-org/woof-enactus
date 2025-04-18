@@ -1,0 +1,62 @@
+interface SignInDto {
+  username: string;
+  password: string;
+}
+
+type GoodsState = "LOW" | "OK" | "MEDIUM";
+
+interface CreateNeededGoodsDto {
+  name: string;
+  note?: string;
+  amountCurrent?: number;
+  amountMax: number;
+  amountUnit?: string;
+  state: GoodsState;
+  stateInfo?: string;
+  partnerId: number;
+}
+
+interface UpdateNeededGoodsDto extends Partial<CreateNeededGoodsDto> {}
+
+type PartnerType = "VET" | "ORG" | "SHOP" | "SHELTER";
+
+interface CreatePartnerDto {
+  name: string;
+  type: PartnerType;
+  description?: string;
+  getToInfo?: string;
+  city?: string;
+  street?: string;
+  postal?: string;
+  phone?: string;
+  website?: string;
+  animals: [string];
+  email?: string;
+  image?: string;
+  visitHours?: string;
+  monday?: string;
+  tuesday?: string;
+  wednesday?: string;
+  thursday?: string;
+  friday?: string;
+  saturday?: string;
+  sunday?: string;
+}
+
+interface UpdatePartnerDto extends Partial<CreatePartnerDto> {}
+
+interface GenericResponse<T = unknown> {
+  ok: boolean;
+  data?: T;
+  message?: string;
+  error?: string;
+}
+
+type JwtType = "auth" | "refresh";
+
+interface JwtPayload {
+  sub: string;
+  username: string;
+  exp: number;
+  type: JwtType;
+}
