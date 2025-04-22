@@ -1,66 +1,64 @@
 import { PrismaClient, Prisma } from "@prisma/client";
+import * as bcrypt from "bcrypt";
 import { faker, fakerPL } from "@faker-js/faker";
 import slugify from "slugify";
 
 const prisma = new PrismaClient();
 
-// Insert 1000 records for testing
-async function main() {
+async function main(): Promise<void> {
+  console.log("[SEED] Clearing database...");
+  await prisma.neededGoodsMeta.deleteMany();
+  await prisma.neededGoods.deleteMany();
   await prisma.workingHours.deleteMany();
   await prisma.partnerProfile.deleteMany();
-  await prisma.neededGoods.deleteMany();
   await prisma.partner.deleteMany();
+  await prisma.partnerAccount.deleteMany();
 
-  await prisma.$executeRaw`ALTER SEQUENCE "Partner_id_seq" RESTART WITH 1;`;
-  await prisma.$executeRaw`ALTER SEQUENCE "PartnerProfile_id_seq" RESTART WITH 1;`;
-  await prisma.$executeRaw`ALTER SEQUENCE "WorkingHours_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "NeededGoodsMeta_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "NeededGoods_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "WorkingHours_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "PartnerProfile_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "Partner_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "PartnerAccount_id_seq" RESTART WITH 1;`;
 
-  const partnersData: Prisma.PartnerCreateManyInput[] = [];
+  console.log("[SEED] Generating data...");
+  const partnerAccountPayload: Prisma.PartnerAccountCreateManyInput[] = [];
+  const partnerPayload: Prisma.PartnerCreateManyInput[] = [];
+  const partnerProfilePayload: Prisma.PartnerProfileCreateManyInput[] = [];
+  const workingHoursPayload: Prisma.WorkingHoursCreateManyInput[] = [];
+  const neededGoodsPayload: Prisma.NeededGoodsCreateManyInput[] = [];
+  const neededGoodsMetaPayload: Prisma.NeededGoodsMetaCreateManyInput[] = [];
+
   for (let i = 0; i < 1000; i++) {
-    partnersData.push({
-      name: faker.company.name(),
-      type: faker.helpers.arrayElement(["VET", "ORG", "SHOP", "SHELTER"]),
+    partnerAccountPayload.push({
+      username: `user${i}`,
+      password: await bcrypt.hash("zaq1@WSX", 10),
+    });
+
+    partnerPayload.push({
+      name: fakerPL.company.name(),
+      slug: `temp-${i}`,
       latitude: faker.location.latitude({ min: 50, max: 54, precision: 5 }),
       longitude: faker.location.longitude({ min: 15, max: 23, precision: 5 }),
-      slug: `temp-${i}`,
+      type: faker.helpers.arrayElement(["VET", "ORG", "SHOP", "SHELTER"]),
       accountId: i + 1,
     });
-  }
 
-  const resultPartners = await prisma.partner.createMany({
-    data: partnersData,
-  });
-
-  // getch all and generate slug
-  const allPartners = await prisma.partner.findMany();
-  const updatePromises = allPartners.map(partner => {
-    const generatedSlug = `${slugify(partner.name, { lower: true })}-${partner.id}`;
-    return prisma.partner.update({
-      where: { id: partner.id },
-      data: { slug: generatedSlug },
-    });
-  });
-  await Promise.all(updatePromises);
-
-  const profilesData: Prisma.PartnerProfileCreateManyInput[] = [];
-  const hoursData: Prisma.WorkingHoursCreateManyInput[] = [];
-  for (let i = 0; i < 1000; i++) {
-    profilesData.push({
+    partnerProfilePayload.push({
       partnerId: i + 1,
+      description: fakerPL.lorem.lines(2),
+      getToInfo: "przykładkowe instrukcje dojazdu...",
+      city: fakerPL.location.city(),
+      street: fakerPL.location.street(),
+      postal: fakerPL.location.zipCode("##-###"),
+      website: fakerPL.internet.url(),
       animals: faker.helpers.arrayElements(["Dogs", "Cats", "Parrots"], {
         min: 1,
         max: 3,
       }),
-      city: fakerPL.location.city(),
-      street: fakerPL.location.street(),
-      getToInfo: "Jakieś tam instrukcje dojazdu...",
-      postal: fakerPL.location.zipCode("##-###"),
-      description: fakerPL.lorem.paragraph(),
-      visitHours: "Pon-Pt 10:30 - 14:00",
+      visitHours: "Pon - Pt, 10:00 - 14:30",
       phone: fakerPL.phone.number(),
-      website: faker.internet.url(),
-      email: faker.internet.email(),
+      email: fakerPL.internet.email(),
       image: faker.image.urlPicsumPhotos({
         grayscale: false,
         blur: 0,
@@ -68,7 +66,8 @@ async function main() {
         height: 400,
       }),
     });
-    hoursData.push({
+
+    workingHoursPayload.push({
       profileId: i + 1,
       monday: "8:00 - 15:00",
       tuesday: "8:00 - 15:00",
@@ -78,52 +77,59 @@ async function main() {
       saturday: "Zamknięte",
       sunday: "Zamknięte",
     });
-  }
 
-  const neededGoodsData: Prisma.NeededGoodsCreateManyInput[] = [];
-  for (let partnerId = 1; partnerId <= 1000; partnerId++) {
-    const numberOfGoods = faker.number.int({ min: 1, max: 15 });
-    for (let j = 0; j < numberOfGoods; j++) {
-      neededGoodsData.push({
-        partnerId: partnerId,
-        amountCurrent: 0,
-        amountMax: faker.number.int({ min: 0, max: 100 }),
-        amountUnit: faker.helpers.arrayElement(["sztuki", "litry"]),
-        state: "LOW",
-        stateInfo: 'Jakis tam stan typu "Potrzebne pilnie", etc.',
-        name: fakerPL.lorem.words({ min: 1, max: 4 }),
-      });
-    }
-  }
-  const neededGoodsMetaData: Prisma.NeededGoodsMetaCreateManyInput[] = [];
+    neededGoodsPayload.push({
+      partnerId: i + 1,
+      name: fakerPL.lorem.words({ min: 1, max: 4 }),
+      amountCurrent: 0,
+      amountMax: faker.number.int({ min: 0, max: 100 }),
+      amountUnit: faker.helpers.arrayElement(["sztuki", "litry"]),
+      state: "LOW",
+      stateInfo: 'Jakis tam stan typu "Potrzebne pilnie", etc.',
+    });
 
-  for (let partnerId = 1; partnerId <= 1000; partnerId++) {
-    neededGoodsMetaData.push({
-      partnerId,
-      note: faker.lorem.paragraphs({ min: 1, max: 2 }),
+    neededGoodsMetaPayload.push({
+      partnerId: i + 1,
+      note: fakerPL.lorem.paragraph(),
     });
   }
 
-  const resultNeededGoodsMeta = await prisma.neededGoodsMeta.createMany({
-    data: neededGoodsMetaData,
+  await prisma.partnerAccount.createMany({
+    data: partnerAccountPayload,
   });
 
-  const resultProfiles = await prisma.partnerProfile.createMany({
-    data: profilesData,
+  const createdPartners = await prisma.partner.createManyAndReturn({
+    data: partnerPayload,
   });
 
-  const resultHours = await prisma.workingHours.createMany({
-    data: hoursData,
+  await prisma.partnerProfile.createMany({
+    data: partnerProfilePayload,
   });
 
-  const neededGoods = await prisma.neededGoods.createMany({
-    data: neededGoodsData,
+  await prisma.workingHours.createMany({
+    data: workingHoursPayload,
   });
 
-  console.log(`Inserted ${resultPartners.count} partners`);
-  console.log(`Inserted ${resultProfiles.count} profiles`);
-  console.log(`Inserted ${resultHours.count} working hours`);
-  console.log(`Inserted ${neededGoods.count} needed goods`);
+  await prisma.neededGoods.createMany({
+    data: neededGoodsPayload,
+  });
+
+  await prisma.neededGoodsMeta.createMany({
+    data: neededGoodsMetaPayload,
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  createdPartners.forEach(async partner => {
+    const generatedSlug = `${slugify(partner.name, { lower: true })}-${partner.id}`;
+    await prisma.partner.update({
+      where: {
+        id: partner.id,
+      },
+      data: {
+        slug: generatedSlug,
+      },
+    });
+  });
 }
 
 main()
