@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "chakra:typegen": "chakra typegen src/constants/theme.ts"
+    "chakra:typegen": "chakra typegen src/constants/theme.ts",
+    "typecheck": "npx tsc --noEmit"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.8.1",
