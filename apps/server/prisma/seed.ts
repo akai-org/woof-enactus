@@ -32,7 +32,7 @@ async function main(): Promise<void> {
   for (let i = 0; i < 1000; i++) {
     partnerAccountPayload.push({
       username: `user${i}`,
-      password: await bcrypt.hash("zaq1@WSX", 10),
+      password: await bcrypt.hash("zaq1@WSX", 6),
     });
 
     partnerPayload.push({
