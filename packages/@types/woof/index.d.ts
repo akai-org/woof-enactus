@@ -31,7 +31,7 @@ declare module "woof" {
     postal?: string;
     phone?: string;
     website?: string;
-    animals: [string];
+    animals: string[];
     email?: string;
     image?: string;
     visitHours?: string;
@@ -97,10 +97,11 @@ declare module "woof" {
     slug: string;
     latitude: number;
     longitude: number;
-    profile?: PartnerProfile;
-    neededGoods: NeededGoods[];
-    neededGoodsMeta?: NeededGoodsMeta;
     type: PartnerType;
+    accountId: number;
+    profile?: PartnerProfile;
+    neededGoods?: NeededGoods[];
+    neededGoodsMeta?: NeededGoodsMeta;
   }
 
   interface PartnerAccount extends DatabaseEntity {
