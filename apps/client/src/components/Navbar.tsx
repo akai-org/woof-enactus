@@ -80,8 +80,9 @@ function Nav() {
                     </Drawer.Header>
                     <Drawer.Body display="flex" flexDirection="column" gap={8}>
                       <For each={links}>
-                        {item => (
+                        {(item, i) => (
                           <Link
+                            key={i}
                             linkProps={{ href: item.href }}
                             chakraLinkProps={{
                               textDecoration: "none",
@@ -141,8 +142,8 @@ function Nav() {
                 gap="5"
               >
                 <For each={links}>
-                  {item => (
-                    <Tabs.Trigger value={item.name} asChild>
+                  {(item, i) => (
+                    <Tabs.Trigger key={i} value={item.name} asChild>
                       <Link
                         linkProps={{ href: item.href }}
                         chakraLinkProps={{

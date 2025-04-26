@@ -1,18 +1,52 @@
+"use client";
 import { Button, Field, Fieldset, Flex, Input } from "@chakra-ui/react";
 import { Link } from "@/components/ui/";
-import { type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
+import z from "zod";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type Props = {
-  action: (formData: FormData) => Promise<void>;
+  onSubmitProp: (data: AuthFormDataType) => Promise<boolean>;
   legend: string;
   submit: string;
   rememberPassword?: boolean;
   children?: ReactNode;
 };
 
-function AuthForm(props: Props) {
-  const { action, legend, submit, rememberPassword = false, children } = props;
+const schema = z.object({
+  username: z
+    .string({ message: "To pole jest wymagane" })
+    .min(4, "Email musi mieć co najmniej 4 znaki"),
+  password: z
+    .string({ message: "To pole jest wymagane" })
+    .min(4, "Hasło musi mieć co najmniej 4 znaki"),
+});
 
+type AuthFormDataType = z.infer<typeof schema>;
+
+function AuthForm(props: Props) {
+  const {
+    onSubmitProp,
+    legend,
+    submit,
+    rememberPassword = false,
+    children,
+  } = props;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit: SubmitHandler<AuthFormDataType> = async data => {
+    const ok = await onSubmitProp(data);
+    if (!ok) setError("root", { message: "Nieprawidłowe dane logowania" });
+  };
   return (
     <Flex
       direction="column"
@@ -21,8 +55,8 @@ function AuthForm(props: Props) {
       alignItems="center"
       justifyContent="center"
     >
-      <Fieldset.Root maxW="md" textAlign="center">
-        <form action={action}>
+      <Fieldset.Root maxW="md" textAlign="center" invalid={errors.root && true}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Fieldset.Legend
             fontSize="2xl"
             fontWeight="bold"
@@ -32,26 +66,28 @@ function AuthForm(props: Props) {
             {legend}
           </Fieldset.Legend>
           <Fieldset.Content>
-            <Field.Root maxW="md">
+            <Field.Root maxW="md" invalid={errors.username && true}>
               <Field.Label>Adres email konta</Field.Label>
               <Input
-                id="mail"
-                name="mail"
-                required
                 placeholder="Adres email"
                 type="email"
+                {...register("username")}
               />
+              <Field.ErrorText>
+                {errors.username && errors.username.message}
+              </Field.ErrorText>
             </Field.Root>
 
-            <Field.Root maxW="md">
+            <Field.Root maxW="md" invalid={errors.password && true}>
               <Field.Label>Hasło</Field.Label>
               <Input
-                id="password"
-                name="password"
-                required
                 placeholder="Hasło"
                 type="password"
+                {...register("password")}
               />
+              <Field.ErrorText>
+                {errors.password && errors.password.message}
+              </Field.ErrorText>
             </Field.Root>
             {rememberPassword && (
               <Link
@@ -62,10 +98,10 @@ function AuthForm(props: Props) {
               </Link>
             )}
             <Button type="submit">{submit}</Button>
+            <Fieldset.ErrorText>
+              {errors.root && errors.root.message}
+            </Fieldset.ErrorText>
           </Fieldset.Content>
-          <Fieldset.ErrorText>
-            Some fields are invalid. Please check them.
-          </Fieldset.ErrorText>
         </form>
       </Fieldset.Root>
       {children}
@@ -73,3 +109,4 @@ function AuthForm(props: Props) {
   );
 }
 export { AuthForm };
+export type { AuthFormDataType };

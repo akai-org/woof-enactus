@@ -1,4 +1,4 @@
-import { loginAction } from "@/actions/loginAction";
+import { loginAction } from "@/api/loginAction";
 import { AuthForm } from "@/components/AuthForm";
 import { Button } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -6,7 +6,7 @@ import NextLink from "next/link";
 export default function LoginPage() {
   return (
     <AuthForm
-      action={loginAction}
+      onSubmitProp={loginAction}
       legend="Zaloguj się"
       submit="Zaloguj się do twojej placówki"
       rememberPassword

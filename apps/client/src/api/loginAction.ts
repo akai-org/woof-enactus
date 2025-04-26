@@ -1,8 +1,8 @@
 "use server";
-
+import type { AuthFormDataType } from "@/components/AuthForm";
 import type { GenericServerResponse } from "@/types";
 
-async function loginAction(formData: FormData) {
+const loginAction = async (formData: AuthFormDataType) => {
   try {
     const res = await fetch(process.env.API_URL + "/auth/login", {
       method: "POST",
@@ -10,24 +10,22 @@ async function loginAction(formData: FormData) {
         Accept: "*/*",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        username: formData.get("mail"),
-        password: formData.get("password"),
-      }),
+      body: JSON.stringify(formData),
     });
+
     const {
       data,
       ok,
     }: GenericServerResponse<{ accessToken: string; refreshToken: string }> =
       await res.json();
-    if (!res.ok || !ok) {
-      throw new Error();
-    }
+    if (!ok) throw new Error();
+
     localStorage.setItem("token", data.refreshToken);
-    console.log(data)
+
+    return true;
   } catch {
     console.error("error in loginAction");
+    return false;
   }
-}
-
+};
 export { loginAction };

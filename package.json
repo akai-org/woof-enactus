@@ -18,5 +18,8 @@
   ],
   "devDependencies": {
     "prettier": "^3.5.1"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.0.1"
   }
 }
