@@ -29,3 +29,12 @@ export class GenericResponse<T = unknown> {
 }
 
 export class GetAllPartnersResponse extends GenericResponse<Partner[]> {}
+
+export type JwtType = "auth" | "refresh";
+
+export class JwtPayload {
+  sub!: string;
+  username!: string;
+  exp!: number;
+  type!: JwtType;
+}

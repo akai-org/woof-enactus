@@ -1,100 +1,166 @@
-import { Box, Flex, Heading, Table, Text } from "@chakra-ui/react";
+import { getPartnerNeeds } from "@/api";
+import NotFound from "@/app/not-found";
+import {
+  Accordion,
+  Box,
+  Flex,
+  Heading,
+  Span,
+  Table,
+  HStack,
+  Text,
+} from "@chakra-ui/react";
 
-const categories = {
-  always: {
-    label: "Zawsze mile widziane",
-    color: "brand.600",
-  },
-  longTerm: {
-    label: "Długoterminowe, zawsze mile widziane",
-    color: "brand.500",
-  },
-  urgent: {
-    label: "Potrzebne w najbiższym czasie",
-    color: "accent.yellow",
-  },
+const colors = {
+  OK: "brand.600",
+  MEDIUM: "brand.500",
+  LOW: "accent.yellow",
 };
 
-const items = [
-  {
-    name: "Karma sucha",
-    availability: "2 / 10kg",
-    category: categories.urgent,
-  },
-  {
-    name: "Karma sucha",
-    availability: "2 / 10kg",
-    category: categories.urgent,
-  },
-  {
-    name: "Karma sucha",
-    availability: "2 / 10kg",
-    category: categories.always,
-  },
-  {
-    name: "Karma sucha",
-    availability: "2 / 10kg",
-    category: categories.urgent,
-  },
-  {
-    name: "Karma sucha",
-    availability: "2 / 10kg",
-    category: categories.longTerm,
-  },
-];
+type Props = {
+  slug: string;
+};
 
-export default function PartnerNeeds() {
+export default async function PartnerNeeds({ slug }: Props) {
+  const needs = await getPartnerNeeds(slug);
+  if (!needs) return NotFound();
+
+  const newest = new Date(
+    needs.goods.reduce((latest, current) => {
+      return new Date(current.updatedAt) > new Date(latest.updatedAt)
+        ? current
+        : latest;
+    }).updatedAt,
+  );
+  const newestDate = newest.toLocaleString("pl-PL", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Europe/Warsaw",
+  });
+
   return (
     <Flex direction="column" gap="2">
       <Heading as="h2" size={{ base: "3xl", md: "4xl" }} color="brand.700">
         Czego obecnie potrzebujemy
       </Heading>
       <Text color="brand.600" fontWeight="semibold">
-        Ostatnia aktualizacja: 12.12.2000 8:00
+        Ostatnia aktualizacja: {newestDate}
       </Text>
-      <Box overflowX="auto">
-        <Table.Root size="lg" my={10} striped minW="md">
-          <Table.Header>
-            <Table.Row>
-              {["NAZWA", "STAN OBECNY", "KATEGORIA"].map((header, i) => (
-                <Table.ColumnHeader
-                  key={i}
-                  color="brand.700"
-                  textAlign="center"
-                  textWrap="nowrap"
-                >
-                  {header}
-                </Table.ColumnHeader>
-              ))}
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {items.map((item, i) => (
-              <Table.Row key={i}>
-                <Table.Cell>{item.name}</Table.Cell>
-                <Table.Cell>{item.availability}</Table.Cell>
-                <Table.Cell>
-                  <Flex alignItems="center" gap={2}>
-                    <Box
-                      bg={item.category.color}
-                      minW={4}
-                      boxSize={4}
-                      rounded={5}
-                    />
-                    {item.category.label}
-                  </Flex>
-                </Table.Cell>
-              </Table.Row>
+      <Table.Root
+        size="lg"
+        my={10}
+        minW="md"
+        hideBelow="md"
+        borderColor="brand.300"
+        borderWidth={1}
+      >
+        <Table.Header>
+          <Table.Row>
+            {["Nazwa", "Stan obecny", "Kategoria"].map((header, i) => (
+              <Table.ColumnHeader
+                key={i}
+                color="brand.700"
+                textAlign="center"
+                textWrap="nowrap"
+                fontWeight="semibold"
+                p="6"
+              >
+                {header.toUpperCase()}
+              </Table.ColumnHeader>
             ))}
-          </Table.Body>
-        </Table.Root>
-      </Box>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {needs.goods.map((need, i) => (
+            <Table.Row
+              key={i}
+              bgColor={i % 2 === 0 ? "brand.300" : "brand.100"}
+            >
+              <Table.Cell p="6" textAlign="center">
+                {need.name}
+              </Table.Cell>
+              <Table.Cell
+                p="6"
+                textAlign="center"
+              >{`${need.amountCurrent} / ${need.amountMax} ${need.amountUnit}`}</Table.Cell>
+              <Table.Cell p="6">
+                <Flex justify="center" alignItems="center" gap={2}>
+                  <Box
+                    bg={colors[need.state]}
+                    minW={4}
+                    boxSize={4}
+                    rounded={5}
+                  />
+                  {need.stateInfo}
+                </Flex>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table.Root>
+      <Accordion.Root
+        collapsible
+        defaultValue={["0"]}
+        hideFrom="md"
+        borderWidth={1}
+        borderColor="brand.300"
+        borderRadius="sm"
+        mt="6"
+      >
+        {needs.goods.map((need, i) => (
+          <Accordion.Item
+            key={i}
+            value={i.toString()}
+            bgColor={i % 2 === 0 ? "brand.300" : "brand.100"}
+            py="2"
+          >
+            <Accordion.ItemTrigger justifyContent="space-between" px="2">
+              <HStack>
+                <Span>{need.name}</Span>
+                <Box bg={colors[need.state]} minW={4} boxSize={4} rounded={5} />
+              </HStack>
+              <Accordion.ItemIndicator />
+            </Accordion.ItemTrigger>
+            <Accordion.ItemContent px="2">
+              <Accordion.ItemBody>
+                Stan obecny:{" "}
+                {`${need.amountCurrent} / ${need.amountMax} ${need.amountUnit}`}
+                <Flex alignItems="center" gap={2} mt="2">
+                  <Box
+                    bg={colors[need.state]}
+                    minW={4}
+                    boxSize={4}
+                    rounded={5}
+                  />
+                  {need.stateInfo}
+                </Flex>
+              </Accordion.ItemBody>
+            </Accordion.ItemContent>
+          </Accordion.Item>
+        ))}
+      </Accordion.Root>
 
-      <Box p={5}>
-        <Heading w="full" color="brand.500">
+      <Box
+        p={{ md: "8", base: "4" }}
+        borderRadius="sm"
+        borderColor="brand.300"
+        borderWidth={1}
+        width="100%"
+        mt="8"
+      >
+        <Heading
+          as="h3"
+          size={{ md: "2xl", base: "xl" }}
+          color="brand.500"
+          mb="2"
+        >
           Notatka od nas!
         </Heading>
-        <Text>Bardzo dziękujemy za szybką pomoc</Text>
+        <Text>{needs.note ?? `Bardzo dziękujemy za szybką pomoc`}</Text>
       </Box>
     </Flex>
   );

@@ -41,6 +41,23 @@ type PartnerData = {
   profile: PartnerProfile;
 };
 
+type PartnerNeeds = {
+  goods: {
+    amountCurrent: number;
+    amountMax: number;
+    amountUnit: string;
+    createdAt: string;
+    updatedAt: string;
+    id: number;
+    name: string;
+    partnerId: number;
+    state: "OK" | "MEDIUM" | "LOW";
+    stateInfo: string;
+    uuid: number;
+  }[];
+  note: string;
+};
+
 type Legend = {
   name: string;
   color: string;
@@ -53,7 +70,7 @@ type PartnersParams = {
   name: string;
   city: string;
   street: string;
-  type: string; // e.g. "VET,SHELTER,ORG"
+  types: string; // e.g. "VET,SHELTER,ORG"
 };
 
 type GenericServerResponse<T> = {
@@ -79,6 +96,7 @@ export type {
   PartnersParams,
   GenericServerResponse,
   PartnerType,
+  PartnerNeeds,
   PartnerPageParams,
   HomeSearchParams,
 };
