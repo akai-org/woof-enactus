@@ -52,7 +52,6 @@ export class AuthService {
 
   async signUp(username: string, password: string): Promise<GenericResponse> {
     const userExists = (await this.accountsService.findOne(username)).ok;
-    console.log(userExists);
     if (userExists) {
       const res: GenericResponse = {
         ok: false,
