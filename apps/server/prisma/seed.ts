@@ -6,11 +6,13 @@ const prisma = new PrismaClient();
 
 // Insert 1000 records for testing
 async function main() {
+  await prisma.partnerEvent.deleteMany();
   await prisma.workingHours.deleteMany();
   await prisma.partnerProfile.deleteMany();
   await prisma.neededGoods.deleteMany();
   await prisma.partner.deleteMany();
 
+  await prisma.$executeRaw`ALTER SEQUENCE "PartnerEvent_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "Partner_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "PartnerProfile_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "WorkingHours_id_seq" RESTART WITH 1;`;
@@ -33,7 +35,7 @@ async function main() {
 
   // getch all and generate slug
   const allPartners = await prisma.partner.findMany();
-  const updatePromises = allPartners.map((partner) => {
+  const updatePromises = allPartners.map(partner => {
     const generatedSlug = `${slugify(partner.name, { lower: true })}-${partner.id}`;
     return prisma.partner.update({
       where: { id: partner.id },
@@ -108,10 +110,32 @@ async function main() {
     data: neededGoodsData,
   });
 
+  const PartnerEventsData: Prisma.PartnerEventCreateManyInput[] = [];
+
+  for (let partnerId = 1; partnerId <= 1000; partnerId++) {
+    const numberOfEvents = faker.number.int({ min: 1, max: 3 });
+    for (let k = 0; k < numberOfEvents; k++) {
+      PartnerEventsData.push({
+        partnerId: partnerId,
+        title: fakerPL.lorem.sentence(),
+        description: fakerPL.lorem.words({ min: 2, max: 5 }),
+        thumbnail: faker.image.urlPicsumPhotos({
+          width: 640,
+          height: 480,
+        }),
+      });
+    }
+  }
+
+  const resultEvents = await prisma.partnerEvent.createMany({
+    data: PartnerEventsData,
+  });
+
   console.log(`Inserted ${resultPartners.count} partners`);
   console.log(`Inserted ${resultProfiles.count} profiles`);
   console.log(`Inserted ${resultHours.count} working hours`);
   console.log(`Inserted ${neededGoods.count} needed goods`);
+  console.log(`Inserted ${resultEvents.count} partner events`);
 }
 
 main()
