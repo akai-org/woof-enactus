@@ -23,6 +23,7 @@ model Partner {
   profile     PartnerProfile?
   neededGoods NeededGoods[]
   type        PartnerType
+  events      PartnerEvent[]
 }
 
 model PartnerProfile {
@@ -85,4 +86,15 @@ enum GoodsState {
   OK
   MEDIUM
   LOW
+}
+
+model PartnerEvent {
+  id            Int      @id @default(autoincrement())
+  uuid          String   @unique @default(uuid())
+  partner       Partner  @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  partnerId     Int
+  title         String
+  description   String
+  thumbnail     String?
+  createdAt     DateTime @default(now())
 }
