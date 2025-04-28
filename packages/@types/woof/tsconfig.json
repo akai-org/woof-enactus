@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": "src",
+    "skipLibCheck": true,
+    "lib": ["ESNext", "DOM"],
+    "module": "NodeNext",
+    "alwaysStrict": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true
+  }
+}

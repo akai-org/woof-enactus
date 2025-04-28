@@ -43,36 +43,40 @@ function MapMarker({ markerData }: MapMarkerProps) {
           </Box>
 
           <List.Root gap="2" variant="plain" align="center" marginY={"3"}>
-            <List.Item>
-              <List.Indicator asChild>
-                <MdLocalPhone />
-              </List.Indicator>
-              <Link
-                linkProps={{ href: `tel:${profile.phone}` }}
-                chakraLinkProps={{
-                  color: "brand.500",
-                  textDecoration: "none",
-                  _focus: { boxShadow: "none", outline: "none" },
-                }}
-              >
-                {profile.phone}
-              </Link>
-            </List.Item>
-            <List.Item>
-              <List.Indicator asChild>
-                <MdLanguage />
-              </List.Indicator>
-              <Link
-                linkProps={{ href: profile.website }}
-                chakraLinkProps={{
-                  color: "brand.500",
-                  textDecoration: "none",
-                  _focus: { boxShadow: "none", outline: "none" },
-                }}
-              >
-                {profile.website}
-              </Link>
-            </List.Item>
+            {profile.phone && (
+              <List.Item>
+                <List.Indicator asChild>
+                  <MdLocalPhone />
+                </List.Indicator>
+                <Link
+                  linkProps={{ href: `tel:${profile.phone}` }}
+                  chakraLinkProps={{
+                    color: "brand.500",
+                    textDecoration: "none",
+                    _focus: { boxShadow: "none", outline: "none" },
+                  }}
+                >
+                  {profile.phone}
+                </Link>
+              </List.Item>
+            )}
+            {profile.website && (
+              <List.Item>
+                <List.Indicator asChild>
+                  <MdLanguage />
+                </List.Indicator>
+                <Link
+                  linkProps={{ href: profile.website }}
+                  chakraLinkProps={{
+                    color: "brand.500",
+                    textDecoration: "none",
+                    _focus: { boxShadow: "none", outline: "none" },
+                  }}
+                >
+                  {profile.website}
+                </Link>
+              </List.Item>
+            )}
           </List.Root>
           <Link
             linkProps={{ href: `/placowki/${markerData.slug}` }}

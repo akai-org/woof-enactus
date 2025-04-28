@@ -76,8 +76,6 @@ enum PartnerType {
   SHELTER
 }
 
-
-
 model NeededGoods {
   id            Int      @id @default(autoincrement())
   uuid          String   @unique @default(uuid())
