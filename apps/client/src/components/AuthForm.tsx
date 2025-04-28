@@ -1,10 +1,11 @@
 "use client";
 import { Button, Field, Fieldset, Flex, Input } from "@chakra-ui/react";
 import { Link } from "@/components/ui/";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import z from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { redirect } from "next/navigation";
 
 type Props = {
   onSubmitProp: (data: AuthFormDataType) => Promise<boolean>;
@@ -45,7 +46,12 @@ function AuthForm(props: Props) {
 
   const onSubmit: SubmitHandler<AuthFormDataType> = async data => {
     const ok = await onSubmitProp(data);
+    if (typeof ok == "string") {
+      localStorage.setItem("token", ok);
+      redirect("/panel-zarzadzania");
+    }
     if (!ok) setError("root", { message: "Nieprawidłowe dane logowania" });
+    if (ok) redirect("/zaloguj-sie");
   };
   return (
     <Flex

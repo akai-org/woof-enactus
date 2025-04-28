@@ -1,6 +1,6 @@
 "use server";
 import type { AuthFormDataType } from "@/components/AuthForm";
-import type { GenericServerResponse } from "@/types";
+import type { GenericResponse } from "@/types";
 
 async function registerAction(formData: AuthFormDataType) {
   try {
@@ -12,7 +12,7 @@ async function registerAction(formData: AuthFormDataType) {
       },
       body: JSON.stringify(formData),
     });
-    const { ok }: GenericServerResponse<null> = await res.json();
+    const { ok }: GenericResponse<null> = await res.json();
     if (!ok) throw new Error();
     return true;
   } catch {
