@@ -1,0 +1,4 @@
+{
+  "name": "@types/woof",
+  "types": "./index.d.ts"
+}

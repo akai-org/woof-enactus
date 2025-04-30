@@ -1,6 +1,15 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { PartnerType } from '@prisma/client';
-import { IsString, IsNotEmpty, Length, IsEnum, IsOptional, IsArray, ArrayNotEmpty, IsEmail } from 'class-validator';
+import { ApiProperty } from "@nestjs/swagger";
+import { PartnerType } from "@prisma/client";
+import {
+  IsString,
+  IsNotEmpty,
+  Length,
+  IsEnum,
+  IsOptional,
+  IsArray,
+  ArrayNotEmpty,
+  IsEmail,
+} from "class-validator";
 
 export class CreatePartnerDto {
   @ApiProperty()
@@ -71,30 +80,37 @@ export class CreatePartnerDto {
 
   // WorkingHours fields (for openHours)
   @ApiProperty()
+  @IsOptional()
   @IsString()
-  monday: string;
+  monday?: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsString()
-  tuesday: string;
+  tuesday?: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsString()
-  wednesday: string;
+  wednesday?: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsString()
-  thursday: string;
+  thursday?: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsString()
-  friday: string;
+  friday?: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsString()
-  saturday: string;
+  saturday?: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsString()
-  sunday: string;
+  sunday?: string;
 }
