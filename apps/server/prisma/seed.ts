@@ -24,6 +24,7 @@ async function main(): Promise<void> {
   await prisma.$executeRaw`ALTER SEQUENCE "PartnerProfile_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "Partner_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "PartnerAccount_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "PartnerEvent_id_seq" RESTART WITH 1;`;
 
   console.log("[SEED] Generating data...");
   const partnerAccountPayload: Prisma.PartnerAccountCreateManyInput[] = [];
@@ -32,6 +33,7 @@ async function main(): Promise<void> {
   const workingHoursPayload: Prisma.WorkingHoursCreateManyInput[] = [];
   const neededGoodsPayload: Prisma.NeededGoodsCreateManyInput[] = [];
   const neededGoodsMetaPayload: Prisma.NeededGoodsMetaCreateManyInput[] = [];
+  const partnerEventPayload: Prisma.PartnerEventCreateManyInput[] = [];
 
   for (let i = 0; i < 1000; i++) {
     partnerAccountPayload.push({
@@ -96,6 +98,13 @@ async function main(): Promise<void> {
       partnerId: i + 1,
       note: fakerPL.lorem.paragraph(),
     });
+
+    partnerEventPayload.push({
+      partnerId: i + 1,
+      title: fakerPL.lorem.words({ min: 2, max: 3 }),
+      description: fakerPL.lorem.paragraph(),
+      thumbnail: fakerPL.image.avatar(),
+    });
   }
 
   await prisma.partnerAccount.createMany({
@@ -120,6 +129,10 @@ async function main(): Promise<void> {
 
   await prisma.neededGoodsMeta.createMany({
     data: neededGoodsMetaPayload,
+  });
+
+  await prisma.partnerEvent.createMany({
+    data: partnerEventPayload,
   });
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
