@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start:dev:db": "docker compose -f compose.dev.yml up -d",
-    "stop:dev:db": "docker compose -f compose.dev.yml down",
-    "start:dev:server": "npm -w server run start:dev",
-    "start:dev:client": "npm -w client run dev"
+    "start:dev": "docker compose -f compose.dev.yml up --build",
+    "start:dev:d": "docker compose -f compose.dev.yml up --build -d"
   },
   "keywords": [],
   "author": "",
