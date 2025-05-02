@@ -13,24 +13,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model PartnerAccount {
+  id       Int      @id @default(autoincrement())
+  uuid     String   @unique @default(uuid())
+  username String   @unique
+  password String
+  partner  Partner?
+}
+
 model Partner {
-  id          Int         @id @default(autoincrement())
-  uuid        String      @unique @default(uuid())
+  id          Int             @id @default(autoincrement())
+  uuid        String          @unique @default(uuid())
   name        String
-  slug        String      @unique
-  latitude    Float       @default(0)
-  longitude   Float       @default(0)
+  slug        String          @unique
+  latitude    Float           @default(0)
+  longitude   Float           @default(0)
   profile     PartnerProfile?
   neededGoods      NeededGoods[]
   neededGoodsMeta  NeededGoodsMeta?
   type        PartnerType
+  events      PartnerEvent[]
+  account     PartnerAccount? @relation(fields: [accountId], references: [id])
+  accountId   Int?            @unique
 }
 
 model PartnerProfile {
-  id          Int     @id @default(autoincrement())
-  uuid        String  @unique @default(uuid())
-  partner     Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
-  partnerId   Int     @unique
+  id          Int           @id @default(autoincrement())
+  uuid        String        @unique @default(uuid())
+  partner     Partner       @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  partnerId   Int           @unique
   description String?
   getToInfo   String?
   city        String?
@@ -46,17 +57,17 @@ model PartnerProfile {
 }
 
 model WorkingHours {
-  id          Int             @id @default(autoincrement())
-  uuid        String          @unique @default(uuid())
-  profile     PartnerProfile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  profileId   Int             @unique
-  monday      String
-  tuesday     String
-  wednesday   String
-  thursday    String
-  friday      String
-  saturday    String
-  sunday      String
+  id        Int            @id @default(autoincrement())
+  uuid      String         @unique @default(uuid())
+  profile   PartnerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId Int            @unique
+  monday    String
+  tuesday   String
+  wednesday String
+  thursday  String
+  friday    String
+  saturday  String
+  sunday    String
 }
 
 enum PartnerType {
@@ -66,13 +77,11 @@ enum PartnerType {
   SHELTER
 }
 
-
-
 model NeededGoods {
   id            Int      @id @default(autoincrement())
   uuid          String   @unique @default(uuid())
   partner       Partner  @relation(fields: [partnerId], references: [id], onDelete: Cascade)
-  partnerId     Int
+  partnerId     Int      @unique
   name          String
   amountCurrent Int?
   amountMax     Int
@@ -95,4 +104,15 @@ enum GoodsState {
   OK
   MEDIUM
   LOW
+}
+
+model PartnerEvent {
+  id            Int      @id @default(autoincrement())
+  uuid          String   @unique @default(uuid())
+  partner       Partner  @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  partnerId     Int
+  title         String
+  description   String
+  thumbnail     String?
+  createdAt     DateTime @default(now())
 }

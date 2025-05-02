@@ -1,9 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import type { GetAllPartnersResponse, GenericResponse } from "../types/index";
 import { CreatePartnerDto } from "./dto/CreatePartnerDto";
 import UpdatePartnerDto from "./dto/UpdatePartnerDto";
 import { PrismaService } from "../prisma/prisma.service";
-import { Partner, PartnerType, Prisma } from "@prisma/client";
+import { Partner, PartnerAccount, PartnerType, Prisma } from "@prisma/client";
 import slugify from "slugify";
 import { CreateNeededGoodsDto } from "./dto/CreateNeededGoodsDto";
 import { UpdateNeededGoodsDto } from "./dto/UpdateNeededGoodsDto";
@@ -73,7 +73,7 @@ export class PartnersService {
 
       const combinedPartnerIds =
         partnerIdsFromProfile && partnerIdsFromName
-          ? partnerIdsFromProfile.filter(id => partnerIdsFromName!.includes(id))
+          ? partnerIdsFromProfile.filter(id => partnerIdsFromName.includes(id))
           : (partnerIdsFromProfile ?? partnerIdsFromName);
 
       const filter: Prisma.PartnerWhereInput = {
@@ -128,14 +128,18 @@ export class PartnersService {
     }
   }
 
-  async create(body: CreatePartnerDto): Promise<GenericResponse> {
+  async create(
+    user: PartnerAccount,
+    body: CreatePartnerDto,
+  ): Promise<GenericResponse> {
     try {
       // Create a partner with nested profile and working hours
       const newPartner = await this.prisma.partner.create({
         data: {
           name: body.name,
           type: body.type,
-          //TODO latitude and logitude remain 0 for now;
+          accountId: user.id,
+          // TODO latitude and logitude remain 0 for now;
           latitude: 0,
           longitude: 0,
           slug: `temp-${Date.now()}`, // temporary unique value
@@ -154,13 +158,13 @@ export class PartnersService {
               visitHours: body.visitHours,
               openHours: {
                 create: {
-                  monday: body.monday,
-                  tuesday: body.tuesday,
-                  wednesday: body.wednesday,
-                  thursday: body.thursday,
-                  friday: body.friday,
-                  saturday: body.saturday,
-                  sunday: body.sunday,
+                  monday: body.monday || "Brak danych",
+                  tuesday: body.tuesday || "Brak danych",
+                  wednesday: body.wednesday || "Brak danych",
+                  thursday: body.thursday || "Brak danych",
+                  friday: body.friday || "Brak danych",
+                  saturday: body.saturday || "Brak danych",
+                  sunday: body.sunday || "Brak danych",
                 },
               },
             },
@@ -178,6 +182,7 @@ export class PartnersService {
       return { ok: true, data: partnerWithSlug };
     } catch (e: any) {
       const error = e as Error;
+      Logger.error(error.message);
       return {
         ok: false,
         message: "Error creating partner",
@@ -207,7 +212,11 @@ export class PartnersService {
 
       return { ok: true, data: updatedPartner };
     } catch (e: any) {
-      return { ok: false, message: "Error updating partner", error: e.message };
+      return {
+        ok: false,
+        message: "Error updating partner",
+        error: (e as Error).message,
+      };
     }
   }
 
@@ -241,7 +250,11 @@ export class PartnersService {
 
       return { ok: true, data: deletedPartner };
     } catch (e: any) {
-      return { ok: false, message: "Error deleting partner", error: e.message };
+      return {
+        ok: false,
+        message: "Error deleting partner",
+        error: (e as Error).message,
+      };
     }
   }
 
@@ -264,7 +277,11 @@ export class PartnersService {
 
       return { ok: true, data: partner };
     } catch (e: any) {
-      return { ok: false, message: "Internal server error", error: e.message };
+      return {
+        ok: false,
+        message: "Internal server error",
+        error: (e as Error).message,
+      };
     }
   }
 
@@ -299,7 +316,7 @@ export class PartnersService {
       return {
         ok: false,
         message: "Error retrieving needed goods",
-        error: e.message,
+        error: (e as Error).message,
       };
     }
   }
@@ -344,7 +361,7 @@ export class PartnersService {
       return {
         ok: false,
         message: "Error creating needed goods",
-        error: e.message,
+        error: (e as Error).message,
       };
     }
   }
@@ -372,6 +389,7 @@ export class PartnersService {
         };
       }
       // Update needed goods (do not allow updating partnerId)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { partnerId, ...dataToUpdate } = updateDto;
       const updatedGood = await this.prisma.neededGoods.update({
         where: { uuid: goodUuid },
@@ -382,7 +400,7 @@ export class PartnersService {
       return {
         ok: false,
         message: "Error updating needed goods",
-        error: e.message,
+        error: (e as Error).message,
       };
     }
   }
@@ -416,7 +434,7 @@ export class PartnersService {
       return {
         ok: false,
         message: "Error deleting needed goods",
-        error: e.message,
+        error: (e as Error).message,
       };
     }
   }

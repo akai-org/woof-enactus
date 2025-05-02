@@ -44,23 +44,26 @@ function MapMarker({ markerData }: MapMarkerProps) {
           </Box>
 
           <List.Root gap="2" variant="plain" align="center" marginY={"3"}>
-            <List.Item>
-              <List.Indicator asChild>
-                <MdLocalPhone />
-              </List.Indicator>
-
-              <Link color="brand.500" href={`tel:${profile.phone}`}>
-                {profile.phone}
-              </Link>
-            </List.Item>
-            <List.Item>
-              <List.Indicator asChild>
-                <MdLanguage />
-              </List.Indicator>
-              <Link color="brand.500" href={profile.website}>
-                {profile.website}
-              </Link>
-            </List.Item>
+            {profile.phone && (
+              <List.Item>
+                <List.Indicator asChild>
+                  <MdLocalPhone />
+                </List.Indicator>
+                <Link color="brand.500" href={`tel:${profile.phone}`}>
+                  {profile.phone}
+                </Link>
+              </List.Item>
+            )}
+            {profile.website && (
+              <List.Item>
+                <List.Indicator asChild>
+                  <MdLanguage />
+                </List.Indicator>
+                <Link color="brand.500" href={profile.website}>
+                  {profile.website}
+                </Link>
+              </List.Item>
+            )}
           </List.Root>
           <Button variant="cta" asChild>
             <Link asChild>

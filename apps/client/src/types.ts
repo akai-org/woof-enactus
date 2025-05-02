@@ -1,63 +1,29 @@
-// TEMPORARY
-type PartnerProfile = {
-  id: number;
-  uuid: string;
-  partnerId: number;
-  description: string;
-  getToInfo: string;
-  city: string;
-  street: string;
-  postal: string;
-  phone: string;
-  website: string;
-  animals: string[];
-  visitHours: string;
-  email: string;
-  image: string; // url
-  openHours: {
-    monday: string;
-    tuesday: string;
-    wednesday: string;
-    thursday: string;
-    friday: string;
-    saturday: string;
-    sunday: string;
-    id: number;
-    uuid: string;
-    profileId: number;
-  };
-};
+import type {
+  DatabaseEntity,
+  PartnerProfile,
+  PartnerType,
+  WorkingHours as InternalWorkingHours,
+  NeededGoods,
+  GenericResponse,
+  Partner,
+  NeededGoodsMeta,
+} from "woof";
 
-type PartnerType = "SHELTER" | "VET" | "ORG" | "SHOP";
+// ====== altered types from woof package ======
+type WorkingHours = Omit<InternalWorkingHours, keyof DatabaseEntity>;
 
-type PartnerData = {
-  id: number;
-  uuid: string;
-  slug: string;
-  name: string;
-  latitude: number;
-  longitude: number;
-  type: PartnerType;
-  profile: PartnerProfile;
-};
+type PartnerData = RequireKey<
+  Omit<Partner, "neededGoods" | "neededGoodsMeta">,
+  "profile"
+>;
+
+type RequireKey<T, K extends keyof T> = T & Required<Pick<T, K>>;
 
 type PartnerNeeds = {
-  goods: {
-    amountCurrent: number;
-    amountMax: number;
-    amountUnit: string;
-    createdAt: string;
-    updatedAt: string;
-    id: number;
-    name: string;
-    partnerId: number;
-    state: "OK" | "MEDIUM" | "LOW";
-    stateInfo: string;
-    uuid: number;
-  }[];
-  note: string;
-};
+  goods: NeededGoods[];
+} & Omit<NeededGoodsMeta, keyof DatabaseEntity>;
 
+// ====== Client-defined types ======
 type Legend = {
   name: string;
   color: string;
@@ -65,19 +31,11 @@ type Legend = {
   type: PartnerType;
 };
 
-// type for GET /partners endpoint in src/api
 type PartnersParams = {
   name: string;
   city: string;
   street: string;
   types: string; // e.g. "VET,SHELTER,ORG"
-};
-
-type GenericServerResponse<T> = {
-  ok: boolean;
-  data: T;
-  message: string;
-  error: string;
 };
 
 type PartnerPageParams = {
@@ -91,12 +49,17 @@ type HomeSearchParams = Partial<{
 
 export type {
   PartnerData,
+  WorkingHours,
   PartnerProfile,
-  Legend,
-  PartnersParams,
-  GenericServerResponse,
   PartnerType,
+  GenericResponse,
+};
+
+export type {
+  Legend,
   PartnerNeeds,
   PartnerPageParams,
   HomeSearchParams,
+  PartnersParams,
+  RequireKey,
 };
