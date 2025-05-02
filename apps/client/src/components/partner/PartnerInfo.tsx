@@ -12,9 +12,9 @@ import {
 } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 import { FaMapMarkerAlt, FaPhoneVolume, FaRegClock } from "react-icons/fa";
-import type { PartnerData, PartnerProfile } from "@/types";
+import type { PartnerData, WorkingHours } from "@/types";
 
-const polishDays: Record<string, string> = {
+const polishDays: WorkingHours = {
   monday: "Poniedziałek",
   tuesday: "Wtorek",
   wednesday: "Środa",
@@ -24,7 +24,7 @@ const polishDays: Record<string, string> = {
   sunday: "Niedziela",
 };
 
-const getPolishDay = (day: string) => polishDays[day] ?? "";
+const getPolishDay = (day: keyof WorkingHours) => polishDays[day];
 
 export default function PartnerInfo({
   profileData,
@@ -34,21 +34,13 @@ export default function PartnerInfo({
   const data = profileData.profile;
   const type = profileData.type;
 
-  const mappedOpenHours = Object.keys(data.openHours).reduce(
-    (acc, key) => {
-      if (
-        key !== "id" &&
-        key !== "uuid" &&
-        key !== "profileId" &&
-        key in data.openHours
-      ) {
-        acc[key] =
-          data.openHours[key as keyof PartnerProfile["openHours"]].toString();
-      }
-      return acc;
-    },
-    {} as Record<string, string>,
-  );
+  const mappedOpenHours =
+    data.openHours &&
+    (Object.fromEntries(
+      Object.entries(data.openHours)
+        .filter(([key]) => key in polishDays)
+        .map(([key, value]) => [key, value.toString()]),
+    ) as Record<keyof WorkingHours, string>);
 
   return (
     <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={4}>
@@ -63,11 +55,14 @@ export default function PartnerInfo({
             </Flex>
           </Card.Header>
           <Card.Body>
-            <InfoBox title="Główny numer telefonu">
-              <Link color="brand.900" href={`tel:${data.phone}`}>
-                {data.phone}
-              </Link>
-            </InfoBox>
+            {data.phone && (
+              <InfoBox title="Główny numer telefonu">
+                <Link color="brand.900" href={`tel:${data.phone}`}>
+                  {data.phone}
+                </Link>
+              </InfoBox>
+            )}
+
             {type == "VET" && (
               <InfoBox title="Linia nagłego kontaktu">
                 <Link color="brand.900" href={`tel:${data.phone}`}>
@@ -75,16 +70,20 @@ export default function PartnerInfo({
                 </Link>
               </InfoBox>
             )}
-            <InfoBox title="Email">
-              <Link color="brand.900" href={`mailto:${data.email}`}>
-                {data.email}
-              </Link>
-            </InfoBox>
-            <InfoBox title="Strona internetowa">
-              <Link color="brand.900" href={`mailto:${data.website}`}>
-                {data.website}
-              </Link>
-            </InfoBox>
+            {data.email && (
+              <InfoBox title="Email">
+                <Link color="brand.900" href={`mailto:${data.email}`}>
+                  {data.email}
+                </Link>
+              </InfoBox>
+            )}
+            {data.website && (
+              <InfoBox title="Strona internetowa">
+                <Link color="brand.900" href={`mailto:${data.website}`}>
+                  {data.website}
+                </Link>
+              </InfoBox>
+            )}
           </Card.Body>
         </Card.Root>
         <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
@@ -97,29 +96,31 @@ export default function PartnerInfo({
             </InfoBox>
           </Card.Body>
         </Card.Root>
-        <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
-          <Card.Body p={[2, 4]}>
-            <InfoBox icon={<FaRegClock />} title="Godziny pracy" mb={5} />
-            <VStack>
-              {Object.entries(mappedOpenHours).map(([day, hours], i) => (
-                <Flex
-                  key={i}
-                  justifyContent="space-between"
-                  w="full"
-                  maxW={400}
-                  mx="auto"
-                  bg={i < 5 ? "brand.600" : "brand.500"}
-                  color="brand.100"
-                  rounded="md"
-                  p={2}
-                >
-                  <span>{getPolishDay(day)}</span>
-                  <span>{hours}</span>
-                </Flex>
-              ))}
-            </VStack>
-          </Card.Body>
-        </Card.Root>
+        {mappedOpenHours && (
+          <Card.Root w="full" borderColor="brand.300">
+            <Card.Body p={[2, 4]}>
+              <InfoBox icon={<FaRegClock />} title="Godziny pracy" mb={5} />
+              <VStack>
+                {Object.entries(mappedOpenHours).map(([day, hours], i) => (
+                  <Flex
+                    key={day}
+                    justifyContent="space-between"
+                    w="full"
+                    maxW={400}
+                    mx="auto"
+                    bg={i < 5 ? "brand.600" : "brand.500"}
+                    color="brand.100"
+                    rounded="md"
+                    p={2}
+                  >
+                    <span>{getPolishDay(day as keyof WorkingHours)}</span>
+                    <span>{hours}</span>
+                  </Flex>
+                ))}
+              </VStack>
+            </Card.Body>
+          </Card.Root>
+        )}
       </VStack>
       <VStack gap={4} align="start">
         <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
