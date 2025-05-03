@@ -9,23 +9,30 @@ import {
   Query,
   Res,
   UseGuards,
+  Patch,
 } from "@nestjs/common";
 import { PartnersService } from "./partners.service";
 import { Response } from "express";
 import { CreatePartnerDto } from "./dto/CreatePartnerDto";
 import UpdatePartnerDto from "./dto/UpdatePartnerDto";
-import { ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { GetAllPartnersResponse } from "../types";
 import { PartnerAccount, PartnerType } from "@prisma/client";
 import { CreateNeededGoodsDto } from "./dto/CreateNeededGoodsDto";
 import { UpdateNeededGoodsDto } from "./dto/UpdateNeededGoodsDto";
 import { AuthGuard } from "src/auth/auth.guard";
 import { User } from "src/utils/user.decorator";
+import { UpdatePartnerEventDto } from "./dto/UpdatePartnerEventDto";
+import { PartnerEventService } from "./partner-event.service";
+import { CreatePartnerEventDto } from "./dto/CreatePartnerEventDto";
 
 @ApiTags("partners")
 @Controller("partners")
 export class PartnersController {
-  constructor(private readonly partnersService: PartnersService) {}
+  constructor(
+    private readonly partnersService: PartnersService,
+    private readonly partnerEventService: PartnerEventService,
+  ) {}
 
   // GET /partners?city=example&type=example
   @ApiResponse({ type: GetAllPartnersResponse })
@@ -149,5 +156,50 @@ export class PartnersController {
       goodUuid,
     );
     return res.status(result.ok ? 200 : 500).json(result);
+  }
+
+  // GET /partners/:slug/events
+  @Get(":slug/events")
+  async getPartnerEvents(@Param("slug") slug: string, @Res() res: Response) {
+    const result = await this.partnerEventService.findAllForPartner(slug);
+    return res.status(result.ok ? 200 : 404).json(result);
+  }
+
+  // PATCH /partners/:slug/events/:uuid
+  @Patch(":slug/events/:uuid")
+  async updatePartnerEvent(
+    @Param("slug") slug: string,
+    @Param("uuid") uuid: string,
+    @Body() dto: UpdatePartnerEventDto,
+    @Res() res: Response,
+  ) {
+    const result = await this.partnerEventService.updateForPartner(
+      slug,
+      uuid,
+      dto,
+    );
+    return res.status(result.ok ? 200 : 500).json(result);
+  }
+
+  // DELETE /partners/:slug/events/:uuid
+  @Delete(":slug/events/:uuid")
+  async deletePartnerEvent(
+    @Param("slug") slug: string,
+    @Param("uuid") uuid: string,
+    @Res() res: Response,
+  ) {
+    const result = await this.partnerEventService.removeForPartner(slug, uuid);
+    return res.status(result.ok ? 200 : 500).json(result);
+  }
+
+  // POST /partners/:slug/events
+  @Post(":slug/events")
+  async createPartnerEvent(
+    @Param("slug") slug: string,
+    @Body() dto: CreatePartnerEventDto,
+    @Res() res: Response,
+  ) {
+    const result = await this.partnerEventService.createForPartner(slug, dto);
+    return res.status(result.ok ? 201 : 500).json(result);
   }
 }

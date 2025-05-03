@@ -107,6 +107,7 @@ async function main(): Promise<void> {
       title: fakerPL.lorem.words({ min: 2, max: 3 }),
       description: fakerPL.lorem.paragraph(),
       thumbnail: fakerPL.image.avatar(),
+      eventDate: faker.date.between({ from: "2025-06-01", to: "2025-12-31" }),
     });
   }
 
