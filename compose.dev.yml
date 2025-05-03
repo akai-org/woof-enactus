@@ -22,6 +22,7 @@ services:
       - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True
 
   backend-dev:
+    hostname: backend
     build:
       context: .
       dockerfile: ./dev.Dockerfile
@@ -32,6 +33,7 @@ services:
       - "3000:3000"
 
   frontend-dev:
+    hostname: frontend
     build:
       context: .
       dockerfile: ./dev.Dockerfile
