@@ -3,7 +3,10 @@ import * as bcrypt from "bcrypt";
 import { faker, fakerPL } from "@faker-js/faker";
 import slugify from "slugify";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasourceUrl:
+    "postgresql://enactus:zaq1@WSX@localhost:5432/woof?schema=public",
+});
 
 async function main(): Promise<void> {
   console.log("[SEED] Clearing database...");

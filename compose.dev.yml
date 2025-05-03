@@ -2,7 +2,6 @@ services:
   database:
     image: postgres:alpine
     restart: unless-stopped
-    container_name: database
     hostname: database
     ports:
       - 5432:5432
@@ -14,7 +13,6 @@ services:
   pgAdmin:
     image: dpage/pgadmin4:latest
     restart: unless-stopped
-    container_name: pgAdmin
     hostname: pgadmin
     ports:
       - "8080:80"
@@ -22,3 +20,24 @@ services:
       - PGADMIN_DEFAULT_EMAIL=admin@woof.dev
       - PGADMIN_DEFAULT_PASSWORD=zaq1@WSX
       - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True
+
+  backend-dev:
+    build:
+      context: .
+      dockerfile: ./dev.Dockerfile
+    volumes:
+      - "./apps/server:/woof-enactus/apps/server:rw"
+    entrypoint: "npm -w server run start:dev"
+    ports:
+      - "3000:3000"
+
+  frontend-dev:
+    build:
+      context: .
+      dockerfile: ./dev.Dockerfile
+    volumes:
+      - "./apps/client:/woof-enactus/apps/client:rw"
+    entrypoint: "npm -w client run dev"
+    ports:
+      - "3001:3001"
+    
