@@ -2,11 +2,9 @@ import { PrismaClient, Prisma } from "@prisma/client";
 import * as bcrypt from "bcrypt";
 import { faker, fakerPL } from "@faker-js/faker";
 import slugify from "slugify";
+import { setTimeout } from "node:timers/promises";
 
-const prisma = new PrismaClient({
-  datasourceUrl:
-    "postgresql://enactus:zaq1@WSX@localhost:5432/woof?schema=public",
-});
+const prisma = new PrismaClient();
 
 async function main(): Promise<void> {
   console.log("[SEED] Clearing database...");
@@ -111,6 +109,7 @@ async function main(): Promise<void> {
     });
   }
 
+  console.log("[SEED] Seeding data...");
   await prisma.partnerAccount.createMany({
     data: partnerAccountPayload,
   });
@@ -142,6 +141,8 @@ async function main(): Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   createdPartners.forEach(async partner => {
     const generatedSlug = `${slugify(partner.name, { lower: true })}-${partner.id}`;
+    // Potrzebne, bo z jakiegoś powodu baza nie nadążała i czasami rozłączało połączenie
+    await setTimeout(1);
     await prisma.partner.update({
       where: {
         id: partner.id,
@@ -151,9 +152,11 @@ async function main(): Promise<void> {
       },
     });
   });
+
+  console.log("[SEED] Done!");
 }
 
-main()
+void main()
   .catch(e => {
     console.error(e);
     process.exit(1);
