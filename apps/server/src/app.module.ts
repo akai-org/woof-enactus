@@ -5,6 +5,7 @@ import { PartnersModule } from "./partners/partners.module";
 import { ConfigModule } from "@nestjs/config";
 import { AuthModule } from "./auth/auth.module";
 import { AccountsModule } from "./accounts/accounts.module";
+import { EventsModule } from "./events/events.module";
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AccountsModule } from "./accounts/accounts.module";
     PartnersModule,
     AuthModule,
     AccountsModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

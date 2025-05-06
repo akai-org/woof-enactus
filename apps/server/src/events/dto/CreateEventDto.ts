@@ -6,7 +6,7 @@ import {
 } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreatePartnerEventDto {
+export class CreateEventDto {
   @ApiProperty({ example: "Adoption Day" })
   @IsNotEmpty()
   @IsString()
