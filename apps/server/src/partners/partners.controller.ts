@@ -20,7 +20,7 @@ import { PartnerAccount, PartnerType } from "@prisma/client";
 import { AuthGuard } from "src/auth/auth.guard";
 import { User } from "src/utils/user.decorator";
 
-@ApiTags("partners")
+@ApiTags("Partners")
 @Controller("partners")
 export class PartnersController {
   constructor(private readonly partnersService: PartnersService) {}
