@@ -23,11 +23,10 @@ RUN pnpm build
 
 FROM base AS frontend
 WORKDIR /woof-frontend
-COPY --from=builder /woof-build/frontend/.next ./.next
+COPY --from=builder /woof-build/frontend/.next/static ./.next/static
+COPY --from=builder /woof-build/frontend/.next/standalone .
 COPY --from=builder /woof-build/frontend/public ./public
-COPY --from=builder /woof-build/frontend/node_modules ./node_modules
-COPY --from=builder /woof-build/frontend/package.json .
-CMD [ "pnpm", "start" ]
+CMD [ "node", "server.js" ]
 
 FROM base AS backend
 WORKDIR /woof-backend
