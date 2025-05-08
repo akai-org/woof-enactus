@@ -14,7 +14,7 @@ import { CreateNeededGoodsDto } from "./dto/CreateNeededGoodsDto";
 import { UpdateNeededGoodsDto } from "./dto/UpdateNeededGoodsDto";
 import { Response } from "express";
 
-@ApiTags("partners")
+@ApiTags("Needed Goods")
 @Controller("goods")
 export class GoodsController {
   constructor(private readonly goodsService: GoodsService) {}
