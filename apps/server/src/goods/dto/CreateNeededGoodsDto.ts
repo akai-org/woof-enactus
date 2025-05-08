@@ -1,6 +1,13 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional, IsInt, Min, IsEnum } from 'class-validator';
-import { GoodsState } from '@prisma/client';
+import { ApiProperty } from "@nestjs/swagger";
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsInt,
+  Min,
+  IsEnum,
+} from "class-validator";
+import { GoodsState } from "@prisma/client";
 
 export class CreateNeededGoodsDto {
   @ApiProperty({ example: "Food supplies" })
