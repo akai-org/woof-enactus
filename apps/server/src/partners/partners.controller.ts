@@ -17,12 +17,10 @@ import UpdatePartnerDto from "./dto/UpdatePartnerDto";
 import { ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { GetAllPartnersResponse } from "../types";
 import { PartnerAccount, PartnerType } from "@prisma/client";
-import { CreateNeededGoodsDto } from "./dto/CreateNeededGoodsDto";
-import { UpdateNeededGoodsDto } from "./dto/UpdateNeededGoodsDto";
 import { AuthGuard } from "src/auth/auth.guard";
 import { User } from "src/utils/user.decorator";
 
-@ApiTags("partners")
+@ApiTags("Partners")
 @Controller("partners")
 export class PartnersController {
   constructor(private readonly partnersService: PartnersService) {}
@@ -95,59 +93,5 @@ export class PartnersController {
   @Get("profile/:slug")
   async getPartnerWithProfile(@Param("slug") slug: string) {
     return this.partnersService.findOneWithProfile(slug);
-  }
-
-  // GET /partners/:slug/needed-goods
-  @Get(":slug/needed-goods")
-  async getNeededGoodsForPartner(
-    @Param("slug") slug: string,
-    @Res() res: Response,
-  ) {
-    const result = await this.partnersService.findNeededGoodsForPartner(slug);
-    return res.status(result.ok ? 200 : 500).json(result);
-  }
-
-  // POST /partners/:slug/needed-goods
-  @Post(":slug/needed-goods")
-  async createNeededGoodsForPartner(
-    @Param("slug") slug: string,
-    @Body() body: CreateNeededGoodsDto,
-    @Res() res: Response,
-  ) {
-    const result = await this.partnersService.createNeededGoodsForPartner(
-      slug,
-      body,
-    );
-    return res.status(result.ok ? 201 : 500).json(result);
-  }
-
-  // PUT /partners/:slug/needed-goods/update/:goodUuid
-  @Put(":slug/needed-goods/update/:goodUuid")
-  async updateNeededGoodsForPartner(
-    @Param("slug") slug: string,
-    @Param("goodUuid") goodUuid: string,
-    @Body() body: UpdateNeededGoodsDto,
-    @Res() res: Response,
-  ) {
-    const result = await this.partnersService.updateNeededGoodsForPartner(
-      slug,
-      goodUuid,
-      body,
-    );
-    return res.status(result.ok ? 200 : 500).json(result);
-  }
-
-  // DELETE /partners/:slug/needed-goods/delete/:goodUuid
-  @Delete(":slug/needed-goods/delete/:goodUuid")
-  async deleteNeededGoodsForPartner(
-    @Param("slug") slug: string,
-    @Param("goodUuid") goodUuid: string,
-    @Res() res: Response,
-  ) {
-    const result = await this.partnersService.deleteNeededGoodsForPartner(
-      slug,
-      goodUuid,
-    );
-    return res.status(result.ok ? 200 : 500).json(result);
   }
 }
