@@ -114,5 +114,5 @@ model PartnerEvent {
   title         String
   description   String
   thumbnail     String?
-  createdAt     DateTime @default(now())
+  eventDate   DateTime
 }

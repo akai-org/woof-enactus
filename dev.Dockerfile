@@ -1,4 +1,4 @@
-FROM node:alpine AS base 
+FROM node:23-alpine AS base 
 RUN apk add openssl
 
 WORKDIR /woof-enactus
