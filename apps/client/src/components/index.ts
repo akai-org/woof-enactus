@@ -1,4 +1,6 @@
 import { Map } from "./map";
+import { Table } from "./partners-table";
+import { JoinUsContainer } from "./joinus";
 
 import Nav from "./Navbar";
 import Footer from "./Footer";
@@ -21,4 +23,6 @@ export {
   GoBackButton,
   Tooltip,
   Toaster,
+  Table,
+  JoinUsContainer
 };
