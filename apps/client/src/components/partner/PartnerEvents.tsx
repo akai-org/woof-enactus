@@ -43,7 +43,7 @@ export default async function PartnerEvents({ slug }: Props) {
           </Box>
 
           <Flex direction="column" alignItems="center" gap={4}>
-            <Image src={thumbnail} alt={title} width={200} />
+            <Image src={thumbnail} alt={title} maxWidth={400} maxHeight={200} />
             <Button variant="gray" size="lg">
               Przypomnij mi o wydarzeniu!
             </Button>
