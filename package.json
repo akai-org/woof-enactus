@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "start:dev:local": "pnpm --filter=* start:dev:local",
     "start:dev": "docker compose -f compose.dev.yml up --build",
     "start:dev:d": "docker compose -f compose.dev.yml up --build -d"
   },
