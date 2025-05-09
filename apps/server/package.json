@@ -19,8 +19,6 @@
     "prisma:generate": "prisma generate",
     "prisma:reset": "prisma migrate reset",
     "prisma:migrate": "prisma migrate dev",
-    "codegen:download": "bash ./setup_codegen.sh",
-    "codegen:run": "java -jar ./bin/codegen.jar generate -i http://localhost:3000/api/json -l typescript-axios -o ../../packages/woof-api-client",
     "db:seed:helper": "ts-node ./prisma/seed.ts",
     "db:seed": "docker container exec -it woof-enactus-backend-dev-1 sh -c \"npm -w server run db:seed:helper\""
   },
