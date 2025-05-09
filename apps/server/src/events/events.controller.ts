@@ -5,42 +5,47 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  Patch,
   Post,
+  Put,
 } from "@nestjs/common";
-import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { CreatePartnerEventDto } from "./dto/CreatePartnerEventDto";
-import { PartnerEventService } from "./partner-event.service";
-import { UpdatePartnerEventDto } from "./dto/UpdatePartnerEventDto";
+import { ApiTags, ApiResponse } from "@nestjs/swagger";
+import { CreateEventDto } from "./dto/CreateEventDto";
+import { UpdateEventDto } from "./dto/UpdateEventDto";
+import { EventsService } from "./events.service";
 
 @ApiTags("Partner Events")
-@Controller("partner-events")
-export class PartnerEventController {
-  constructor(private readonly partnerEventService: PartnerEventService) {}
+@Controller("events")
+export class EventsController {
+  constructor(private readonly eventsService: EventsService) {}
 
   @Post()
   @ApiResponse({
     status: 201,
     description: "Partner event created successfully.",
   })
-  create(@Body() createPartnerEventDto: CreatePartnerEventDto) {
-    return this.partnerEventService.create(createPartnerEventDto);
+  create(@Body() createEventDto: CreateEventDto) {
+    return this.eventsService.create(createEventDto);
   }
 
   @Get()
   @ApiResponse({ status: 200, description: "List of all partner events." })
   findAll() {
-    return this.partnerEventService.findAll();
+    return this.eventsService.findAll();
   }
 
   @Get(":id")
   @ApiResponse({ status: 200, description: "Partner event found." })
   @ApiResponse({ status: 404, description: "Partner event not found." })
   findOne(@Param("id", ParseIntPipe) id: number) {
-    return this.partnerEventService.findOne(id);
+    return this.eventsService.findOne(id);
   }
 
-  @Patch(":id")
+  @Get("partner/:slug")
+  async getPartnerEvents(@Param("slug") slug: string) {
+    return await this.eventsService.findAllForPartner(slug);
+  }
+
+  @Put(":id")
   @ApiResponse({
     status: 200,
     description: "Partner event updated successfully.",
@@ -48,9 +53,9 @@ export class PartnerEventController {
   @ApiResponse({ status: 404, description: "Partner event not found." })
   update(
     @Param("id", ParseIntPipe) id: number,
-    @Body() updatePartnerEventDto: UpdatePartnerEventDto,
+    @Body() updateEventDto: UpdateEventDto,
   ) {
-    return this.partnerEventService.update(id, updatePartnerEventDto);
+    return this.eventsService.update(id, updateEventDto);
   }
 
   @Delete(":id")
@@ -60,6 +65,6 @@ export class PartnerEventController {
   })
   @ApiResponse({ status: 404, description: "Partner event not found." })
   remove(@Param("id", ParseIntPipe) id: number) {
-    return this.partnerEventService.remove(id);
+    return this.eventsService.remove(id);
   }
 }
