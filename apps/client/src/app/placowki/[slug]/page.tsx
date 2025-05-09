@@ -101,7 +101,7 @@ export default async function PartnerPage({
               <Box bg="brand.100" borderRadius="md" p={[3, 8]}>
                 {tab.id == "info" && <PartnerInfo profileData={profileData} />}
                 {tab.id == "stuff" && <PartnerNeeds slug={slug} />}
-                {tab.id == "events" && <PartnerEvents />}
+                {tab.id == "events" && <PartnerEvents slug={slug}/>}
               </Box>
             </Tabs.Content>
           )}
