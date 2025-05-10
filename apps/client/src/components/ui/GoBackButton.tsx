@@ -8,7 +8,7 @@ export default function GoBackButton() {
   const { back } = useRouter();
 
   return (
-    <Button variant="outline" size="sm" onClick={back}>
+    <Button variant="gray" size="sm" onClick={back}>
       <RiArrowLeftLine />
       Powrót
     </Button>

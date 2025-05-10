@@ -77,3 +77,18 @@
 .leaflet-popup-tip {
   box-shadow: none !important;
 }
+
+/* custom marker cluster icon used in Map.tsx  */
+
+.custom-cluster-icon span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: 700;
+}

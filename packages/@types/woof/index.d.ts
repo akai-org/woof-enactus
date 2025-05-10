@@ -128,6 +128,6 @@ declare module "woof" {
     title: string;
     description: string;
     thumbnail?: string;
-    createdAt: Date;
+    eventDate: Date;
   }
 }

@@ -1,30 +1,52 @@
-import { Button, Card, Flex, Image, Stack } from "@chakra-ui/react";
+import { getPartnerEvents } from "@/api";
+import NotFound from "@/app/not-found";
+import { Box, Button, Card, Flex, Image, Stack } from "@chakra-ui/react";
 
-export default function PartnerEvents() {
+type Props = {
+  slug: string;
+};
+
+export default async function PartnerEvents({ slug }: Props) {
+   const events = await getPartnerEvents(slug);
+    if (!events) return NotFound();
+    
   return (
     <Stack gap={10}>
-      {Array.from({ length: 3 }).map((_, i) => (
+      {events.map(({title,description,thumbnail,eventDate,uuid}) => (
         <Card.Root
           display="grid"
           gridTemplateColumns={["1fr", "1fr", "2fr 1fr"]}
           gap={4}
-          p={[0, 4]}
-          key={i}
+          p={{ base: 2, md: 4 }}
+          paddingBottom={{ base: "4", sm: 0 }}
+          key={uuid}
+          borderColor="brand.300"
+          borderWidth={2}
+          placeItems="center"
         >
-          <div>
+          <Box>
             <Card.Header p={2} textAlign={["center", "left"]}>
-              <Card.Title color="brand.700" fontWeight="bold">
-                12.12.2000 - Lorem ipsum
+              <Card.Title
+                color="brand.600"
+                fontSize={{ base: "lg", md: "2xl" }}
+                fontWeight="bold"
+                mb={{ base: "2", md: "4" }}
+              >
+                {new Date(eventDate).toLocaleString().split(",")[0]}{" "}{title}
               </Card.Title>
             </Card.Header>
             <Card.Body p={2}>
-              <Card.Description>asdaskfjsdljgblsdhfgbl</Card.Description>
+              <Card.Description lineHeight={2}>
+               {description}
+              </Card.Description>
             </Card.Body>
-          </div>
+          </Box>
 
-          <Flex direction="column" gap={4}>
-            <Image src="https://placehold.co/600x400/png" />
-            <Button variant="outline">Przypomnij mi o Wydarzeniu</Button>
+          <Flex direction="column" alignItems="center" gap={4}>
+            <Image src={thumbnail} alt={title} maxWidth={400} maxHeight={200} />
+            <Button variant="gray" size="lg">
+              Przypomnij mi o wydarzeniu!
+            </Button>
           </Flex>
         </Card.Root>
       ))}

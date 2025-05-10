@@ -1,10 +1,10 @@
 import { Box, Card, Container, Grid, Heading } from "@chakra-ui/react";
 import Image from "next/image";
-import AboutUs1 from "@/../public/about-us-1.png";
-import AboutUs2 from "@/../public/about-us-2.png";
-import AboutUs3 from "@/../public/about-us-3.png";
-import AboutUs4 from "@/../public/about-us-4.png";
-import AboutUsBg from "@/../public/about-us-bg.png";
+import AboutUs1 from "@/assets/about-us-1.png";
+import AboutUs2 from "@/assets/about-us-2.png";
+import AboutUs3 from "@/assets/about-us-3.png";
+import AboutUs4 from "@/assets/about-us-4.png";
+import AboutUsBg from "@/assets/about-us-bg.png";
 
 const images = [AboutUs1, AboutUs2, AboutUs3, AboutUs4];
 
@@ -110,7 +110,7 @@ export default function AboutUsPage() {
                 key={i.src}
                 src={i}
                 placeholder="blur"
-                alt="Haumaps Team photo"
+                alt="HauMaps Team photo"
                 style={{ height: "200px", width: "200px" }}
               />
             ))}
