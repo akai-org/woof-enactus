@@ -1,0 +1,25 @@
+# Ten compose jest przeznaczony do uruchamiania na maszynie produkcyjnej
+# Zaciąga zbudowane obrazy z ghcr (TODO)
+services:
+  database:
+    image: postgres:alpine
+    restart: unless-stopped
+    hostname: database
+    env_file:
+      - .env
+
+  backend:
+    hostname: backend
+    image: woof-enactus-backend:latest
+    env_file:
+      - .env
+    depends_on:
+      - database
+
+  frontend:
+    hostname: frontend
+    image: woof-enactus-frontend:latest
+    env_file:
+      - .env
+    depends_on:
+      - backend

@@ -1,0 +1,4 @@
+enablePrePostScripts: true
+packages:
+  - apps/*
+  - packages/*

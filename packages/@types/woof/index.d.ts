@@ -123,4 +123,11 @@ declare module "woof" {
   interface NeededGoodsMeta extends DatabaseEntity {
     note?: string;
   }
+
+  interface PartnerEvent extends DatabaseEntity {
+    title: string;
+    description: string;
+    thumbnail?: string;
+    createdAt: Date;
+  }
 }

@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start:dev:local": "next dev -p 3001",
     "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
+    "start:prod": "next start",
     "lint": "next lint",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "chakra:typegen": "chakra typegen src/constants/theme.ts",

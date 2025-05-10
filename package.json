@@ -3,24 +3,33 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start:dev:db": "docker compose -f compose.dev.yml up -d",
-    "stop:dev:db": "docker compose -f compose.dev.yml down",
-    "start:dev:server": "npm -w server run start:dev",
-    "start:dev:client": "npm -w client run dev"
+    "start:dev:local": "pnpm --filter=* start:dev:local",
+    "start:dev": "docker compose -f compose.dev.yml up --build",
+    "start:dev:d": "docker compose -f compose.dev.yml up --build -d",
+    "start:dev:db": "docker compose -f compose.dev.yml up -d database pgAdmin",
+    "start:dev:server": "npm run start:dev -w server",
+    "start:dev:client": "npm run dev -w client" 
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "devDependencies": {
     "prettier": "^3.5.1"
   },
-  "dependencies": {
-    "@hookform/resolvers": "^5.0.1",
-    "jwt-decode": "^4.0.0"
-  }
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@prisma/client",
+      "@prisma/engines",
+      "@scarf/scarf",
+      "@swc/core",
+      "bcrypt",
+      "esbuild",
+      "prisma",
+      "sharp",
+      "unrs-resolver"
+    ]
+  },
+  "packageManager": "pnpm@10.10.0"
 }

@@ -2,6 +2,7 @@ import { PrismaClient, Prisma } from "@prisma/client";
 import * as bcrypt from "bcrypt";
 import { faker, fakerPL } from "@faker-js/faker";
 import slugify from "slugify";
+import { setTimeout } from "node:timers/promises";
 
 const prisma = new PrismaClient();
 
@@ -14,12 +15,17 @@ async function main(): Promise<void> {
   await prisma.partner.deleteMany();
   await prisma.partnerAccount.deleteMany();
 
+  await prisma.$executeRaw`ALTER SEQUENCE "PartnerEvent_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "Partner_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "PartnerProfile_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "WorkingHours_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "NeededGoodsMeta_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "NeededGoods_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "WorkingHours_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "PartnerProfile_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "Partner_id_seq" RESTART WITH 1;`;
   await prisma.$executeRaw`ALTER SEQUENCE "PartnerAccount_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "PartnerEvent_id_seq" RESTART WITH 1;`;
 
   console.log("[SEED] Generating data...");
   const partnerAccountPayload: Prisma.PartnerAccountCreateManyInput[] = [];
@@ -28,6 +34,7 @@ async function main(): Promise<void> {
   const workingHoursPayload: Prisma.WorkingHoursCreateManyInput[] = [];
   const neededGoodsPayload: Prisma.NeededGoodsCreateManyInput[] = [];
   const neededGoodsMetaPayload: Prisma.NeededGoodsMetaCreateManyInput[] = [];
+  const partnerEventPayload: Prisma.PartnerEventCreateManyInput[] = [];
 
   for (let i = 0; i < 1000; i++) {
     partnerAccountPayload.push({
@@ -92,8 +99,17 @@ async function main(): Promise<void> {
       partnerId: i + 1,
       note: fakerPL.lorem.paragraph(),
     });
+
+    partnerEventPayload.push({
+      partnerId: i + 1,
+      title: fakerPL.lorem.words({ min: 2, max: 3 }),
+      description: fakerPL.lorem.paragraph(),
+      thumbnail: fakerPL.image.avatar(),
+      eventDate: faker.date.between({ from: "2025-06-01", to: "2025-12-31" }),
+    });
   }
 
+  console.log("[SEED] Seeding data...");
   await prisma.partnerAccount.createMany({
     data: partnerAccountPayload,
   });
@@ -118,9 +134,15 @@ async function main(): Promise<void> {
     data: neededGoodsMetaPayload,
   });
 
+  await prisma.partnerEvent.createMany({
+    data: partnerEventPayload,
+  });
+
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   createdPartners.forEach(async partner => {
     const generatedSlug = `${slugify(partner.name, { lower: true })}-${partner.id}`;
+    // Potrzebne, bo z jakiegoś powodu baza nie nadążała i czasami rozłączało połączenie
+    await setTimeout(1);
     await prisma.partner.update({
       where: {
         id: partner.id,
@@ -130,9 +152,11 @@ async function main(): Promise<void> {
       },
     });
   });
+
+  console.log("[SEED] Done!");
 }
 
-main()
+void main()
   .catch(e => {
     console.error(e);
     process.exit(1);

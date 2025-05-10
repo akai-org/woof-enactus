@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["@chakra-ui/react"],
     typedEnv: true,
   },
+  output: "standalone",
 };
 
 export default nextConfig;
