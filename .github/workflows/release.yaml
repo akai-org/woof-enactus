@@ -2,13 +2,14 @@ name: Release
 
 on:
   push:
+    branches:
+      - release
     tags:
       - '*'
 
 jobs:
   release:
     name: Build Docker images and push to GCP Aritfact Registry
-    if: github.ref == 'refs/heads/release'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
