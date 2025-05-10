@@ -2,8 +2,6 @@ name: Release
 
 on:
   push:
-    branches:
-      - release
     tags:
       - '*'
 
@@ -17,9 +15,10 @@ jobs:
 
       - id: auth
         name: Authenticate with Google Cloud
-        uses: google-github-actions/auth@v0
+        uses: google-github-actions/auth@v2
         with:
           token_format: access_token
+          project_id: angular-amp-459415-h8
           workload_identity_provider: projects/782854916885/locations/global/workloadIdentityPools/haumaps/providers/github
           service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
           access_token_lifetime: 300s
