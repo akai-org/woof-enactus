@@ -1,3 +1,8 @@
-import Map from "./Map";
+"use client";
+import dynamic from "next/dynamic";
 
-export { Map };
+const MapNoSSR = dynamic(() => import("./Map"), {
+  ssr: false,
+});
+
+export { MapNoSSR };

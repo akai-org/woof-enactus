@@ -1,4 +1,4 @@
-import { Map } from "./map";
+import { MapNoSSR as Map } from "./map";
 
 import Nav from "./Navbar";
 import Footer from "./Footer";
