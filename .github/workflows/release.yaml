@@ -9,6 +9,9 @@ jobs:
   release:
     name: Build Docker images and push to GCP Aritfact Registry
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
