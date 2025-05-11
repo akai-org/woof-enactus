@@ -21,6 +21,30 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=zaq1@WSX
       - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True
 
+  cms:
+    build:
+      context: ./apps/blog
+      dockerfile: Dockerfile
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./apps/blog:/app:cached
+      - /app/node_modules
+    env_file:
+      - ./apps/blog/.env
+    depends_on:
+      - database
+    environment:
+      - DATABASE_CLIENT=postgres
+      - DATABASE_HOST=database
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=woof
+      - DATABASE_USERNAME=enactus
+      - DATABASE_PASSWORD=zaq1@WSX
+      - DATABASE_SSL=false
+    command: ["npm", "run", "develop"]
+
+
   backend-dev:
     hostname: backend
     build:
