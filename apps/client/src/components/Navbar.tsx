@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { IoMenu } from "react-icons/io5";
 import { Link } from "@/components";
+import NextLink from 'next/link'
 
 const links = [
   {
@@ -171,8 +172,9 @@ function Nav() {
             <Button
               bgColor="brand.700"
               display={{ base: "none", md: "initial" }}
+              asChild
             >
-              Zaloguj się jako placówka
+              <NextLink href="/zaloguj-sie">Zaloguj się jako placówka</NextLink>
             </Button>
           </Flex>
         </Center>
