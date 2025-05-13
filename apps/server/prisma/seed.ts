@@ -6,9 +6,10 @@ import slugify from "slugify";
 import { setTimeout } from "node:timers/promises";
 
 const parseAddress = (address: string): string[] => {
-  const street = address.split(",")[0].trim();
-  const postal = address.split(",")[1].split(" ")[0].trim();
-  const city = address.split(",")[1].split(" ")[1].trim();
+  console.log(address);
+  const street = address.split(", ")[0].trim();
+  const postal = address.split(", ")[1].split(" ")[0].trim();
+  const city = address.split(", ")[1].split(" ")[1].trim();
   return [street, postal, city];
 };
 
