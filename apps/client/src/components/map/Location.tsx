@@ -16,7 +16,7 @@ type LocationProps = {
 };
 
 const customIcon = icon({
-  iconUrl: "user-marker-icon.svg",
+  iconUrl: "user-marker-icon.png",
   iconSize: [35, 35],
 });
 
