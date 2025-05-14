@@ -26,7 +26,8 @@ type MapProps = {
   data: PartnerData[];
 };
 
-const createClusterIcon = markerCluster => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const createClusterIcon = (markerCluster: any) => {
   const childCount = markerCluster.getChildCount();
   let iconUrl = "cluster-";
 
