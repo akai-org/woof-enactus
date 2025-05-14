@@ -6,7 +6,7 @@ export default async function getPartnerNeeds(
 ): Promise<PartnerNeeds | null> {
   try {
     const res = await fetch(
-      `${process.env.API_URL}/partners/${partnerSlug}/needed-goods`,
+      `${process.env.API_URL}/goods/${partnerSlug}/goods`,
     );
     const { data, ok }: GenericResponse<PartnerNeeds> = await res.json();
     if (!res.ok || !ok) {
