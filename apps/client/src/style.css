@@ -60,6 +60,7 @@
 
 .leaflet-popup {
   text-align: left !important;
+  max-width: 35ch;
 }
 .leaflet-popup-content-wrapper {
   border-radius: 8px !important;

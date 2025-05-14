@@ -5,7 +5,7 @@ import type { LatLngExpression } from "leaflet";
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
 import type { PartnerData, PartnerType } from "@/types";
-import { Box, List, Text, Button, Link } from "@chakra-ui/react";
+import { Box, List, Text, Button, Link, Flex } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
 import { legendItems } from "@/constants";
 import { TiArrowRight } from "react-icons/ti";
@@ -30,11 +30,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
   return (
     <Marker position={position} icon={createIcon(type)}>
       <Popup>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          justifyContent={"space-between"}
-        >
+        <Flex flexDirection={"column"} justifyContent={"space-between"}>
           <Text textStyle="sm" fontWeight={"bold"}>
             {name}
           </Text>
@@ -75,7 +71,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
               </NextLink>
             </Link>
           </Button>
-        </Box>
+        </Flex>
       </Popup>
     </Marker>
   );
