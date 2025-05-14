@@ -148,7 +148,7 @@ export default async function PartnerNeeds({ slug }: Props) {
         p={{ md: "8", base: "4" }}
         borderRadius="sm"
         borderColor="brand.300"
-        borderWidth={1}
+        borderWidth={2}
         width="100%"
         mt="8"
       >
