@@ -27,10 +27,6 @@ const tabs = [
   },
 ];
 
-export async function generateStaticParams() {
-  return [];
-}
-
 export default async function PartnerPage({
   params,
 }: {
