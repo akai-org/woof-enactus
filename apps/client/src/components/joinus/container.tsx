@@ -2,23 +2,17 @@ import { Box, Button, Card, Container, Heading, Text } from "@chakra-ui/react";
 
 export default function JoinUsContainer() {
   return (
-    <Container
-      
-      gap={20}
-      display="flex"
-      flexDirection="column"
-      marginBottom="40px"
-    >
+    <Container gap={20} marginBottom="10">
       <Card.Root
-      
-        margin="auto"
-        maxWidth="650px"
+        marginY="10"
+        marginX="auto"
+        maxWidth="70ch"
         borderColor="brand.300"
         backgroundColor="brand.200"
+        p="4"
       >
         <Card.Header>
           <Heading
-            fontStyle="italic"
             lineHeight="50px"
             margin="auto"
             color="brand.600"
@@ -28,20 +22,15 @@ export default function JoinUsContainer() {
             Reprezentujesz schronisko dla zwierząt <br />
             lub orgaznizacje prozwierzęcą i chciałbyś <br />
             przedstawić swoją placówkę? Dołącz do{" "}
-            <Text as="span" color="brand.500">
-              HAUMAPS
+            <Text as="span" color="brand.500" textTransform="uppercase">
+              Haumaps
             </Text>
             !
           </Heading>
         </Card.Header>
         <Card.Body>
-          <Button
-            margin="auto"
-            backgroundColor="accent.green"
-            padding="35px"
-            width="auto"
-          >
-            <Heading fontSize="xl" color="white" fontWeight="500">
+          <Button variant="cta" size="2xl" alignSelf="center">
+            <Heading fontSize="2xl" color="white" fontWeight="500">
               ZAREJESTRUJ PLACÓWKĘ!
             </Heading>
           </Button>
