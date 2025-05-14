@@ -18,7 +18,13 @@ export default function ZarejestrujSiePage() {
   return (
     <Stack>
       <form action={formAction}>
-        <Fieldset.Root size="lg" maxW="md" mx="auto" mt={10} invalid={state.message}>
+        <Fieldset.Root
+          size="lg"
+          maxW="md"
+          mx="auto"
+          mt={10}
+          invalid={state.message}
+        >
           <Stack textAlign="center">
             <Fieldset.Legend
               as="h1"
@@ -41,7 +47,9 @@ export default function ZarejestrujSiePage() {
               <Input name="pass" type="password" />
             </Field.Root>
           </Fieldset.Content>
-          <Fieldset.ErrorText>{state?.message} </Fieldset.ErrorText>
+          <Fieldset.ErrorText w="fit" mx="auto">
+            {state?.message}
+          </Fieldset.ErrorText>
           <Button type="submit" alignSelf="center" disabled={pending}>
             Zarejestruj placówkę
           </Button>
