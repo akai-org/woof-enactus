@@ -22,22 +22,28 @@ services:
       - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True
 
   backend-dev:
+    hostname: backend
     build:
       context: .
       dockerfile: ./dev.Dockerfile
     volumes:
       - "./apps/server:/woof-enactus/apps/server:rw"
-    entrypoint: "npm -w server run start:dev"
+    entrypoint: "pnpm --filter=server start:dev"
     ports:
       - "3000:3000"
+    depends_on:
+      - database
 
   frontend-dev:
+    hostname: frontend
     build:
       context: .
       dockerfile: ./dev.Dockerfile
     volumes:
       - "./apps/client:/woof-enactus/apps/client:rw"
-    entrypoint: "npm -w client run dev"
+    entrypoint: "pnpm --filter=client dev"
     ports:
       - "3001:3001"
+    depends_on:
+      - backend-dev
     
