@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   CloseButton,
@@ -15,7 +16,8 @@ import {
 } from "@chakra-ui/react";
 import { IoMenu } from "react-icons/io5";
 import { Link } from "@/components";
-import NextLink from 'next/link'
+import NextLink from "next/link";
+import useAuth from "./useAuth";
 
 const links = [
   {
@@ -37,6 +39,7 @@ const links = [
 ];
 
 function Nav() {
+  const isLogged = useAuth();
   return (
     <Box
       position="sticky"
@@ -83,6 +86,7 @@ function Nav() {
                         {item => (
                           <Link
                             linkProps={{ href: item.href }}
+                            key={item.name}
                             chakraLinkProps={{
                               textDecoration: "none",
                               textStyle: "md",
@@ -93,8 +97,15 @@ function Nav() {
                           </Link>
                         )}
                       </For>
-                      <Button bgColor="brand.700">
-                        Zaloguj się jako placówka
+
+                      <Button bgColor="brand.700" asChild>
+                        <NextLink
+                          href={isLogged ? "/panel-placowki" : "/zaloguj-sie"}
+                        >
+                          {isLogged
+                            ? "Panel placówki"
+                            : "Zaloguj się jako placówka"}
+                        </NextLink>
                       </Button>
                     </Drawer.Body>
                     <Drawer.Footer>
@@ -142,7 +153,7 @@ function Nav() {
               >
                 <For each={links}>
                   {item => (
-                    <Tabs.Trigger value={item.name} asChild>
+                    <Tabs.Trigger value={item.name} key={item.name} asChild>
                       <Link
                         linkProps={{ href: item.href }}
                         chakraLinkProps={{
@@ -169,13 +180,14 @@ function Nav() {
           </Flex>
 
           <Flex flex="1" justifyContent="flex-end">
-            <Button
-              bgColor="brand.700"
-              display={{ base: "none", md: "initial" }}
-              asChild
-            >
-              <NextLink href="/zaloguj-sie">Zaloguj się jako placówka</NextLink>
-            </Button>
+            <NextLink href={isLogged ? "/panel-placowki" : "/zaloguj-sie"}>
+              <Button
+                bgColor="brand.700"
+                display={{ base: "none", md: "initial" }}
+              >
+                {isLogged ? "Panel placówki" : "Zaloguj się jako placówka"}
+              </Button>
+            </NextLink>
           </Flex>
         </Center>
       </Container>
