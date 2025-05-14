@@ -20,11 +20,7 @@ export default async function loginAction(prevState: any, formData: FormData) {
   const json = await res.json();
   console.log(json);
 
-  if (!json.ok) {
-    return {
-      message: json.message,
-    };
-  }
+  if (!json.ok) return json.message;
 
   const data = json.data;
   const cookieStore = await cookies();
@@ -39,5 +35,5 @@ export default async function loginAction(prevState: any, formData: FormData) {
     httpOnly: true,
   });
 
-  redirect('/panel-placowki')
+  redirect("/panel-placowki");
 }

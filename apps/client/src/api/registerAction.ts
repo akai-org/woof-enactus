@@ -22,11 +22,6 @@ export default async function registerAction(
 
   const json = await res.json();
 
-  if (!json.ok) {
-    return {
-      message: json.message,
-    };
-  }
-
+  if (!json.ok) return json.message;
   redirect("/zaloguj-sie");
 }

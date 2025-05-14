@@ -10,15 +10,15 @@ const initialState = {
 };
 
 export default function ZalogujSiePage() {
-  const [state, formAction, pending] = useActionState(
+  const [message, formAction, pending] = useActionState(
     loginAction,
-    initialState,
+    null
   );
 
   return (
     <Stack>
       <form action={formAction}>
-        <Fieldset.Root size="lg" maxW="md" mx="auto" mt={10} invalid={state?.message}>
+        <Fieldset.Root size="lg" maxW="md" mx="auto" mt={10} invalid={message}>
           <Stack textAlign="center">
             <Fieldset.Legend
               as="h1"
@@ -49,7 +49,7 @@ export default function ZalogujSiePage() {
             Zaloguj się do swojej placówki
           </Button>
           <Fieldset.ErrorText w="fit" mx="auto">
-            {state?.message}
+            {message}
           </Fieldset.ErrorText>
         </Fieldset.Root>
       </form>

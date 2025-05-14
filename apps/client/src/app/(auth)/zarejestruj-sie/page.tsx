@@ -4,27 +4,13 @@ import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 import Link from "next/link";
 import { useActionState } from "react";
 
-const initialState = {
-  email: "",
-  pass: "",
-};
-
 export default function ZarejestrujSiePage() {
-  const [state, formAction, pending] = useActionState(
-    registerAction,
-    initialState,
-  );
+  const [message, formAction, pending] = useActionState(registerAction, null);
 
   return (
     <Stack>
       <form action={formAction}>
-        <Fieldset.Root
-          size="lg"
-          maxW="md"
-          mx="auto"
-          mt={10}
-          invalid={state.message}
-        >
+        <Fieldset.Root size="lg" maxW="md" mx="auto" mt={10} invalid={message}>
           <Stack textAlign="center">
             <Fieldset.Legend
               as="h1"
@@ -48,7 +34,7 @@ export default function ZarejestrujSiePage() {
             </Field.Root>
           </Fieldset.Content>
           <Fieldset.ErrorText w="fit" mx="auto">
-            {state?.message}
+            {message}
           </Fieldset.ErrorText>
           <Button type="submit" alignSelf="center" disabled={pending}>
             Zarejestruj placówkę
