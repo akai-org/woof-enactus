@@ -50,9 +50,10 @@ type HomeSearchParams = Partial<{
 
 // ============ Api layer types =============
 
-interface ApiClientOptions {
+type ApiClientOptions = Readonly<{
   baseUrl: string;
-}
+  globalFetchOptions?: RequestInit;
+}>;
 
 interface IApiClient {
   readonly baseUrl: string;
