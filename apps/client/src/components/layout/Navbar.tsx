@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   CloseButton,
@@ -18,6 +19,7 @@ import { IoMenu } from "react-icons/io5";
 import NextLink from "next/link";
 import NavLink from "./NavLink";
 import { Logo } from "@/components";
+import useAuth from "../useAuth";
 
 const links = [
   {
@@ -39,6 +41,7 @@ const links = [
 ];
 
 function Nav() {
+  const isLogged = useAuth();
   return (
     <Box
       position="sticky"
@@ -86,6 +89,7 @@ function Nav() {
                     fontSize="sm"
                     fontWeight="medium"
                     value={item.name}
+                    key={item.name}
                   >
                     <NavLink href={item.href} name={item.name} />
                   </List.Item>
@@ -94,8 +98,10 @@ function Nav() {
             </List.Root>
           </Flex>
 
-          <Button bgColor="brand.700" hideBelow={"lg"}>
-            Zaloguj się jako placówka
+          <Button bgColor="brand.700" hideBelow="md" asChild>
+            <NextLink href={isLogged ? "/panel-placowki" : "/zaloguj-sie"}>
+              {isLogged ? "Panel placówki" : "Zaloguj się jako placówka"}
+            </NextLink>
           </Button>
           <Drawer.Root placement="end">
             <Drawer.Trigger asChild>
@@ -136,8 +142,14 @@ function Nav() {
                         </Link>
                       )}
                     </For>
-                    <Button bgColor="brand.700">
-                      Zaloguj się jako placówka
+                    <Button bgColor="brand.700" asChild>
+                      <NextLink
+                        href={isLogged ? "/panel-placowki" : "/zaloguj-sie"}
+                      >
+                        {isLogged
+                          ? "Panel placówki"
+                          : "Zaloguj się jako placówka"}
+                      </NextLink>
                     </Button>
                   </Drawer.Body>
                   <Drawer.Footer>
