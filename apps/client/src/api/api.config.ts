@@ -1,4 +1,4 @@
-import type { ApiClientOptions } from "@/types";
+import type { ApiClientOptions } from "./types";
 
 const endpoints = {
   partners: `/partners`,

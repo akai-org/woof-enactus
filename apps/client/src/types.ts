@@ -48,18 +48,6 @@ type HomeSearchParams = Partial<{
   type: string; // e.g. "VET,SHELTER,ORG"
 }>;
 
-// ============ Api layer types =============
-
-type ApiClientOptions = Readonly<{
-  baseUrl: string;
-  globalFetchOptions?: RequestInit;
-}>;
-
-interface IApiClient {
-  readonly baseUrl: string;
-  get<T>(endpoint: string, params?: string): Promise<T | null>;
-}
-
 export type {
   PartnerData,
   WorkingHours,
@@ -77,5 +65,3 @@ export type {
   PartnersParams,
   RequireKey,
 };
-
-export type { ApiClientOptions, IApiClient };

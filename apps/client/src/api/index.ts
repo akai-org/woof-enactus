@@ -5,6 +5,10 @@ import getPartnerEvents from "./getPartnerEvents";
 
 import { ApiClient } from "./ApiClient";
 import { PartnerService } from "./PartnerService";
+import { apiClientOptions } from "./api.config";
+
+import type { IApiClient, IPartnerService } from "./types";
 
 export { getPartnerProfile, getPartners, getPartnerNeeds, getPartnerEvents };
-export { ApiClient, PartnerService };
+export { ApiClient, PartnerService, apiClientOptions };
+export type { IApiClient, IPartnerService };

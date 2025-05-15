@@ -1,13 +1,13 @@
 import type {
-  IApiClient,
   PartnerData,
   PartnerEvent,
   PartnerNeeds,
   PartnersParams,
 } from "@/types";
+import type { IApiClient, IPartnerService } from "./types";
 import { endpoints } from "./api.config";
 
-export class PartnerService {
+export class PartnerService implements IPartnerService {
   private readonly _apiClient: IApiClient;
 
   constructor(apiClient: IApiClient) {

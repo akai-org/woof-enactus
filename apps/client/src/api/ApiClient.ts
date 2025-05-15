@@ -1,4 +1,5 @@
-import type { ApiClientOptions, GenericResponse, IApiClient } from "@/types";
+import type { GenericResponse } from "@/types";
+import type { ApiClientOptions, IApiClient } from "./types";
 
 export class ApiClient implements IApiClient {
   private readonly _baseUrl: string;
