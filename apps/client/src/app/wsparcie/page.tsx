@@ -41,16 +41,16 @@ export default function SupportPage() {
                   <Text>
                     lacinia non. Sed dignissim tortor ac sapien volutpat
                     pretium. Donec tincidunt mauris risus, id interdum nulla
-                    consectetur eget. Curabitur sit amet massa nec jestem gejem
-                    justo tempus dignissim sed id lacus. Proin dignissim mi in
-                    nisi mollis, in imperdiet dui viverra. Integer tristique
-                    porttitor tristique. Nulla nec commodo turpis. Mauris vitae
-                    dictum est. Aenean a felis ac velit condimentum vestibulum
-                    id nec magna. Ut et velit id erat finibus porttitor at id
-                    sem. Sed vulputate tempor ex eget molestie. Etiam nibh
-                    ligula, blandit ornare magna laoreet, iaculis laoreet eros.
-                    Aliquam tempor sollicitudin iaculis. Praesent sit amet massa
-                    id felis mattis ultrices id faucibus eros. Sed et urna arcu.
+                    consectetur eget. Curabitur sit amet massa nec justo tempus
+                    dignissim sed id lacus. Proin dignissim mi in nisi mollis,
+                    in imperdiet dui viverra. Integer tristique porttitor
+                    tristique. Nulla nec commodo turpis. Mauris vitae dictum
+                    est. Aenean a felis ac velit condimentum vestibulum id nec
+                    magna. Ut et velit id erat finibus porttitor at id sem. Sed
+                    vulputate tempor ex eget molestie. Etiam nibh ligula,
+                    blandit ornare magna laoreet, iaculis laoreet eros. Aliquam
+                    tempor sollicitudin iaculis. Praesent sit amet massa id
+                    felis mattis ultrices id faucibus eros. Sed et urna arcu.
                     Integer ut elit sit amet magna vestibulum pulvinar. Fusce id
                     lacus vitae odio
                   </Text>
