@@ -6,11 +6,10 @@ const container = new Container();
 
 function initContainer() {
   container.registerSingleton("ApiClient", new ApiClient(apiClientOptions));
-
-  container.registerSingleton("PartnerService", () => {
-    const apiClient = container.resolve<IApiClient>("ApiClient");
-    return new PartnerService(apiClient);
-  });
+  container.registerSingleton(
+    "PartnerService",
+    new PartnerService(container.resolve<IApiClient>("ApiClient")),
+  );
 }
 
 export { container, initContainer };

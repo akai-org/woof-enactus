@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export class Container {
-  private singletons = new Map<string, any | (() => any)>();
+  private singletons = new Map<string, any>();
   private factories = new Map<string, () => any>();
 
   registerSingleton<T>(key: string, instance: T) {

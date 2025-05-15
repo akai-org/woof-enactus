@@ -9,6 +9,9 @@ import { Footer, Nav, Toaster } from "@/components";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/styles";
 import "../style.css";
+import { initContainer } from "@/features/di";
+
+initContainer();
 
 export const metadata: Metadata = {
   title: "HauMaps",
