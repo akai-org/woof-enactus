@@ -7,8 +7,8 @@
     "start:dev": "docker compose -f compose.dev.yml up --build",
     "start:dev:d": "docker compose -f compose.dev.yml up --build -d",
     "start:dev:db": "docker compose -f compose.dev.yml up -d database pgAdmin",
-    "start:dev:server": "npm run start:dev -w server",
-    "start:dev:client": "npm run dev -w client" 
+    "start:dev:server": "pnpm --filter=server start:dev",
+    "start:dev:client": "pnpm --filter=client dev"
   },
   "keywords": [],
   "author": "",
