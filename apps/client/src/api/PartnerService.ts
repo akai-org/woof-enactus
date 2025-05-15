@@ -1,5 +1,4 @@
 import type {
-  GenericResponse,
   IApiClient,
   PartnerData,
   PartnerEvent,

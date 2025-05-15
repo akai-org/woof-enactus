@@ -8,5 +8,8 @@ export const getPartnerTypeName = (type: string) => {
       return "Sklep Zoologiczny";
     case "SHELTER":
       return "Schronisko";
+    default:
+      throw new Error(`${type} partner type doesn't exist.`);
+      break;
   }
 };

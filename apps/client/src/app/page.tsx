@@ -1,4 +1,4 @@
-import { Map } from "@/components";
+import { Map } from "@/features/map";
 import { Table } from "@/components";
 import { JoinUsContainer } from "@/components";
 

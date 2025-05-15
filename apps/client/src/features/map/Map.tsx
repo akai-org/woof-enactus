@@ -10,7 +10,7 @@ import type { PartnerData } from "@/types";
 import MapMarker from "./MapMarker";
 import Location from "./Location";
 import type { LocationHandle } from "./Location";
-import { SearchBar } from "../map-search-bar";
+import { SearchBar } from "./search-bar";
 import L from "leaflet";
 
 /* 

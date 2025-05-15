@@ -1,13 +1,9 @@
 import { Box, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
-import {
-  PartnerInfo,
-  PartnerNeeds,
-  PartnerEvents,
-  GoBackButton,
-} from "@/components";
+import { PartnerInfo, PartnerNeeds, PartnerEvents } from "@/features/partners";
 import { getPartnerProfile } from "@/api";
 import type { PartnerPageParams } from "@/types";
+import { GoBackButton } from "@/components";
 
 const tabs = [
   {
