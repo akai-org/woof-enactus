@@ -7,7 +7,7 @@ import type {
   GenericResponse,
   Partner,
   NeededGoodsMeta,
-  PartnerEvent
+  PartnerEvent,
 } from "woof";
 
 // ====== altered types from woof package ======
@@ -48,13 +48,24 @@ type HomeSearchParams = Partial<{
   type: string; // e.g. "VET,SHELTER,ORG"
 }>;
 
+// ============ Api layer types =============
+
+interface ApiClientOptions {
+  baseUrl: string;
+}
+
+interface IApiClient {
+  readonly baseUrl: string;
+  get<T>(endpoint: string, params?: string): Promise<T | null>;
+}
+
 export type {
   PartnerData,
   WorkingHours,
   PartnerProfile,
   PartnerType,
   GenericResponse,
-  PartnerEvent
+  PartnerEvent,
 };
 
 export type {
@@ -65,3 +76,5 @@ export type {
   PartnersParams,
   RequireKey,
 };
+
+export type { ApiClientOptions, IApiClient };
