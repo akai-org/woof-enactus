@@ -5,6 +5,7 @@ import type {
   PartnerNeeds,
   PartnersParams,
 } from "@/types";
+import { endpoints } from "./api.config";
 
 export class PartnerService {
   private readonly _apiClient: IApiClient;
@@ -19,20 +20,20 @@ export class PartnerService {
     const searchParams = new URLSearchParams(params);
 
     return this._apiClient.get<PartnerData[]>(
-      "/partners",
+      endpoints.partners,
       searchParams.toString(),
     );
   }
 
   async getProfile(slug: string): Promise<PartnerData | null> {
-    return this._apiClient.get(`/partners/profile/${slug}`);
+    return this._apiClient.get(endpoints.partnerProfile(slug));
   }
 
-  async getNeededGoods(slug: string): Promise<PartnerNeeds | null> {
-    return this._apiClient.get(`/goods/${slug}/goods`);
+  async getNeeds(slug: string): Promise<PartnerNeeds | null> {
+    return this._apiClient.get(endpoints.partnerNeeds(slug));
   }
 
   async getEvents(slug: string): Promise<PartnerEvent[] | null> {
-    return this._apiClient.get(`/events/partner/${slug}`);
+    return this._apiClient.get(endpoints.partnerEvents(slug));
   }
 }
