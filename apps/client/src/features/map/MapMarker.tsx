@@ -10,6 +10,7 @@ import { MdLanguage, MdLocalPhone } from "react-icons/md";
 import { legendItems } from "@/constants";
 import { TiArrowRight } from "react-icons/ti";
 import NextLink from "next/link";
+import { truncate } from "@/utils";
 
 type MapMarkerProps = {
   markerData: PartnerData;
@@ -56,7 +57,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
                   <MdLanguage />
                 </List.Indicator>
                 <Link color="brand.500" href={profile.website}>
-                  {profile.website}
+                  {truncate(profile.website)}
                 </Link>
               </List.Item>
             )}
