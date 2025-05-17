@@ -1,6 +1,8 @@
-import getPartnerProfile from "./getPartnerProfile";
-import getPartners from "./getPartners";
-import getPartnerNeeds from "./getPartnerNeeds";
-import getPartnerEvents from "./getPartnerEvents";  
+import { ApiClient } from "./ApiClient";
+import { PartnerService } from "./PartnerService";
+import { apiClientOptions } from "./api.config";
 
-export { getPartnerProfile, getPartners, getPartnerNeeds,getPartnerEvents };
+import type { IApiClient, IPartnerService } from "./types";
+
+export { ApiClient, PartnerService, apiClientOptions };
+export type { IApiClient, IPartnerService };

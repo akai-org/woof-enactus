@@ -6,6 +6,7 @@ import { icon } from "leaflet";
 import { useEffect, useState, useImperativeHandle, useCallback } from "react";
 
 import { Marker, useMapEvents } from "react-leaflet";
+import { LOCATION_FOUND_ZOOM } from "./map.config";
 
 export type LocationHandle = { centerUser: () => void };
 
@@ -20,7 +21,7 @@ const customIcon = icon({
   iconSize: [35, 35],
 });
 
-const Location = ({ defaultPosition, defaultZoom, ref }: LocationProps) => {
+const Location = ({ defaultPosition, defaultZoom: _, ref }: LocationProps) => {
   const [userPosition, setUserPosition] = useState<LatLngExpression | null>(
     null,
   );
@@ -38,13 +39,13 @@ const Location = ({ defaultPosition, defaultZoom, ref }: LocationProps) => {
     locationfound: event => {
       const userLatLng: LatLngExpression = [event.latlng.lat, event.latlng.lng];
       setUserPosition(userLatLng);
-      map.setView(userLatLng, 13, { animate: true });
+      map.setView(userLatLng, LOCATION_FOUND_ZOOM, { animate: true });
     },
   });
 
   const centerUser = useCallback(() => {
     if (userPosition) {
-      map.setView(userPosition, 13, { animate: true });
+      map.setView(userPosition, LOCATION_FOUND_ZOOM, { animate: true });
     } else {
       toaster.create({
         title: "Pozwól nam na pobranie Twojej lokalizacji",

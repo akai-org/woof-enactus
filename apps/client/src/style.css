@@ -62,6 +62,7 @@
   text-align: left !important;
   max-width: 35ch;
 }
+
 .leaflet-popup-content-wrapper {
   border-radius: 8px !important;
   padding: 1.15rem !important;
@@ -69,6 +70,7 @@
 .leaflet-popup-content {
   margin: 0 !important;
   line-height: 1.1 !important;
+  overflow: hidden;
 }
 .leaflet-popup-content p {
   margin: 0 !important;

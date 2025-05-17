@@ -1,0 +1,17 @@
+import type { LatLngExpression } from "leaflet";
+
+const DEFAULT_POSITION: LatLngExpression = [
+  52.06936542110084, 19.480192653660254,
+];
+const MIN_ZOOM = 6;
+const MAX_ZOOM = 18;
+const DEFAULT_ZOOM = MIN_ZOOM;
+const LOCATION_FOUND_ZOOM = 13;
+
+export {
+  DEFAULT_POSITION,
+  MIN_ZOOM,
+  MAX_ZOOM,
+  DEFAULT_ZOOM,
+  LOCATION_FOUND_ZOOM,
+};

@@ -1,13 +1,12 @@
+import { PartnerInfo, PartnerNeeds, PartnerEvents } from "@/features/partners";
+import { container } from "@/features/di";
+import { GoBackButton } from "@/components";
+
 import { Box, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
-import {
-  PartnerInfo,
-  PartnerNeeds,
-  PartnerEvents,
-  GoBackButton,
-} from "@/components";
-import { getPartnerProfile } from "@/api";
+
 import type { PartnerPageParams } from "@/types";
+import type { IPartnerService } from "@/api";
 
 const tabs = [
   {
@@ -33,7 +32,10 @@ export default async function PartnerPage({
   params: Promise<PartnerPageParams>;
 }) {
   const { slug } = await params;
-  const profileData = await getPartnerProfile(slug);
+
+  const profileData = await container
+    .resolve<IPartnerService>("PartnerService")
+    .getProfile(slug);
 
   if (!profileData) notFound();
 

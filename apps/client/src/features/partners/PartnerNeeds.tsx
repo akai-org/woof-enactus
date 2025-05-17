@@ -1,5 +1,6 @@
-import { getPartnerNeeds } from "@/api";
 import NotFound from "@/app/not-found";
+import { container } from "@/features/di";
+
 import {
   Accordion,
   Box,
@@ -10,6 +11,7 @@ import {
   HStack,
   Text,
 } from "@chakra-ui/react";
+import type { IPartnerService } from "@/api";
 
 const colors = {
   OK: "brand.600",
@@ -22,7 +24,10 @@ type Props = {
 };
 
 export default async function PartnerNeeds({ slug }: Props) {
-  const needs = await getPartnerNeeds(slug);
+  const needs = await container
+    .resolve<IPartnerService>("PartnerService")
+    .getNeeds(slug);
+
   if (!needs) return NotFound();
 
   const newest = new Date(
