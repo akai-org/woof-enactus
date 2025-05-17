@@ -1,9 +1,13 @@
 import { Map } from "@/components";
+import { Table } from "@/components";
+import { JoinUsContainer } from "@/components";
+
 import { getPartners } from "@/api";
 
 import { ClientOnly, Container, Skeleton, Heading } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import type { HomeSearchParams } from "@/types";
+
 
 export default async function Home({
   searchParams,
@@ -32,6 +36,8 @@ export default async function Home({
       </Container>
       <ClientOnly fallback={<Skeleton minH="70vh" />}>
         <Map data={partners} />
+        <Table data={partners} />
+        <JoinUsContainer/>
       </ClientOnly>
     </>
   );

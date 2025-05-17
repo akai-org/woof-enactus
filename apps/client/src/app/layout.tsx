@@ -1,4 +1,3 @@
-import "leaflet/dist/leaflet.css";
 import type { Metadata } from "next";
 
 import { Box } from "@chakra-ui/react";
@@ -12,7 +11,7 @@ import "react-leaflet-markercluster/styles";
 import "../style.css";
 
 export const metadata: Metadata = {
-  title: "Haumaps",
+  title: "HauMaps",
   description: "Baza danych organizacji pomocy zwierzętom",
 };
 

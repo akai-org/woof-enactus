@@ -27,23 +27,6 @@ const tabs = [
   },
 ];
 
-export async function generateStaticParams() {
-  // const partners = await fetch(`${process.env.API_URL}/partners`).then(res =>
-  //   res.json(),
-  // );
-
-  // return partners.data.map((p: { slug: string }) => ({
-  //   slug: p.slug,
-  // }));
-   
-  // Backend nie jest dostępny podczas budowania,
-  // dlatego w generateStaticParams() nie może być
-  // funkcji fetch
-  return [];
-}
-
-export const dynamic = "auto";
-
 export default async function PartnerPage({
   params,
 }: {
@@ -105,7 +88,7 @@ export default async function PartnerPage({
               <Box bg="brand.100" borderRadius="md" p={[3, 8]}>
                 {tab.id == "info" && <PartnerInfo profileData={profileData} />}
                 {tab.id == "stuff" && <PartnerNeeds slug={slug} />}
-                {tab.id == "events" && <PartnerEvents />}
+                {tab.id == "events" && <PartnerEvents slug={slug} />}
               </Box>
             </Tabs.Content>
           )}

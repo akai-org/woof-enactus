@@ -5,10 +5,11 @@ import type { LatLngExpression } from "leaflet";
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
 import type { PartnerData, PartnerType } from "@/types";
-import { Box, List, Text } from "@chakra-ui/react";
+import { Box, List, Text, Button, Link, Flex } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
-import { Link, Button } from "@/components";
 import { legendItems } from "@/constants";
+import { TiArrowRight } from "react-icons/ti";
+import NextLink from "next/link";
 
 type MapMarkerProps = {
   markerData: PartnerData;
@@ -29,11 +30,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
   return (
     <Marker position={position} icon={createIcon(type)}>
       <Popup>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          justifyContent={"space-between"}
-        >
+        <Flex flexDirection={"column"} justifyContent={"space-between"}>
           <Text textStyle="sm" fontWeight={"bold"}>
             {name}
           </Text>
@@ -48,14 +45,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
                 <List.Indicator asChild>
                   <MdLocalPhone />
                 </List.Indicator>
-                <Link
-                  linkProps={{ href: `tel:${profile.phone}` }}
-                  chakraLinkProps={{
-                    color: "brand.500",
-                    textDecoration: "none",
-                    _focus: { boxShadow: "none", outline: "none" },
-                  }}
-                >
+                <Link color="brand.500" href={`tel:${profile.phone}`}>
                   {profile.phone}
                 </Link>
               </List.Item>
@@ -65,31 +55,23 @@ function MapMarker({ markerData }: MapMarkerProps) {
                 <List.Indicator asChild>
                   <MdLanguage />
                 </List.Indicator>
-                <Link
-                  linkProps={{ href: profile.website }}
-                  chakraLinkProps={{
-                    color: "brand.500",
-                    textDecoration: "none",
-                    _focus: { boxShadow: "none", outline: "none" },
-                  }}
-                >
+                <Link color="brand.500" href={profile.website}>
                   {profile.website}
                 </Link>
               </List.Item>
             )}
           </List.Root>
-          <Link
-            linkProps={{ href: `/placowki/${markerData.slug}` }}
-            chakraLinkProps={{
-              color: "brand.500",
-              textDecoration: "none",
-              _focus: { boxShadow: "none", outline: "none" },
-              fontWeight: "bold",
-            }}
-          >
-            <Button as="span">Szczegóły</Button>
-          </Link>
-        </Box>
+          <Button variant="cta" asChild>
+            <Link asChild>
+              <NextLink href={`/placowki/${markerData.slug}`}>
+                <Text as="span" color="brand.100">
+                  Szczegóły
+                </Text>
+                <TiArrowRight color="white" />
+              </NextLink>
+            </Link>
+          </Button>
+        </Flex>
       </Popup>
     </Marker>
   );

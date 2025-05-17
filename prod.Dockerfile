@@ -19,6 +19,7 @@ WORKDIR /woof-build/backend
 RUN pnpm prisma generate
 RUN pnpm build
 WORKDIR /woof-build/frontend
+RUN pnpm chakra:typegen
 RUN pnpm build
 
 FROM base AS frontend

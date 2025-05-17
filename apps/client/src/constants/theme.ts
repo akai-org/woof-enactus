@@ -1,6 +1,55 @@
-import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
+import {
+  createSystem,
+  defaultConfig,
+  defineConfig,
+  defineRecipe,
+} from "@chakra-ui/react";
 
 /* NOTE: to update types after theme update enter npm run chakra:typegen -w client */
+
+const buttonRecipe = defineRecipe({
+  variants: {
+    variant: {
+      cta: {
+        variant: "solid",
+        fontFamily: "heading",
+        textTransform: "uppercase",
+        letterSpacing: "wide",
+        bgColor: "accent.green",
+        color: "brand.100",
+        _hover: {
+          bgColor: "accent.greenDark",
+          transition: "all 200ms ease-out",
+        },
+      },
+      gray: {
+        variant: "solid",
+        fontFamily: "heading",
+        bgColor: "accent.gray",
+        color: "brand.900",
+        _hover: {
+          bgColor: "accent.grayDark",
+          transition: "all 200ms ease-out",
+        },
+      },
+    },
+  },
+});
+
+const linkRecipe = defineRecipe({
+  variants: {
+    visual: {
+      noHoverUnderline: {
+        _focus: { boxShadow: "none", outline: "none" },
+        _hover: {
+          textDecoration: "none",
+          textDecorationColor: "red.400",
+        },
+      },
+    },
+  },
+  defaultVariants: { visual: "noHoverUnderline" },
+});
 
 const customConfig = defineConfig({
   globalCss: {
@@ -13,6 +62,10 @@ const customConfig = defineConfig({
     },
   },
   theme: {
+    recipes: {
+      button: buttonRecipe,
+      link: linkRecipe,
+    },
     tokens: {
       colors: {
         brand: {
@@ -29,7 +82,9 @@ const customConfig = defineConfig({
         accent: {
           yellow: { value: "#FFD600" },
           green: { value: "#38A169" },
+          greenDark: { value: "#318c5c" },
           gray: { value: "#EDF2F7" },
+          grayDark: { value: "#d7dce0" },
         },
       },
       fonts: {
