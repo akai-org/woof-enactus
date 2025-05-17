@@ -1,12 +1,13 @@
-'use client' 
- 
+"use client";
+
 export default function GlobalError({
   error,
   reset,
 }: {
-  error: Error & { digest?: string }
-  reset: () => void
+  error: Error & { digest?: string };
+  reset: () => void;
 }) {
+  if (process.env.NODE_ENV == "development") console.log(error);
   return (
     <html>
       <body>
@@ -14,5 +15,5 @@ export default function GlobalError({
         <button onClick={() => reset()}>Spróbuj ponownie</button>
       </body>
     </html>
-  )
+  );
 }
