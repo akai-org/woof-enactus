@@ -37,7 +37,7 @@ export default function SupportPage() {
               gap="20px"
             >
               <Box flex={1} width={{ base: "100%", md: "50%" }} padding="20px">
-                <Card.Description lineHeight="25px" fontWeight="500">
+                <Card.Description lineHeight="25px" fontWeight="500" asChild>
                   <Text>
                     lacinia non. Sed dignissim tortor ac sapien volutpat
                     pretium. Donec tincidunt mauris risus, id interdum nulla
