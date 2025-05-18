@@ -1,8 +1,7 @@
 import { ApiClient } from "./ApiClient";
-import { PartnerService } from "./PartnerService";
-import { apiClientOptions } from "./api.config";
+import * as config from "./api.config";
 
 import type { IApiClient, IPartnerService } from "./types";
 
-export { ApiClient, PartnerService, apiClientOptions };
+export { ApiClient, config };
 export type { IApiClient, IPartnerService };

@@ -4,8 +4,8 @@ import type {
   PartnerNeeds,
   PartnersParams,
 } from "@/types";
-import type { IApiClient, IPartnerService } from "./types";
-import { endpoints } from "./api.config";
+import type { IApiClient, IPartnerService } from "@/api";
+import { endpoints } from "@/api/api.config";
 
 export class PartnerService implements IPartnerService {
   private readonly _apiClient: IApiClient;
