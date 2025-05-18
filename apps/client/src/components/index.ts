@@ -5,6 +5,14 @@ import { Footer, Nav } from "./layout";
 
 import { Checkbox, Tooltip, GoBackButton, Toaster, Logo } from "./ui";
 
+import {
+  OrgTypeGuard,
+  ShelterTypeGuard,
+  ShopTypeGuard,
+  VetTypeGuard,
+  NullishGuard,
+} from "./utility-components";
+
 export {
   Nav,
   Footer,
@@ -15,4 +23,9 @@ export {
   Table,
   JoinUsContainer,
   Logo,
+  OrgTypeGuard,
+  ShelterTypeGuard,
+  ShopTypeGuard,
+  VetTypeGuard,
+  NullishGuard,
 };
