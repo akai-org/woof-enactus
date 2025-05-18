@@ -5,6 +5,7 @@ import {
   ShopTypeGuard,
   VetTypeGuard,
 } from "./PartnerTypeGuard";
+import EmptyArrayGuard from "./EmptyArrayGuard";
 
 export {
   NullishGuard,
@@ -12,4 +13,5 @@ export {
   ShelterTypeGuard,
   ShopTypeGuard,
   VetTypeGuard,
+  EmptyArrayGuard,
 };

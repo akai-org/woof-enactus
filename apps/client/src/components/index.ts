@@ -11,6 +11,7 @@ import {
   ShopTypeGuard,
   VetTypeGuard,
   NullishGuard,
+  EmptyArrayGuard,
 } from "./utility-components";
 
 export {
@@ -28,4 +29,5 @@ export {
   ShopTypeGuard,
   VetTypeGuard,
   NullishGuard,
+  EmptyArrayGuard,
 };

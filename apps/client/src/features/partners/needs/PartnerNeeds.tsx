@@ -1,20 +1,13 @@
 import NotFound from "@/app/not-found";
 import { container } from "@/features/di";
 
-import {
-  Accordion,
-  Box,
-  Flex,
-  Heading,
-  Span,
-  Table,
-  HStack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, Table, Text } from "@chakra-ui/react";
 import type { IPartnerService } from "@/api";
 import type { GoodsState } from "@/types";
 import Note from "./Note";
 import NeedsMobile from "./NeedsMobile";
+import { EmptyArrayGuard } from "@/components";
+import EmptyNeedsList from "./EmptyNeedsList";
 
 const PRIORITY_COLORS: Readonly<Record<GoodsState, string>> = {
   OK: "brand.600",
@@ -57,60 +50,61 @@ export default async function PartnerNeeds({ slug }: PartnerNeedsProps) {
       <Text color="brand.600" fontWeight="semibold">
         Ostatnia aktualizacja: {newestDate}
       </Text>
-      <Table.Root
-        size="lg"
-        my={10}
-        minW="md"
-        hideBelow="md"
-        borderColor="brand.300"
-        borderWidth={1}
-      >
-        <Table.Header>
-          <Table.Row>
-            {TABLE_HEADINGS.map((header, i) => (
-              <Table.ColumnHeader
-                key={i}
-                color="brand.700"
-                textAlign="center"
-                textWrap="nowrap"
-                fontWeight="semibold"
-                p="6"
-              >
-                {header.toUpperCase()}
-              </Table.ColumnHeader>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {needs.goods.map((need, i) => (
-            <Table.Row
-              key={need.uuid}
-              bgColor={i % 2 === 0 ? "brand.300" : "brand.100"}
-            >
-              <Table.Cell p="6" textAlign="center">
-                {need.name}
-              </Table.Cell>
-              <Table.Cell
-                p="6"
-                textAlign="center"
-              >{`${need.amountCurrent ?? 0} / ${need.amountMax} ${need.amountUnit ?? ""}`}</Table.Cell>
-              <Table.Cell p="6">
-                <Flex justify="center" alignItems="center" gap={2}>
-                  <Box
-                    bg={PRIORITY_COLORS[need.state]}
-                    minW={4}
-                    boxSize={4}
-                    rounded={"md"}
-                  />
-                  {need.stateInfo}
-                </Flex>
-              </Table.Cell>
+      <EmptyArrayGuard check={needs.goods} fallback={<EmptyNeedsList />}>
+        <Table.Root
+          size="lg"
+          my={10}
+          minW="md"
+          hideBelow="md"
+          borderColor="brand.300"
+          borderWidth={1}
+        >
+          <Table.Header>
+            <Table.Row>
+              {TABLE_HEADINGS.map((header, i) => (
+                <Table.ColumnHeader
+                  key={i}
+                  color="brand.700"
+                  textAlign="center"
+                  textWrap="nowrap"
+                  fontWeight="semibold"
+                  p="6"
+                >
+                  {header.toUpperCase()}
+                </Table.ColumnHeader>
+              ))}
             </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
-
-      <NeedsMobile needs={needs} priorityColors={PRIORITY_COLORS} />
+          </Table.Header>
+          <Table.Body>
+            {needs.goods.map((need, i) => (
+              <Table.Row
+                key={need.uuid}
+                bgColor={i % 2 === 0 ? "brand.300" : "brand.100"}
+              >
+                <Table.Cell p="6" textAlign="center">
+                  {need.name}
+                </Table.Cell>
+                <Table.Cell
+                  p="6"
+                  textAlign="center"
+                >{`${need.amountCurrent ?? 0} / ${need.amountMax} ${need.amountUnit ?? ""}`}</Table.Cell>
+                <Table.Cell p="6">
+                  <Flex justify="center" alignItems="center" gap={2}>
+                    <Box
+                      bg={PRIORITY_COLORS[need.state]}
+                      minW={4}
+                      boxSize={4}
+                      rounded={"md"}
+                    />
+                    {need.stateInfo}
+                  </Flex>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table.Root>
+        <NeedsMobile needs={needs} priorityColors={PRIORITY_COLORS} />
+      </EmptyArrayGuard>
 
       <Note note={needs.note} />
     </Flex>

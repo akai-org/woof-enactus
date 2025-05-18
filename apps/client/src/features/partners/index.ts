@@ -1,4 +1,4 @@
-import PartnerEvents from "./PartnerEvents";
+import PartnerEvents from "./events/PartnerEvents";
 import PartnerInfo from "./info/PartnerInfo";
 import PartnerNeeds from "./needs/PartnerNeeds";
 
