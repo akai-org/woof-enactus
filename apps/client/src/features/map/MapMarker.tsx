@@ -10,7 +10,6 @@ import { MdLanguage, MdLocalPhone } from "react-icons/md";
 import { legendItems } from "@/constants";
 import { TiArrowRight } from "react-icons/ti";
 import NextLink from "next/link";
-import { truncate } from "@/utils";
 
 type MapMarkerProps = {
   markerData: PartnerData;
@@ -31,36 +30,41 @@ function MapMarker({ markerData }: MapMarkerProps) {
   return (
     <Marker position={position} icon={createIcon(type)}>
       <Popup>
-        <Flex flexDirection={"column"} justifyContent={"space-between"}>
-          <Text textStyle="sm" fontWeight={"bold"}>
+        <Flex flexDirection="column" justifyContent="space-between">
+          <Text textStyle="sm" fontWeight="bold">
             {name}
           </Text>
-          <Box marginTop={"1"} marginBottom={"2"}>
+          <Box marginTop="1" marginBottom="2">
             <Text textStyle="xs">{profile.street}</Text>
             <Text textStyle="xs">{`${profile.postal} ${profile.city}`}</Text>
           </Box>
 
           <List.Root gap="2" variant="plain" align="center" marginY={"3"}>
-            {profile.phone && (
-              <List.Item>
-                <List.Indicator asChild>
-                  <MdLocalPhone />
-                </List.Indicator>
+            <List.Item>
+              <List.Indicator asChild>
+                <MdLocalPhone />
+              </List.Indicator>
+              {profile.phone ? (
                 <Link color="brand.500" href={`tel:${profile.phone}`}>
                   {profile.phone}
                 </Link>
-              </List.Item>
-            )}
-            {profile.website && (
-              <List.Item>
-                <List.Indicator asChild>
-                  <MdLanguage />
-                </List.Indicator>
+              ) : (
+                "-"
+              )}
+            </List.Item>
+
+            <List.Item>
+              <List.Indicator asChild>
+                <MdLanguage />
+              </List.Indicator>
+              {profile.website ? (
                 <Link color="brand.500" href={profile.website}>
-                  {truncate(profile.website)}
+                  {profile.website}
                 </Link>
-              </List.Item>
-            )}
+              ) : (
+                "-"
+              )}
+            </List.Item>
           </List.Root>
           <Button variant="cta" asChild>
             <Link asChild>
