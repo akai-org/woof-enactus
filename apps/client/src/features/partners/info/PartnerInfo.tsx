@@ -14,11 +14,11 @@ import { NullishGuard, VetTypeGuard } from "@/components";
 import WorkingHours from "./WorkingHours";
 import InfoBox from "./InfoBox";
 
-export default function PartnerInfo({
-  profileData,
-}: {
+type PartnerInfoProps = {
   profileData: PartnerData;
-}) {
+};
+
+export default function PartnerInfo({ profileData }: PartnerInfoProps) {
   const data = profileData.profile;
   const type = profileData.type;
 

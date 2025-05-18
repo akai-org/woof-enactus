@@ -5,7 +5,7 @@ import { FaRegClock } from "react-icons/fa";
 import InfoBox from "./InfoBox";
 import { NullishGuard } from "@/components";
 
-const polishDays: WorkingHoursType = {
+const POLISH_DAYS: Readonly<WorkingHoursType> = {
   monday: "Poniedziałek",
   tuesday: "Wtorek",
   wednesday: "Środa",
@@ -15,7 +15,7 @@ const polishDays: WorkingHoursType = {
   sunday: "Niedziela",
 };
 
-const getPolishDay = (day: keyof WorkingHoursType) => polishDays[day];
+const getPolishDay = (day: keyof WorkingHoursType) => POLISH_DAYS[day];
 
 type WorkingHoursProps = {
   workingHours?: WorkingHoursType;
@@ -30,7 +30,7 @@ type DayOfTheWeekProps = {
 function WorkingHours({ workingHours }: WorkingHoursProps) {
   const openHours = workingHours
     ? (Object.fromEntries(
-        Object.entries(workingHours).filter(([key]) => key in polishDays),
+        Object.entries(workingHours).filter(([key]) => key in POLISH_DAYS),
       ) as Record<keyof WorkingHoursType, string>)
     : null;
 
@@ -48,7 +48,7 @@ function WorkingHours({ workingHours }: WorkingHoursProps) {
                   key={day}
                 />
               ))
-            : Object.entries(polishDays).map(([day, _], i) => (
+            : Object.entries(POLISH_DAYS).map(([day, _], i) => (
                 <DayOfTheWeek
                   dayName={day}
                   isWeekend={i > 5}
