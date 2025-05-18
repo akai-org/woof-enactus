@@ -1,5 +1,4 @@
-# Ten compose jest przeznaczony do uruchamiania na maszynie produkcyjnej
-# Zaciąga zbudowane obrazy z ghcr (TODO)
+
 services:
   database:
     image: postgres:alpine
@@ -23,3 +22,26 @@ services:
       - .env
     depends_on:
       - backend
+
+  cms:
+    build:
+      context: .
+      dockerfile: ./apps/blog/prod.Dockerfile
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./apps/blog:/apps/blog:cached
+    env_file:
+      - ./apps/blog/.env
+    environment:
+      - DATABASE_CLIENT=postgres
+      - DATABASE_HOST=aws-0-eu-central-1.pooler.supabase.com
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=postgres
+      - DATABASE_USERNAME=postgres.wshnqqdekglkwbkqysrj
+      - DATABASE_PASSWORD=d87ytasdiuafdoayisdlfgaid
+      - DATABASE_SSL=true
+      - NODE_ENV=production
+
+
+

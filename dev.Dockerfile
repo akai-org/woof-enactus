@@ -18,3 +18,17 @@ COPY apps/server/package.json ./apps/server/package.json
 COPY apps/client/package.json ./apps/client/package.json
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+
+COPY apps/blog/package.json ./apps/blog/package.json
+
+# #CMS
+# FROM base AS cms
+# WORKDIR /app
+
+# COPY --from=deps /woof-enactus /app
+# COPY apps/blog /app/apps/blog
+
+# WORKDIR /app/apps/blog
+
+# CMD ["pnpm", "run", "develop"]

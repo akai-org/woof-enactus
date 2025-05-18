@@ -23,8 +23,8 @@ services:
 
   cms:
     build:
-      context: ./apps/blog
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/blog/dev.Dockerfile
     ports:
       - "1337:1337"
     volumes:
@@ -33,16 +33,27 @@ services:
     env_file:
       - ./apps/blog/.env
     depends_on:
-      - database
+      - cms-database
     environment:
       - DATABASE_CLIENT=postgres
-      - DATABASE_HOST=database
+      - DATABASE_HOST=cms-database
       - DATABASE_PORT=5432
-      - DATABASE_NAME=woof
-      - DATABASE_USERNAME=enactus
-      - DATABASE_PASSWORD=zaq1@WSX
+      - DATABASE_NAME=cms
+      - DATABASE_USERNAME=cmsuser
+      - DATABASE_PASSWORD=cmspass
       - DATABASE_SSL=false
-    command: ["npm", "run", "develop"]
+    command: ["pnpm", "run", "develop"]
+
+  cms-database:
+    image: postgres:alpine
+    restart: unless-stopped
+    hostname: cms-database
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_USER=cmsuser
+      - POSTGRES_PASSWORD=cmspass
+      - POSTGRES_DB=cms
 
 
   backend-dev:
@@ -70,4 +81,5 @@ services:
       - "3001:3001"
     depends_on:
       - backend-dev
-    
+
+  

@@ -37,3 +37,6 @@ COPY --from=builder /woof-build/backend/node_modules ./node_modules
 COPY --from=builder /woof-build/backend/package.json .
 COPY --from=builder /woof-build/backend/pnpm-workspace.yaml .
 CMD [ "pnpm", "start" ]
+
+
+COPY apps/blog/package.json ./apps/blog/package.json
