@@ -12,18 +12,23 @@ import {
   Text,
 } from "@chakra-ui/react";
 import type { IPartnerService } from "@/api";
+import type { GoodsState } from "@/types";
+import Note from "./Note";
+import NeedsMobile from "./NeedsMobile";
 
-const colors = {
+const PRIORITY_COLORS: Readonly<Record<GoodsState, string>> = {
   OK: "brand.600",
   MEDIUM: "brand.500",
   LOW: "accent.yellow",
 };
 
-type Props = {
+const TABLE_HEADINGS = ["Nazwa", "Stan obecny", "Kategoria"] as const;
+
+type PartnerNeedsProps = {
   slug: string;
 };
 
-export default async function PartnerNeeds({ slug }: Props) {
+export default async function PartnerNeeds({ slug }: PartnerNeedsProps) {
   const needs = await container
     .resolve<IPartnerService>("PartnerService")
     .getNeeds(slug);
@@ -32,9 +37,7 @@ export default async function PartnerNeeds({ slug }: Props) {
 
   const newest = new Date(
     needs.goods.reduce((latest, current) => {
-      return new Date(current.updatedAt) > new Date(latest.updatedAt)
-        ? current
-        : latest;
+      return current.updatedAt > latest.updatedAt ? current : latest;
     }).updatedAt,
   );
   const newestDate = newest.toLocaleString("pl-PL", {
@@ -43,7 +46,6 @@ export default async function PartnerNeeds({ slug }: Props) {
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false,
     timeZone: "Europe/Warsaw",
   });
 
@@ -65,7 +67,7 @@ export default async function PartnerNeeds({ slug }: Props) {
       >
         <Table.Header>
           <Table.Row>
-            {["Nazwa", "Stan obecny", "Kategoria"].map((header, i) => (
+            {TABLE_HEADINGS.map((header, i) => (
               <Table.ColumnHeader
                 key={i}
                 color="brand.700"
@@ -82,7 +84,7 @@ export default async function PartnerNeeds({ slug }: Props) {
         <Table.Body>
           {needs.goods.map((need, i) => (
             <Table.Row
-              key={i}
+              key={need.uuid}
               bgColor={i % 2 === 0 ? "brand.300" : "brand.100"}
             >
               <Table.Cell p="6" textAlign="center">
@@ -91,14 +93,14 @@ export default async function PartnerNeeds({ slug }: Props) {
               <Table.Cell
                 p="6"
                 textAlign="center"
-              >{`${need.amountCurrent} / ${need.amountMax} ${need.amountUnit}`}</Table.Cell>
+              >{`${need.amountCurrent ?? 0} / ${need.amountMax} ${need.amountUnit ?? ""}`}</Table.Cell>
               <Table.Cell p="6">
                 <Flex justify="center" alignItems="center" gap={2}>
                   <Box
-                    bg={colors[need.state]}
+                    bg={PRIORITY_COLORS[need.state]}
                     minW={4}
                     boxSize={4}
-                    rounded={5}
+                    rounded={"md"}
                   />
                   {need.stateInfo}
                 </Flex>
@@ -107,66 +109,10 @@ export default async function PartnerNeeds({ slug }: Props) {
           ))}
         </Table.Body>
       </Table.Root>
-      <Accordion.Root
-        collapsible
-        defaultValue={["0"]}
-        hideFrom="md"
-        borderWidth={1}
-        borderColor="brand.300"
-        borderRadius="sm"
-        mt="6"
-      >
-        {needs.goods.map((need, i) => (
-          <Accordion.Item
-            key={i}
-            value={i.toString()}
-            bgColor={i % 2 === 0 ? "brand.300" : "brand.100"}
-            py="2"
-          >
-            <Accordion.ItemTrigger justifyContent="space-between" px="2">
-              <HStack>
-                <Span>{need.name}</Span>
-                <Box bg={colors[need.state]} minW={4} boxSize={4} rounded={5} />
-              </HStack>
-              <Accordion.ItemIndicator />
-            </Accordion.ItemTrigger>
-            <Accordion.ItemContent px="2">
-              <Accordion.ItemBody>
-                Stan obecny:{" "}
-                {`${need.amountCurrent} / ${need.amountMax} ${need.amountUnit}`}
-                <Flex alignItems="center" gap={2} mt="2">
-                  <Box
-                    bg={colors[need.state]}
-                    minW={4}
-                    boxSize={4}
-                    rounded={5}
-                  />
-                  {need.stateInfo}
-                </Flex>
-              </Accordion.ItemBody>
-            </Accordion.ItemContent>
-          </Accordion.Item>
-        ))}
-      </Accordion.Root>
 
-      <Box
-        p={{ md: "8", base: "4" }}
-        borderRadius="sm"
-        borderColor="brand.300"
-        borderWidth={2}
-        width="100%"
-        mt="8"
-      >
-        <Heading
-          as="h3"
-          size={{ md: "2xl", base: "xl" }}
-          color="brand.500"
-          mb="2"
-        >
-          Notatka od nas!
-        </Heading>
-        <Text>{needs.note ?? `Bardzo dziękujemy za szybką pomoc`}</Text>
-      </Box>
+      <NeedsMobile needs={needs} priorityColors={PRIORITY_COLORS} />
+
+      <Note note={needs.note} />
     </Flex>
   );
 }

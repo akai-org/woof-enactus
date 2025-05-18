@@ -5,7 +5,7 @@ import type { LatLngExpression } from "leaflet";
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
 import type { PartnerData, PartnerType } from "@/types";
-import { Box, List, Text, Button, Link, Flex } from "@chakra-ui/react";
+import { Box, List, Text, Button, Link, Flex, Span } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
 import { legendItems } from "@/constants";
 import { TiArrowRight } from "react-icons/ti";
@@ -69,9 +69,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
           <Button variant="cta" asChild>
             <Link asChild>
               <NextLink href={`/placowki/${markerData.slug}`}>
-                <Text as="span" color="brand.100">
-                  Szczegóły
-                </Text>
+                <Span color="brand.100">Szczegóły</Span>
                 <TiArrowRight color="white" />
               </NextLink>
             </Link>

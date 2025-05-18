@@ -50,7 +50,7 @@ export default function PartnersTable({ data }: TableProps) {
               {data.slice(start, end).map((item, index) => (
                 <Table.Row
                   border="none"
-                  key={item.id}
+                  key={item.uuid}
                   backgroundColor={index % 2 === 0 ? "brand.200" : "white"}
                   height="20"
                 >

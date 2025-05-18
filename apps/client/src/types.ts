@@ -8,6 +8,7 @@ import type {
   Partner,
   NeededGoodsMeta,
   PartnerEvent,
+  GoodsState,
 } from "woof";
 
 // ====== altered types from woof package ======
@@ -55,6 +56,7 @@ export type {
   PartnerType,
   GenericResponse,
   PartnerEvent,
+  GoodsState,
 };
 
 export type {

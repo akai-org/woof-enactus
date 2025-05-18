@@ -1,6 +1,6 @@
 import React from "react";
 import type { WorkingHours as WorkingHoursType } from "@/types";
-import { Card, Flex, VStack } from "@chakra-ui/react";
+import { Card, Flex, Span, VStack } from "@chakra-ui/react";
 import { FaRegClock } from "react-icons/fa";
 import InfoBox from "./InfoBox";
 import { NullishGuard } from "@/components";
@@ -74,9 +74,9 @@ function DayOfTheWeek({ dayName, openHours, isWeekend }: DayOfTheWeekProps) {
       rounded="md"
       p={2}
     >
-      <span>{getPolishDay(dayName as keyof WorkingHoursType)}</span>
+      <Span>{getPolishDay(dayName as keyof WorkingHoursType)}</Span>
       <NullishGuard check={openHours}>
-        <span>{openHours}</span>
+        <Span>{openHours}</Span>
       </NullishGuard>
     </Flex>
   );

@@ -1,4 +1,4 @@
-import { Text, Flex, Heading, type FlexProps } from "@chakra-ui/react";
+import { Text, Flex, Heading, type FlexProps, Span } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 
 type InfoBoxProps = {
@@ -23,9 +23,7 @@ function InfoBox({ icon, title, children, ...rest }: InfoBoxProps) {
         </Heading>
       </Flex>
 
-      <Text as="span" color="brand.900">
-        {children}
-      </Text>
+      <Span color="brand.900">{children}</Span>
     </Flex>
   );
 }

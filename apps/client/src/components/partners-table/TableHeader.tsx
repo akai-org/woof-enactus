@@ -8,7 +8,7 @@ const TABLE_HEADINGS = [
   "Telefon",
   "Strona internetowa",
   "Kategoria",
-];
+] as const;
 
 function TableHeader() {
   return (

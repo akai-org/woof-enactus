@@ -33,7 +33,7 @@ function MobileTable({ data, firstItem, lastItem }: MobileTableProps) {
     >
       {data.slice(firstItem, lastItem).map((item, index) => (
         <Accordion.Item
-          key={item.id}
+          key={item.uuid}
           value={index.toString()}
           bgColor={index % 2 === 0 ? "brand.200" : "white"}
           py="2"
