@@ -1,10 +1,9 @@
-import { Box, Button, Container, For, Heading, Tabs } from "@chakra-ui/react";
+import { Box, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import { PartnerInfo, PartnerNeeds, PartnerEvents } from "@/components";
 import { getPartnerProfile } from "@/api";
 import type { PartnerPageParams } from "@/types";
-import { RiArrowLeftLine } from "react-icons/ri";
-import Link from "next/link";
+import GoBackButton from "@/components/ui/GoBackButton";
 
 const tabs = [
   {
@@ -48,12 +47,7 @@ export default async function PartnerPage({
 
   return (
     <Container mt={8} maxW="breakpoint-xl">
-      <Button variant="surface" size="sm" asChild>
-        <Link href="/">
-          <RiArrowLeftLine />
-          Powrót
-        </Link>
-      </Button>
+      <GoBackButton/>
       <Heading
         my={5}
         size={{ base: "4xl", md: "5xl" }}
