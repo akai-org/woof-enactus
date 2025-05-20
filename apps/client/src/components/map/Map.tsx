@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState, useRef } from "react";
+import { useCallback, useMemo, useState, useRef, useEffect } from "react";
 import type { LatLngExpression } from "leaflet";
 
 import { MapContainer, TileLayer } from "react-leaflet";
@@ -12,6 +12,8 @@ import Location from "./Location";
 import type { LocationHandle } from "./Location";
 import { SearchBar } from "../map-search-bar";
 import L from "leaflet";
+
+import { toaster } from "@/constants";
 
 /* 
   NOTE: Except for its children, MapContainer props are immutable:
@@ -62,6 +64,16 @@ function Map({ children, data }: MapProps) {
       setShowLocation(true);
     }
   }, [showLocation]);
+
+  useEffect(() => {
+    queueMicrotask(() => {
+      if (data.length == 0)
+        toaster.create({
+          description: "Nie znaleziono żadnych placówek",
+          type: "error",
+        });
+    });
+  }, [data]);
 
   return (
     <>

@@ -23,7 +23,6 @@ export default async function Home({
   };
 
   const partners = await getPartners({ types: type, ...params });
-
   if (!partners) notFound();
 
   return (
