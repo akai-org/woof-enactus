@@ -131,14 +131,18 @@ function Nav() {
                   <Drawer.Body display="flex" flexDirection="column" gap={8}>
                     <For each={links}>
                       {item => (
-                        <Link asChild fontWeight="medium">
-                          <NextLink href={item.href}>{item.name}</NextLink>
-                        </Link>
+                        <Drawer.CloseTrigger asChild position="initial">
+                          <Link asChild fontWeight="medium">
+                            <NextLink href={item.href}>{item.name}</NextLink>
+                          </Link>
+                        </Drawer.CloseTrigger>
                       )}
                     </For>
-                    <Button bgColor="brand.700">
-                      Zaloguj się jako placówka
-                    </Button>
+                    <Drawer.CloseTrigger asChild position="initial">
+                      <Button bgColor="brand.700">
+                        Zaloguj się jako placówka
+                      </Button>
+                    </Drawer.CloseTrigger>
                   </Drawer.Body>
                   <Drawer.Footer>
                     <Link
