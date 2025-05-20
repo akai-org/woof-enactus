@@ -43,7 +43,7 @@ export default function ZarejestrujSiePage() {
       </form>
 
       <Button variant="outline" alignSelf="center" mt={5}>
-        <Link href="/zaloguj-sie">Masz już konto? Zaloguj się</Link>
+        <Link href="/logowanie">Masz już konto? Zaloguj się</Link>
       </Button>
     </Stack>
   );

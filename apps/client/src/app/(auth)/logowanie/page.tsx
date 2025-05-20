@@ -57,7 +57,7 @@ export default function ZalogujSiePage() {
         <Link href="/przypomnij-haslo">Zapomniałem\am hasła</Link>
       </Button>
       <Button variant="outline" alignSelf="center">
-        <Link href="/zarejestruj-sie">Zarejestruj placówke</Link>
+        <Link href="/rejestracja">Zarejestruj placówke</Link>
       </Button>
     </Stack>
   );

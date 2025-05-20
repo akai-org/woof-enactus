@@ -97,12 +97,13 @@ function Nav() {
               </For>
             </List.Root>
           </Flex>
-
-          <Button bgColor="brand.700" hideBelow="md" asChild>
-            <NextLink href={isLogged ? "/panel-placowki" : "/zaloguj-sie"}>
-              {isLogged ? "Panel placówki" : "Zaloguj się jako placówka"}
-            </NextLink>
-          </Button>
+          {process.env.NODE_ENV != "production" && (
+            <Button bgColor="brand.700" hideBelow="md" asChild>
+              <NextLink href={isLogged ? "/panel-placowki" : "/logowanie"}>
+                {isLogged ? "Panel placówki" : "Zaloguj się jako placówka"}
+              </NextLink>
+            </Button>
+          )}
           <Drawer.Root placement="end">
             <Drawer.Trigger asChild>
               <IconButton hideFrom="lg" aria-label="Menu" variant="ghost">
@@ -142,15 +143,17 @@ function Nav() {
                         </Link>
                       )}
                     </For>
-                    <Button bgColor="brand.700" asChild>
-                      <NextLink
-                        href={isLogged ? "/panel-placowki" : "/zaloguj-sie"}
-                      >
-                        {isLogged
-                          ? "Panel placówki"
-                          : "Zaloguj się jako placówka"}
-                      </NextLink>
-                    </Button>
+                    {process.env.NODE_ENV != "production" && (
+                      <Button bgColor="brand.700" asChild>
+                        <NextLink
+                          href={isLogged ? "/panel-placowki" : "/logowanie"}
+                        >
+                          {isLogged
+                            ? "Panel placówki"
+                            : "Zaloguj się jako placówka"}
+                        </NextLink>
+                      </Button>
+                    )}
                   </Drawer.Body>
                   <Drawer.Footer>
                     <Link
