@@ -36,7 +36,7 @@ export default async function Home({
       <ClientOnly fallback={<Skeleton minH="70vh" />}>
         <Map data={partners} />
         <Table data={partners} />
-        {process.env.NODE_ENV != "production" && <JoinUsContainer />}
+        <JoinUsContainer />
       </ClientOnly>
     </>
   );

@@ -3,7 +3,10 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
-export default async function loginAction(prevState: any, formData: FormData) {
+export default async function loginAction(
+  prevState: unknown,
+  formData: FormData,
+) {
   const username = formData.get("email") as string;
   const password = formData.get("pass") as string;
   const res = await fetch(`${process.env.API_URL}/auth/login`, {
@@ -18,7 +21,7 @@ export default async function loginAction(prevState: any, formData: FormData) {
   });
 
   const json = await res.json();
-  console.log(json);
+  //console.log(json);
 
   if (!json.ok) return json.message;
 

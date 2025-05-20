@@ -2,9 +2,8 @@
 
 import { redirect } from "next/navigation";
 
-// TODO: add logger, improve error handling
 export default async function registerAction(
-  prevState: any,
+  prevState: unknown,
   formData: FormData,
 ) {
   const username = formData.get("email") as string;

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import refreshAction from "./api/refreshAction";
+import { refreshAction } from "@/actions";
 
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/panel-placowki")) {

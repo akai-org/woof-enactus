@@ -19,7 +19,7 @@ import { IoMenu } from "react-icons/io5";
 import NextLink from "next/link";
 import NavLink from "./NavLink";
 import { Logo } from "@/components";
-import useAuth from "../useAuth";
+import { useAuth } from "@/hooks";
 
 const links = [
   {
@@ -53,7 +53,7 @@ function Nav() {
       borderBottomColor="brand.300"
     >
       <Container>
-        <Center minHeight="20">
+        <Center minHeight="24">
           <Flex gap={4} justifyContent="space-between" alignItems="center">
             <Link
               asChild
@@ -86,7 +86,6 @@ function Nav() {
                     flexGrow="1"
                     color="brand.700"
                     borderRadius="sm"
-                    fontSize="sm"
                     fontWeight="medium"
                     value={item.name}
                     key={item.name}
@@ -97,13 +96,13 @@ function Nav() {
               </For>
             </List.Root>
           </Flex>
-          {process.env.NODE_ENV != "production" && (
-            <Button bgColor="brand.700" hideBelow="md" asChild>
-              <NextLink href={isLogged ? "/panel-placowki" : "/logowanie"}>
-                {isLogged ? "Panel placówki" : "Zaloguj się jako placówka"}
-              </NextLink>
-            </Button>
-          )}
+
+          <Button bgColor="brand.700" hideBelow="lg" asChild>
+            <NextLink href={isLogged ? "/panel-placowki" : "/logowanie"}>
+              {isLogged ? "Panel placówki" : "Zaloguj się jako placówka"}
+            </NextLink>
+          </Button>
+
           <Drawer.Root placement="end">
             <Drawer.Trigger asChild>
               <IconButton hideFrom="lg" aria-label="Menu" variant="ghost">
@@ -135,25 +134,33 @@ function Nav() {
                       </Drawer.CloseTrigger>
                     </Flex>
                   </Drawer.Header>
-                  <Drawer.Body display="flex" flexDirection="column" gap={8}>
+                  <Drawer.Body
+                    display="flex"
+                    flexDirection="column"
+                    gap={9}
+                    marginTop="4"
+                  >
                     <For each={links}>
                       {item => (
-                        <Link asChild fontWeight="medium">
+                        <Link
+                          asChild
+                          fontWeight="medium"
+                          fontSize="md"
+                          key={item.name}
+                        >
                           <NextLink href={item.href}>{item.name}</NextLink>
                         </Link>
                       )}
                     </For>
-                    {process.env.NODE_ENV != "production" && (
-                      <Button bgColor="brand.700" asChild>
-                        <NextLink
-                          href={isLogged ? "/panel-placowki" : "/logowanie"}
-                        >
-                          {isLogged
-                            ? "Panel placówki"
-                            : "Zaloguj się jako placówka"}
-                        </NextLink>
-                      </Button>
-                    )}
+                    <Button bgColor="brand.700" asChild>
+                      <NextLink
+                        href={isLogged ? "/panel-placowki" : "/logowanie"}
+                      >
+                        {isLogged
+                          ? "Panel placówki"
+                          : "Zaloguj się jako placówka"}
+                      </NextLink>
+                    </Button>
                   </Drawer.Body>
                   <Drawer.Footer>
                     <Link

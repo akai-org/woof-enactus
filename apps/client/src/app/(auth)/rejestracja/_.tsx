@@ -1,5 +1,5 @@
 "use client";
-import registerAction from "@/api/registerAction";
+import { registerAction } from "@/actions";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 import Link from "next/link";
 import { useActionState } from "react";

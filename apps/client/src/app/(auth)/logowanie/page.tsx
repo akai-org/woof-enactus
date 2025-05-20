@@ -1,6 +1,13 @@
-"use client"
-import loginAction from "@/api/loginAction";
-import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
+"use client";
+import { loginAction } from "@/actions";
+import {
+  Button,
+  Container,
+  Field,
+  Fieldset,
+  Input,
+  Stack,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import { useActionState } from "react";
 
@@ -10,13 +17,10 @@ const initialState = {
 };
 
 export default function ZalogujSiePage() {
-  const [message, formAction, pending] = useActionState(
-    loginAction,
-    null
-  );
+  const [message, formAction, pending] = useActionState(loginAction, null);
 
   return (
-    <Stack>
+    <Container>
       <form action={formAction}>
         <Fieldset.Root size="lg" maxW="md" mx="auto" mt={10} invalid={message}>
           <Stack textAlign="center">
@@ -45,20 +49,25 @@ export default function ZalogujSiePage() {
             </Field.Root>
           </Fieldset.Content>
 
-          <Button disabled={pending} type="submit" alignSelf="center">
+          <Button
+            disabled={pending}
+            type="submit"
+            alignSelf="center"
+            variant="cta"
+          >
             Zaloguj się do swojej placówki
           </Button>
-          <Fieldset.ErrorText w="fit" mx="auto">
+          {/* <Fieldset.ErrorText w="fit" mx="auto">
             {message}
-          </Fieldset.ErrorText>
+          </Fieldset.ErrorText> */}
         </Fieldset.Root>
       </form>
-      <Button variant="ghost" alignSelf="center" asChild>
+      {/* <Button variant="ghost" alignSelf="center" asChild>
         <Link href="/przypomnij-haslo">Zapomniałem\am hasła</Link>
-      </Button>
-      <Button variant="outline" alignSelf="center">
+      </Button> */}
+      {/* <Button variant="outline" alignSelf="center">
         <Link href="/rejestracja">Zarejestruj placówke</Link>
-      </Button>
-    </Stack>
+      </Button> */}
+    </Container>
   );
 }

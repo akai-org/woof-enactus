@@ -2,7 +2,6 @@
 
 import { cookies } from "next/headers";
 
-// TODO: add logger, improve error handling
 export default async function refreshAction() {
   const cookieStore = await cookies();
 

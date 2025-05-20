@@ -1,4 +1,4 @@
-import refreshAction from "@/api/refreshAction";
+import { refreshAction } from "@/actions";
 
 export async function GET(request: Request) {
   const isLogged = await refreshAction();
