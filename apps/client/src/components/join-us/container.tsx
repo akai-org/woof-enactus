@@ -1,4 +1,4 @@
-import { Button, Card, Container, Heading, Span, Text } from "@chakra-ui/react";
+import { Button, Card, Container, Heading, Span } from "@chakra-ui/react";
 import Link from "next/link";
 
 export default function JoinUsContainer() {
@@ -23,9 +23,9 @@ export default function JoinUsContainer() {
             Reprezentujesz schronisko dla zwierząt <br />
             lub orgaznizacje prozwierzęcą i chciałbyś <br />
             przedstawić swoją placówkę? Dołącz do{" "}
-            <Text as="span" color="brand.500" textTransform="uppercase">
+            <Span color="brand.500" textTransform="uppercase">
               Haumaps
-            </Text>
+            </Span>
             !
           </Heading>
         </Card.Header>

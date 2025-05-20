@@ -5,4 +5,4 @@ const MapNoSSR = dynamic(() => import("./Map"), {
   ssr: false,
 });
 
-export { MapNoSSR };
+export { MapNoSSR as Map };
