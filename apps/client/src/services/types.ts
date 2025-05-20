@@ -1,4 +1,4 @@
-import type { ApiErrorDetails, Result } from "@/api";
+import type { Result } from "@/api";
 import type {
   PartnerData,
   PartnerEvent,
@@ -6,7 +6,7 @@ import type {
   PartnersParams,
 } from "@/types";
 
-interface PartnerError extends ApiErrorDetails {
+interface PartnerError {
   userMessage: string;
 }
 

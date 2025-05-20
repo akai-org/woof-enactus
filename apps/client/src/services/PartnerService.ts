@@ -6,8 +6,10 @@ import type {
 } from "@/types";
 import type { IPartnerService } from "@/services";
 import { endpoints } from "@/api/api.config";
-import type { ApiErrorDetails, IApiClient, Result } from "@/api";
+import type { IApiClient, Result } from "@/api";
 import type { PartnerError } from "./types";
+
+//TODO: add LoggerService
 
 export class PartnerService implements IPartnerService {
   private readonly _apiClient: IApiClient;
@@ -27,15 +29,17 @@ export class PartnerService implements IPartnerService {
     );
 
     if (!result.success) {
-      const err = this.mapToPartnerError(
-        result.error,
+      const errMsg = this.getUserMessage(
+        result.error.statusCode,
         "Nie udało się pobrać listy placówek.",
       );
-      console.error(err);
+      console.error(result.error);
 
       return {
         success: false,
-        error: err,
+        error: {
+          userMessage: errMsg,
+        },
       };
     }
 
@@ -48,15 +52,17 @@ export class PartnerService implements IPartnerService {
     );
 
     if (!result.success) {
-      const err = this.mapToPartnerError(
-        result.error,
+      const errMsg = this.getUserMessage(
+        result.error.statusCode,
         "Nie udało się pobrać profilu placówki",
       );
-      console.error(err);
+      console.error(result.error);
 
       return {
         success: false,
-        error: err,
+        error: {
+          userMessage: errMsg,
+        },
       };
     }
 
@@ -69,15 +75,17 @@ export class PartnerService implements IPartnerService {
     );
 
     if (!result.success) {
-      const err = this.mapToPartnerError(
-        result.error,
+      const errMsg = this.getUserMessage(
+        result.error.statusCode,
         "Nie udało się pobrać potrzeb placówki.",
       );
-      console.error(err);
+      console.error(result.error);
 
       return {
         success: false,
-        error: err,
+        error: {
+          userMessage: errMsg,
+        },
       };
     }
 
@@ -90,37 +98,27 @@ export class PartnerService implements IPartnerService {
     );
 
     if (!result.success) {
-      const err = this.mapToPartnerError(
-        result.error,
+      const errMsg = this.getUserMessage(
+        result.error.statusCode,
         "Nie udało się pobrać wydarzeń placówki.",
       );
-      console.error(err);
+      console.error(result.error);
 
       return {
         success: false,
-        error: err,
+        error: {
+          userMessage: errMsg,
+        },
       };
     }
 
     return result;
   }
 
-  private mapToPartnerError(
-    apiError: ApiErrorDetails,
-    userMessage: string,
-  ): PartnerError {
-    return {
-      ...apiError,
-      userMessage: this.getUserMessage(apiError.statusCode, userMessage),
-    };
-  }
-
   private getUserMessage(statusCode: number, defaultMessage: string): string {
     switch (statusCode) {
       case 404:
         return "Nie znaleziono placówki.";
-      case 401:
-        return "Brak dostępu do danych placówki.";
       case 500:
         return "Wystąpił błąd serwera.";
       default:
