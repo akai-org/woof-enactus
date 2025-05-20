@@ -1,10 +1,10 @@
-import { Map } from "@/components";
 import { Table } from "@/components";
 import { JoinUsContainer } from "@/components";
+import { Map } from "@/components";
 
 import { getPartners } from "@/api";
 
-import { ClientOnly, Container, Skeleton, Heading } from "@chakra-ui/react";
+import { Container, Heading } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import type { HomeSearchParams } from "@/types";
 
@@ -33,9 +33,7 @@ export default async function Home({
           Znajdź placówki prozwierzęce
         </Heading>
       </Container>
-      <ClientOnly fallback={<Skeleton minH="80vh" />}>
-        <Map data={partners} />
-      </ClientOnly>
+      <Map data={partners} />
       <Table data={partners} />
       <JoinUsContainer />
     </>

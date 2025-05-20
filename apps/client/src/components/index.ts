@@ -1,4 +1,4 @@
-import { MapNoSSR as Map } from "./map";
+import { MapNoSSR as Map } from "./map/MapNoSsr";
 import { Table } from "./partners-table";
 import { JoinUsContainer } from "./joinus";
 
