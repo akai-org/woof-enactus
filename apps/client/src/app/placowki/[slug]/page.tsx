@@ -1,9 +1,13 @@
 import { Box, Container, For, Heading, Tabs } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
-import { PartnerInfo, PartnerNeeds, PartnerEvents } from "@/components";
+import {
+  PartnerInfo,
+  PartnerNeeds,
+  PartnerEvents,
+  GoBackButton,
+} from "@/components";
 import { getPartnerProfile } from "@/api";
 import type { PartnerPageParams } from "@/types";
-import GoBackButton from "@/components/ui/GoBackButton";
 
 const tabs = [
   {
@@ -47,7 +51,7 @@ export default async function PartnerPage({
 
   return (
     <Container mt={8} maxW="breakpoint-xl">
-      <GoBackButton/>
+      <GoBackButton />
       <Heading
         my={5}
         size={{ base: "4xl", md: "5xl" }}
