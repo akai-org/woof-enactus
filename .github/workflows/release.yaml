@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
   release:
@@ -15,7 +15,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
+      - name: Verify tag source branch
+        run: |
+          git fetch origin release --quiet
+          if git merge-base --is-ancestor $GITHUB_SHA origin/release; then
+            echo "Tag commit is on release branch – proceeding."
+          else
+            echo "Tag commit is NOT from release branch – stopping workflow."
+            exit 1
+          fi
       - id: auth
         name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
@@ -41,7 +51,8 @@ jobs:
 
       - name: Get image tag
         id: get-tag
-        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+        run: |
+          echo "short_ref=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
       - name: Build and push Frontend Image
         uses: docker/build-push-action@v6
