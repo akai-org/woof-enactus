@@ -1,1 +1,0 @@
-import{ao as s,ap as r,j as u,aq as i}from"./strapi-Crm562h2.js";const p=({children:t})=>{const a=s("PrivateRoute",n=>n.token),{pathname:e,search:o}=r();return a!==null?t:u.jsx(i,{to:{pathname:"/auth/login",search:e!=="/"?`?redirectTo=${encodeURIComponent(`${e}${o}`)}`:void 0}})};export{p as P};
