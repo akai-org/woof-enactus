@@ -49,6 +49,11 @@ type HomeSearchParams = Partial<{
   type: string; // e.g. "VET,SHELTER,ORG"
 }>;
 
+type AuthProps = {
+  username: string;
+  password: string;
+}
+
 export type {
   PartnerData,
   WorkingHours,
@@ -66,4 +71,5 @@ export type {
   HomeSearchParams,
   PartnersParams,
   RequireKey,
+  AuthProps
 };

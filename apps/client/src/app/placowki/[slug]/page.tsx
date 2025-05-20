@@ -75,6 +75,7 @@ export default async function PartnerPage({
             {tab => (
               <Tabs.Trigger
                 value={tab.id}
+                key={tab.id}
                 justifyContent="center"
                 py={{ base: "8", md: "10" }}
                 borderColor={tab.color}
@@ -93,7 +94,12 @@ export default async function PartnerPage({
         </Tabs.List>
         <For each={tabsToShow}>
           {tab => (
-            <Tabs.Content bg={tab.color} value={tab.id} p={[2, undefined, 8]}>
+            <Tabs.Content
+              bg={tab.color}
+              value={tab.id}
+              key={tab.id}
+              p={[2, undefined, 8]}
+            >
               <Box bg="brand.100" borderRadius="md" p={[3, 8]}>
                 {tab.id == "info" && <PartnerInfo profileData={profileData} />}
                 {tab.id == "stuff" && <PartnerNeeds slug={slug} />}
