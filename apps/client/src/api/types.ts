@@ -1,10 +1,3 @@
-import type {
-  PartnerData,
-  PartnerEvent,
-  PartnerNeeds,
-  PartnersParams,
-} from "@/types";
-
 type ApiClientOptions = Readonly<{
   baseUrl: string;
   globalFetchOptions?: RequestInit;
@@ -12,14 +5,21 @@ type ApiClientOptions = Readonly<{
 
 interface IApiClient {
   readonly baseUrl: string;
-  get<T>(endpoint: string, params?: string): Promise<T | null>;
+  get<T>(endpoint: string, params?: string): Promise<ApiResult<T>>;
 }
 
-interface IPartnerService {
-  getAll(params?: Partial<PartnersParams>): Promise<PartnerData[] | null>;
-  getProfile(slug: string): Promise<PartnerData | null>;
-  getNeeds(slug: string): Promise<PartnerNeeds | null>;
-  getEvents(slug: string): Promise<PartnerEvent[] | null>;
+type Result<T, E = Error> =
+  | { success: true; data: T }
+  | { success: false; error: E };
+
+interface ApiErrorDetails {
+  statusCode: number;
+  message: string;
+  error: string;
+  endpoint: string;
 }
 
-export type { ApiClientOptions, IApiClient, IPartnerService };
+type ApiResult<T> = Result<T, ApiErrorDetails>;
+
+export type { ApiClientOptions, IApiClient };
+export type { Result, ApiResult, ApiErrorDetails };

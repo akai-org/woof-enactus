@@ -1,12 +1,11 @@
-import NotFound from "@/app/not-found";
 import { container } from "@/features/di";
 
 import { Box, Flex, Heading, Table, Text } from "@chakra-ui/react";
-import type { IPartnerService } from "@/api";
+import type { IPartnerService } from "@/services";
 import type { GoodsState } from "@/types";
 import Note from "./Note";
 import NeedsMobile from "./NeedsMobile";
-import { EmptyArrayGuard } from "@/components";
+import { EmptyArrayGuard, ErrorMessage } from "@/components";
 import EmptyNeedsList from "./EmptyNeedsList";
 
 const PRIORITY_COLORS: Readonly<Record<GoodsState, string>> = {
@@ -26,10 +25,12 @@ export default async function PartnerNeeds({ slug }: PartnerNeedsProps) {
     .resolve<IPartnerService>("PartnerService")
     .getNeeds(slug);
 
-  if (!needs) return NotFound();
+  if (!needs.success) return <ErrorMessage message={needs.error.userMessage} />;
+
+  const needsData = needs.data;
 
   const newest = new Date(
-    needs.goods.reduce((latest, current) => {
+    needsData.goods.reduce((latest, current) => {
       return current.updatedAt > latest.updatedAt ? current : latest;
     }).updatedAt,
   );
@@ -50,7 +51,7 @@ export default async function PartnerNeeds({ slug }: PartnerNeedsProps) {
       <Text color="brand.600" fontWeight="semibold">
         Ostatnia aktualizacja: {newestDate}
       </Text>
-      <EmptyArrayGuard check={needs.goods} fallback={<EmptyNeedsList />}>
+      <EmptyArrayGuard check={needsData.goods} fallback={<EmptyNeedsList />}>
         <Table.Root
           size="lg"
           my={10}
@@ -76,7 +77,7 @@ export default async function PartnerNeeds({ slug }: PartnerNeedsProps) {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {needs.goods.map((need, i) => (
+            {needsData.goods.map((need, i) => (
               <Table.Row
                 key={need.uuid}
                 bgColor={i % 2 === 0 ? "brand.300" : "brand.100"}
@@ -103,10 +104,10 @@ export default async function PartnerNeeds({ slug }: PartnerNeedsProps) {
             ))}
           </Table.Body>
         </Table.Root>
-        <NeedsMobile needs={needs} priorityColors={PRIORITY_COLORS} />
+        <NeedsMobile needs={needsData} priorityColors={PRIORITY_COLORS} />
       </EmptyArrayGuard>
 
-      <Note note={needs.note} />
+      <Note note={needsData.note} />
     </Flex>
   );
 }

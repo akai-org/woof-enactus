@@ -12,6 +12,7 @@ import {
   VetTypeGuard,
   NullishGuard,
   EmptyArrayGuard,
+  ErrorMessage,
 } from "./utility-components";
 
 export {
@@ -30,4 +31,5 @@ export {
   VetTypeGuard,
   NullishGuard,
   EmptyArrayGuard,
+  ErrorMessage,
 };

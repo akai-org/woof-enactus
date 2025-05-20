@@ -1,12 +1,11 @@
 import { PartnerInfo, PartnerNeeds, PartnerEvents } from "@/features/partners";
 import { container } from "@/features/di";
-import { GoBackButton } from "@/components";
+import { ErrorMessage, GoBackButton } from "@/components";
 
 import { Box, Container, For, Heading, Tabs } from "@chakra-ui/react";
-import { notFound } from "next/navigation";
 
 import type { PartnerPageParams } from "@/types";
-import type { IPartnerService } from "@/api";
+import type { IPartnerService } from "@/services";
 
 const tabs = [
   {
@@ -26,21 +25,9 @@ const tabs = [
   },
 ];
 
-export default async function PartnerPage({
-  params,
-}: {
-  params: Promise<PartnerPageParams>;
-}) {
-  const { slug } = await params;
-
-  const profileData = await container
-    .resolve<IPartnerService>("PartnerService")
-    .getProfile(slug);
-
-  if (!profileData) notFound();
-
+const getTabs = (type: string) => {
   const tabsToShow = [];
-  switch (profileData.type) {
+  switch (type) {
     case "VET":
       tabsToShow.push(tabs[1]);
       break;
@@ -50,6 +37,26 @@ export default async function PartnerPage({
     default:
       tabsToShow.push(tabs[0], tabs[1], tabs[2]);
   }
+
+  return tabsToShow;
+};
+
+export default async function PartnerPage({
+  params,
+}: {
+  params: Promise<PartnerPageParams>;
+}) {
+  const { slug } = await params;
+
+  const profile = await container
+    .resolve<IPartnerService>("PartnerService")
+    .getProfile(slug);
+
+  if (!profile.success)
+    return <ErrorMessage message={profile.error.userMessage} />;
+
+  const tabsToShow = getTabs(profile.data.type);
+  const profileData = profile.data;
 
   return (
     <Container mt={8} maxW="breakpoint-xl">

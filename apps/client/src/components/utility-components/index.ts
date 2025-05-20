@@ -6,6 +6,7 @@ import {
   VetTypeGuard,
 } from "./PartnerTypeGuard";
 import EmptyArrayGuard from "./EmptyArrayGuard";
+import ErrorMessage from "./ErrorMessage";
 
 export {
   NullishGuard,
@@ -14,4 +15,5 @@ export {
   ShopTypeGuard,
   VetTypeGuard,
   EmptyArrayGuard,
+  ErrorMessage,
 };
