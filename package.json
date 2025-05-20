@@ -26,6 +26,7 @@
       "@scarf/scarf",
       "@swc/core",
       "bcrypt",
+      "core-js-pure",
       "esbuild",
       "prisma",
       "sharp",
