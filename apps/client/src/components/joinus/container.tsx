@@ -1,4 +1,5 @@
-import { Box, Button, Card, Container, Heading, Text } from "@chakra-ui/react";
+import { Button, Card, Container, Heading, Span, Text } from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function JoinUsContainer() {
   return (
@@ -29,10 +30,12 @@ export default function JoinUsContainer() {
           </Heading>
         </Card.Header>
         <Card.Body>
-          <Button variant="cta" size="2xl" alignSelf="center">
-            <Heading fontSize="2xl" color="white" fontWeight="500">
+          <Button variant="cta" size="2xl" alignSelf="center" disabled asChild>
+            {/* <Link href="/rejestracja"> */}
+            <Span fontSize="2xl" color="white" fontWeight="500">
               ZAREJESTRUJ PLACÓWKĘ!
-            </Heading>
+            </Span>
+            {/* </Link> */}
           </Button>
         </Card.Body>
       </Card.Root>
