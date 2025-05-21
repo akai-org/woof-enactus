@@ -8,13 +8,12 @@ import {
   Image,
   Link,
 } from "@chakra-ui/react";
-import AboutUs1 from "@/assets/about-us-1.png";
 import { FiCoffee } from "react-icons/fi";
 
 export default function SupportPage() {
   return (
     <Box bgColor="brand.100">
-      <Container py={20}>
+      <Container py={20} maxWidth="breakpoint-lg">
         <Card.Root
           borderColor="black"
           padding={{ base: "1", sm: "6", md: "10" }}
@@ -35,7 +34,7 @@ export default function SupportPage() {
               flexDirection={{ base: "column-reverse", md: "row" }}
               gap="20px"
             >
-              <Box flex={1} width={{ base: "100%", md: "50%" }} padding="20px">
+              <Box flex={1} width={{ base: "100%", md: "50%" }}>
                 <Card.Description lineHeight="25px" fontWeight="500">
                   lacinia non. Sed dignissim tortor ac sapien volutpat pretium.
                   Donec tincidunt mauris risus, id interdum nulla consectetur
@@ -52,12 +51,12 @@ export default function SupportPage() {
                   vestibulum pulvinar. Fusce id lacus vitae odio
                 </Card.Description>
               </Box>
-              <Image
+              {/* <Image
                 width={{ base: "100%", md: "50%" }}
                 src={AboutUs1.src}
                 alt=""
                 padding="5"
-              />
+              /> */}
             </Flex>
             <Button variant="cta" size="2xl" alignSelf="center" mt="8" asChild>
               <Link href="https://ko-fi.com" color="brand.100">

@@ -21,8 +21,8 @@ export default function JoinUsContainer() {
             fontWeight="350"
             textAlign="center"
           >
-            Reprezentujesz schronisko dla zwierząt lub organizację prozwierzęcą
-            i chciałbyś przedstawić swoją placówkę? Dołącz do{" "}
+            Reprezentujesz schronisko dla zwierząt lub organizację przyjazną
+            zwierzętom i chciałbyś przedstawić swoją placówkę? Dołącz do{" "}
             <Span color="brand.500" textTransform="uppercase">
               Haumaps
             </Span>
