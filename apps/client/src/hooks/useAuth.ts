@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const useAuth = () => {
+function useAuth() {
   const [isLogged, setisLogged] = useState(false);
-  fetch("/api/auth").then(res => setisLogged(res.status == 200));
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_HOST_URL}/api/auth`).then(res =>
+      setisLogged(res.status == 200),
+    );
+  }, []);
+
   return isLogged;
-};
+}
 
 export default useAuth;

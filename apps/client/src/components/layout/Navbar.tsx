@@ -142,25 +142,28 @@ function Nav() {
                   >
                     <For each={links}>
                       {item => (
-                        <Link
+                        <Drawer.CloseTrigger
                           asChild
-                          fontWeight="medium"
-                          fontSize="md"
+                          position="initial"
                           key={item.name}
                         >
-                          <NextLink href={item.href}>{item.name}</NextLink>
-                        </Link>
+                          <Link asChild fontWeight="medium" fontSize="md">
+                            <NextLink href={item.href}>{item.name}</NextLink>
+                          </Link>
+                        </Drawer.CloseTrigger>
                       )}
                     </For>
-                    <Button bgColor="brand.700" asChild>
-                      <NextLink
-                        href={isLogged ? "/panel-placowki" : "/logowanie"}
-                      >
-                        {isLogged
-                          ? "Panel placówki"
-                          : "Zaloguj się jako placówka"}
-                      </NextLink>
-                    </Button>
+                    <Drawer.CloseTrigger asChild position="initial">
+                      <Button bgColor="brand.700" asChild>
+                        <NextLink
+                          href={isLogged ? "/panel-placowki" : "/logowanie"}
+                        >
+                          {isLogged
+                            ? "Panel placówki"
+                            : "Zaloguj się jako placówka"}
+                        </NextLink>
+                      </Button>
+                    </Drawer.CloseTrigger>
                   </Drawer.Body>
                   <Drawer.Footer>
                     <Link

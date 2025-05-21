@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState, useRef } from "react";
+import { useCallback, useMemo, useState, useRef, useEffect } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 
@@ -11,11 +11,16 @@ import { SearchBar } from "./search-bar";
 import {
   DEFAULT_POSITION,
   DEFAULT_ZOOM,
+  LOCATION_FOUND_ZOOM,
   MAX_ZOOM,
   MIN_ZOOM,
+  PARTNER_ADDRESS_SEARCH_PARAM,
 } from "./map.config";
 import type { PartnerData } from "@/types";
 import { createClusterIcon } from "./createClusterIcon";
+
+import { toaster } from "@/constants";
+import { useSearchParams } from "next/navigation";
 
 /* 
   NOTE: Except for its children, MapContainer props are immutable:
@@ -30,6 +35,8 @@ type MapProps = {
 function Map({ children, data }: MapProps) {
   const [showLocation, setShowLocation] = useState(false);
   const locationRef = useRef<LocationHandle>(null);
+  const mapRef = useRef<L.Map | null>(null);
+  const searchParams = useSearchParams();
 
   const memoizedMarkers = useMemo(
     () => data.map(item => <MapMarker markerData={item} key={item.uuid} />),
@@ -44,6 +51,27 @@ function Map({ children, data }: MapProps) {
     }
   }, [showLocation]);
 
+  useEffect(() => {
+    const searchQuery = searchParams.get(PARTNER_ADDRESS_SEARCH_PARAM);
+    if (!searchQuery) return;
+
+    if (data.length > 0) {
+      mapRef.current?.flyTo(
+        [data[0].latitude, data[0].longitude],
+        LOCATION_FOUND_ZOOM,
+        { animate: true, duration: 1 },
+      );
+    } else {
+      queueMicrotask(() => {
+        if (data.length == 0)
+          toaster.create({
+            description: "Nie znaleziono żadnych placówek",
+            type: "error",
+          });
+      });
+    }
+  }, [data, searchParams]);
+
   return (
     <>
       <SearchBar onLocate={handleLocate} />
@@ -53,7 +81,8 @@ function Map({ children, data }: MapProps) {
         zoomControl={true}
         minZoom={MIN_ZOOM}
         maxZoom={MAX_ZOOM}
-        style={{ minHeight: "70vh" }}
+        ref={mapRef}
+        style={{ minHeight: "65dvh" }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

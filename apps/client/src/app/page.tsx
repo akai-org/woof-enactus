@@ -3,7 +3,7 @@ import { Table } from "@/components";
 import { JoinUsContainer } from "@/components";
 import { container } from "@/features/di";
 
-import { ClientOnly, Container, Skeleton, Heading } from "@chakra-ui/react";
+import { Container, Heading } from "@chakra-ui/react";
 
 import type { HomeSearchParams } from "@/types";
 import type { IPartnerService } from "@/services";
@@ -34,14 +34,12 @@ export default async function Home({
     <>
       <Container marginTop="8">
         <Heading as="h1" size="4xl" color="brand.700" my="2">
-          Znajdź placówki prozwierzęce
+          Znajdź placówki przyjazne zwierzętom
         </Heading>
       </Container>
-      <ClientOnly fallback={<Skeleton minH="70vh" />}>
-        <Map data={partners.data} />
-        <Table data={partners.data} />
-        <JoinUsContainer />
-      </ClientOnly>
+      <Map data={partners.data} />
+      <Table data={partners.data} />
+      <JoinUsContainer />
     </>
   );
 }

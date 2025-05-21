@@ -16,7 +16,7 @@ export default function SearchBar({ onLocate }: SearchBarProps) {
         justifyContent="space-between"
         alignItems="center"
         flexDir={{ base: "column", md: "row" }}
-        gap="2"
+        gap={{ base: "5", md: "32" }}
       >
         <Search onLocate={onLocate} />
         <Flex
