@@ -60,13 +60,14 @@ export default function Search({ onLocate }: SearchProps) {
       onClick={() => {
         setValue("");
         inputRef.current?.focus();
+        replace(pathname);
       }}
       me="-2"
     />
   ) : undefined;
 
   return (
-    <form onSubmit={handleSearchSubmit} style={{width: "100%"}}>
+    <form onSubmit={handleSearchSubmit} style={{ width: "100%" }}>
       <Group
         w="full"
         marginRight={{ base: "0", md: "10%" }}
