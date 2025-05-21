@@ -1,4 +1,5 @@
 import {
+  Box,
   CloseButton,
   Group,
   IconButton,
@@ -67,48 +68,50 @@ export default function Search({ onLocate }: SearchProps) {
   ) : undefined;
 
   return (
-    <form onSubmit={handleSearchSubmit} style={{ width: "100%" }}>
-      <Group
-        w="full"
-        marginRight={{ base: "0", md: "10%" }}
-        marginY="2"
-        attached
-      >
-        <InputGroup endElement={endElement}>
-          <Input
-            placeholder="Miasto, ulica"
-            value={value}
-            onChange={e => {
-              setValue(e.currentTarget.value);
-            }}
-            borderColor="brand.300"
-            color="brand.700"
-            _placeholder={{ color: "brand.700" }}
-          />
-        </InputGroup>
-        <IconButton
-          variant="outline"
-          type="submit"
-          borderLeft={0}
-          borderRight={0}
+    <Box width="100%">
+      <form onSubmit={handleSearchSubmit}>
+        <Group
+          w="full"
+          marginRight={{ base: "0", md: "10%" }}
+          marginY="2"
+          attached
         >
-          <IoSearch />
-        </IconButton>
-
-        <Tooltip
-          content="Zlokalizuj mnie"
-          positioning={{ placement: "right-end" }}
-        >
+          <InputGroup endElement={endElement}>
+            <Input
+              placeholder="Miasto, ulica"
+              value={value}
+              onChange={e => {
+                setValue(e.currentTarget.value);
+              }}
+              borderColor="brand.300"
+              color="brand.700"
+              _placeholder={{ color: "brand.700" }}
+            />
+          </InputGroup>
           <IconButton
-            onClick={onLocate}
             variant="outline"
-            borderTopLeftRadius={0}
-            borderBottomLeftRadius={0}
+            type="submit"
+            borderLeft={0}
+            borderRight={0}
           >
-            <FaLocationCrosshairs />
+            <IoSearch />
           </IconButton>
-        </Tooltip>
-      </Group>
-    </form>
+
+          <Tooltip
+            content="Zlokalizuj mnie"
+            positioning={{ placement: "right-end" }}
+          >
+            <IconButton
+              onClick={onLocate}
+              variant="outline"
+              borderTopLeftRadius={0}
+              borderBottomLeftRadius={0}
+            >
+              <FaLocationCrosshairs />
+            </IconButton>
+          </Tooltip>
+        </Group>
+      </form>
+    </Box>
   );
 }

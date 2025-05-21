@@ -14,15 +14,15 @@ export default function JoinUsContainer() {
       >
         <Card.Header>
           <Heading
-            lineHeight="50px"
+            lineHeight="45px"
             margin="auto"
             color="brand.600"
-            size="2xl"
+            size={{ base: "xl", sm: "2xl" }}
             fontWeight="350"
+            textAlign="center"
           >
-            Reprezentujesz schronisko dla zwierząt <br />
-            lub orgaznizacje prozwierzęcą i chciałbyś <br />
-            przedstawić swoją placówkę? Dołącz do{" "}
+            Reprezentujesz schronisko dla zwierząt lub organizację prozwierzęcą
+            i chciałbyś przedstawić swoją placówkę? Dołącz do{" "}
             <Span color="brand.500" textTransform="uppercase">
               Haumaps
             </Span>
@@ -30,9 +30,17 @@ export default function JoinUsContainer() {
           </Heading>
         </Card.Header>
         <Card.Body>
-          <Button variant="cta" size="2xl" alignSelf="center" disabled asChild>
+          <Button
+            variant="cta"
+            size={{ base: "xl", sm: "2xl" }}
+            alignSelf="center"
+            disabled
+            color="white"
+            fontWeight="500"
+            asChild
+          >
             {/* <Link href="/rejestracja"> */}
-            <Span fontSize="2xl" color="white" fontWeight="500">
+            <Span fontSize={{ base: "xl", sm: "2xl" }}>
               ZAREJESTRUJ PLACÓWKĘ!
             </Span>
             {/* </Link> */}

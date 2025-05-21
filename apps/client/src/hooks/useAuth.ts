@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useAuth = () => {
+function useAuth() {
   const [isLogged, setisLogged] = useState(false);
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_HOST_URL}/api/auth`).then(res =>
@@ -9,6 +9,6 @@ const useAuth = () => {
   }, []);
 
   return isLogged;
-};
+}
 
 export default useAuth;

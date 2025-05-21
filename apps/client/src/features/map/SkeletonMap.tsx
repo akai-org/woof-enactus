@@ -4,10 +4,10 @@ function SekletonMap() {
   return (
     <Box>
       <Flex direction="column">
-        <Container padding={4} h="70px">
+        <Container padding={4} h="4.5rem">
           <Skeleton w="full" h="full" />
         </Container>
-        <Skeleton h="70dvh" />
+        <Skeleton h="65dvh" />
       </Flex>
     </Box>
   );

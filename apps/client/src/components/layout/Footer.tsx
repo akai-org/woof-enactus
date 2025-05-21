@@ -18,7 +18,7 @@ function Footer() {
               fontWeight="bold"
               href="mailto:kontaktwithenactus@gmail.com"
             >
-              kontaktwithenactus@gmail.com
+              enactusput@gmail.com
             </Link>
           </Flex>
 
