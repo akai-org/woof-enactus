@@ -7,7 +7,8 @@ import type {
   GenericResponse,
   Partner,
   NeededGoodsMeta,
-  PartnerEvent
+  PartnerEvent,
+  GoodsState,
 } from "woof";
 
 // ====== altered types from woof package ======
@@ -48,13 +49,19 @@ type HomeSearchParams = Partial<{
   type: string; // e.g. "VET,SHELTER,ORG"
 }>;
 
+type AuthProps = {
+  username: string;
+  password: string;
+}
+
 export type {
   PartnerData,
   WorkingHours,
   PartnerProfile,
   PartnerType,
   GenericResponse,
-  PartnerEvent
+  PartnerEvent,
+  GoodsState,
 };
 
 export type {
@@ -64,4 +71,5 @@ export type {
   HomeSearchParams,
   PartnersParams,
   RequireKey,
+  AuthProps
 };

@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   CloseButton,
@@ -18,6 +19,7 @@ import { IoMenu } from "react-icons/io5";
 import NextLink from "next/link";
 import NavLink from "./NavLink";
 import { Logo } from "@/components";
+import { useAuth } from "@/hooks";
 
 const links = [
   {
@@ -39,6 +41,7 @@ const links = [
 ];
 
 function Nav() {
+  const isLogged = useAuth();
   return (
     <Box
       position="sticky"
@@ -50,7 +53,7 @@ function Nav() {
       borderBottomColor="brand.300"
     >
       <Container>
-        <Center minHeight="20">
+        <Center minHeight="24">
           <Flex gap={4} justifyContent="space-between" alignItems="center">
             <Link
               asChild
@@ -83,9 +86,9 @@ function Nav() {
                     flexGrow="1"
                     color="brand.700"
                     borderRadius="sm"
-                    fontSize="sm"
                     fontWeight="medium"
                     value={item.name}
+                    key={item.name}
                   >
                     <NavLink href={item.href} name={item.name} />
                   </List.Item>
@@ -94,9 +97,12 @@ function Nav() {
             </List.Root>
           </Flex>
 
-          <Button bgColor="brand.700" hideBelow={"lg"}>
-            Zaloguj się jako placówka
+          <Button bgColor="brand.700" hideBelow="lg" asChild>
+            <NextLink href={isLogged ? "/panel-placowki" : "/logowanie"}>
+              {isLogged ? "Panel placówki" : "Zaloguj się jako placówka"}
+            </NextLink>
           </Button>
+
           <Drawer.Root placement="end">
             <Drawer.Trigger asChild>
               <IconButton hideFrom="lg" aria-label="Menu" variant="ghost">
@@ -128,19 +134,34 @@ function Nav() {
                       </Drawer.CloseTrigger>
                     </Flex>
                   </Drawer.Header>
-                  <Drawer.Body display="flex" flexDirection="column" gap={8}>
+                  <Drawer.Body
+                    display="flex"
+                    flexDirection="column"
+                    gap={9}
+                    marginTop="4"
+                  >
                     <For each={links}>
                       {item => (
-                        <Drawer.CloseTrigger asChild position="initial">
-                          <Link asChild fontWeight="medium">
+                        <Drawer.CloseTrigger
+                          asChild
+                          position="initial"
+                          key={item.name}
+                        >
+                          <Link asChild fontWeight="medium" fontSize="md">
                             <NextLink href={item.href}>{item.name}</NextLink>
                           </Link>
                         </Drawer.CloseTrigger>
                       )}
                     </For>
                     <Drawer.CloseTrigger asChild position="initial">
-                      <Button bgColor="brand.700">
-                        Zaloguj się jako placówka
+                      <Button bgColor="brand.700" asChild>
+                        <NextLink
+                          href={isLogged ? "/panel-placowki" : "/logowanie"}
+                        >
+                          {isLogged
+                            ? "Panel placówki"
+                            : "Zaloguj się jako placówka"}
+                        </NextLink>
                       </Button>
                     </Drawer.CloseTrigger>
                   </Drawer.Body>
