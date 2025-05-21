@@ -11,8 +11,7 @@ import { useCallback, useRef, useState, type FormEvent } from "react";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { Tooltip } from "@/components";
-
-const PARTNER_ADDRESS_SEARCH_PARAM = "query";
+import { PARTNER_ADDRESS_SEARCH_PARAM } from "../map.config";
 
 type SearchProps = {
   onLocate: () => void;
