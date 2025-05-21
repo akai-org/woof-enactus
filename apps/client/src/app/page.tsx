@@ -34,7 +34,7 @@ export default async function Home({
     <>
       <Container marginTop="8">
         <Heading as="h1" size="4xl" color="brand.700" my="2">
-          Znajdź placówki prozwierzęce
+          Znajdź placówki przyjazne zwierzętom
         </Heading>
       </Container>
       <Map data={partners.data} />

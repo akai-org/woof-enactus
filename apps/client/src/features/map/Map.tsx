@@ -65,7 +65,7 @@ function Map({ children, data }: MapProps) {
         zoomControl={true}
         minZoom={MIN_ZOOM}
         maxZoom={MAX_ZOOM}
-        style={{ minHeight: "70vh" }}
+        style={{ minHeight: "70dvh" }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

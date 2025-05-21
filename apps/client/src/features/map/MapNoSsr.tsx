@@ -1,10 +1,10 @@
 "use client";
-import { Skeleton } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
+import { SekletonMap } from "./SkeletonMap";
 
 const MapNoSSR = dynamic(() => import("./Map"), {
   ssr: false,
-  loading: () => <Skeleton minH="80vh" />,
+  loading: () => <SekletonMap />,
 });
 
 export { MapNoSSR };
