@@ -1,12 +1,8 @@
 import { Box, Card, Container, Grid, Heading } from "@chakra-ui/react";
 import Image from "next/image";
-import AboutUs1 from "@/../public/about-us-1.png";
-import AboutUs2 from "@/../public/about-us-2.png";
-import AboutUs3 from "@/../public/about-us-3.png";
-import AboutUs4 from "@/../public/about-us-4.png";
-import AboutUsBg from "@/../public/about-us-bg.png";
+import AboutUsBg from "@/assets/about-us-bg.png";
 
-const images = [AboutUs1, AboutUs2, AboutUs3, AboutUs4];
+//const images = [AboutUs1, AboutUs2, AboutUs3, AboutUs4];
 
 export default function AboutUsPage() {
   return (
@@ -15,8 +11,14 @@ export default function AboutUsPage() {
       backgroundSize="auto"
       bgColor="brand.700"
     >
-      <Container gap={20} display="flex" flexDirection="column" py={20}>
-        <Card.Root>
+      <Container
+        gap={20}
+        display="flex"
+        flexDirection="column"
+        py={20}
+        maxWidth="breakpoint-lg"
+      >
+        <Card.Root padding={{ base: "0", sm: "4" }}>
           <Card.Header>
             <Heading color="brand.500" size="3xl">
               Poznaj naszą misje!
@@ -59,8 +61,9 @@ export default function AboutUsPage() {
           </Card.Body>
         </Card.Root>
         <Card.Root
-          display="grid"
-          gridTemplateColumns={{ base: "1fr", md: "1fr 1fr" }}
+          padding={{ base: "0", sm: "4" }}
+          //  display="grid"
+          // gridTemplateColumns={{ base: "1fr", md: "1fr 1fr" }}
         >
           <div>
             <Card.Header>
@@ -104,17 +107,17 @@ export default function AboutUsPage() {
               </Card.Description>
             </Card.Body>
           </div>
-          <Grid templateColumns="1fr 1fr" gap={5} m="auto" py={5}>
+          {/* <Grid templateColumns="1fr 1fr" gap={5} m="auto" py={5}>
             {images.map(i => (
               <Image
                 key={i.src}
                 src={i}
                 placeholder="blur"
-                alt="Haumaps Team photo"
+                alt="HauMaps Team photo"
                 style={{ height: "200px", width: "200px" }}
               />
             ))}
-          </Grid>
+          </Grid> */}
         </Card.Root>
         <Card.Root
           w={{ base: "full", md: "2/3" }}

@@ -46,12 +46,18 @@ declare module "woof" {
 
   interface UpdatePartnerDto extends Partial<CreatePartnerDto> {}
 
-  interface GenericResponse<T = unknown> {
-    ok: boolean;
-    data?: T;
-    message?: string;
-    error?: string;
+  interface SuccessResponse<T = unknown> {
+    ok: true;
+    data: T;
   }
+
+  interface ErrorResponse {
+    ok: false;
+    message: string;
+    error: string;
+  }
+
+  type GenericResponse<T = unknown> = SuccessResponse<T> | ErrorResponse;
 
   type JwtType = "auth" | "refresh";
 
@@ -128,6 +134,6 @@ declare module "woof" {
     title: string;
     description: string;
     thumbnail?: string;
-    createdAt: Date;
+    eventDate: Date;
   }
 }

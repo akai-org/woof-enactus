@@ -1,9 +1,13 @@
-import { Map } from "@/components";
-import { getPartners } from "@/api";
+import { Map } from "@/features/map";
+import { Table } from "@/components";
+import { JoinUsContainer } from "@/components";
+import { container } from "@/features/di";
 
-import { ClientOnly, Container, Skeleton, Heading } from "@chakra-ui/react";
-import { notFound } from "next/navigation";
+import { Container, Heading } from "@chakra-ui/react";
+
 import type { HomeSearchParams } from "@/types";
+import type { IPartnerService } from "@/services";
+import { ErrorMessage } from "@/components";
 
 export default async function Home({
   searchParams,
@@ -19,20 +23,23 @@ export default async function Home({
     ...(street && { street }),
   };
 
-  const partners = await getPartners({ types: type, ...params });
+  const partners = await container
+    .resolve<IPartnerService>("PartnerService")
+    .getAll({ types: type, ...params });
 
-  if (!partners) notFound();
+  if (!partners.success)
+    return <ErrorMessage message={partners.error.userMessage} />;
 
   return (
     <>
       <Container marginTop="8">
         <Heading as="h1" size="4xl" color="brand.700" my="2">
-          Znajdź placówki prozwierzęce
+          Znajdź placówki przyjazne zwierzętom
         </Heading>
       </Container>
-      <ClientOnly fallback={<Skeleton minH="70vh" />}>
-        <Map data={partners} />
-      </ClientOnly>
+      <Map data={partners.data} />
+      <Table data={partners.data} />
+      <JoinUsContainer />
     </>
   );
 }
