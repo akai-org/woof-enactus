@@ -9,14 +9,14 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (process.env.NODE_ENV == "production") {
-    const authPaths = ["/logowanie", "/rejestracja"];
-    const isAuthPath = authPaths.some(path =>
-      request.nextUrl.pathname.startsWith(path),
-    );
+  //if (process.env.NODE_ENV == "production") {
+  const authPaths = ["/logowanie"]; //, "/rejestracja"];
+  const isAuthPath = authPaths.some(path =>
+    request.nextUrl.pathname.startsWith(path),
+  );
 
-    if (isAuthPath) return NextResponse.error();
-  }
+  if (isAuthPath) return NextResponse.error();
+  // }
 
   return NextResponse.next();
 }
