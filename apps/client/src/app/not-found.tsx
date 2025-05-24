@@ -7,7 +7,7 @@ export default function NotFound() {
         Strony nie znaleziono
       </Heading>
 
-      <Button asChild>
+      <Button variant="cta" asChild>
         <Link asChild>
           <NextLink href="/">Strona główna</NextLink>
         </Link>
