@@ -34,7 +34,7 @@ jobs:
           project_id: angular-amp-459415-h8
           workload_identity_provider: projects/782854916885/locations/global/workloadIdentityPools/haumaps/providers/github
           service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
-          access_token_lifetime: 300s
+          access_token_lifetime: 600s
 
       - name: Login to Artifact Registry
         uses: docker/login-action@v2
