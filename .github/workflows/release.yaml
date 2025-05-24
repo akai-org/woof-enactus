@@ -3,15 +3,15 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   release:
     name: Build Docker images and push to GCP Aritfact Registry
     runs-on: ubuntu-latest
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -73,3 +73,12 @@ jobs:
           tags: |
             europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-backend:${{ steps.get-tag.outputs.short_ref }}
             europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-backend:latest
+      - name: Build and push Blog image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          file: prod.Dockerfile
+          target: blog
+          tags: |
+            europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-blog:${{ steps.get-tag.outputs.short_ref }}
+            europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-blog:latest
