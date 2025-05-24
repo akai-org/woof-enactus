@@ -46,4 +46,17 @@ services:
       - "3001:3001"
     depends_on:
       - backend-dev
+
+  blog-dev:
+    hostname: blog
+    build:
+      context: .
+      dockerfile: ./dev.Dockerfile
+    volumes:
+      - "./apps/blog:/woof-enactus/apps/blog:rw"
+    entrypoint: "pnpm --filter=blog dev"
+    ports:
+      - "1337:1337"
+    depends_on:
+      - frontend-dev
     

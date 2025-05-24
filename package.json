@@ -8,7 +8,8 @@
     "start:dev:d": "docker compose -f compose.dev.yml up --build -d",
     "start:dev:db": "docker compose -f compose.dev.yml up -d database pgAdmin",
     "start:dev:server": "pnpm --filter=server start:dev",
-    "start:dev:client": "pnpm --filter=client dev"
+    "start:dev:client": "pnpm --filter=client dev",
+    "start:dev:blog": "pnpm --filter=blog dev"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
       "@scarf/scarf",
       "@swc/core",
       "bcrypt",
+      "core-js-pure",
       "esbuild",
       "prisma",
       "sharp",
