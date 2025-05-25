@@ -7,7 +7,8 @@ import type {
   GenericResponse,
   Partner,
   NeededGoodsMeta,
-  PartnerEvent
+  PartnerEvent,
+  BlogType
 } from "woof";
 
 // ====== altered types from woof package ======
@@ -28,8 +29,15 @@ type PartnerNeeds = {
 type Legend = {
   name: string;
   color: string;
-  markerPath: string;
+  markerPath?: string;
   type: PartnerType;
+};
+
+type BlogLegend = {
+  name: string;
+  color: string;
+  markerPath?: string;
+  type: BlogType;
 };
 
 type PartnersParams = {
@@ -53,12 +61,14 @@ export type {
   WorkingHours,
   PartnerProfile,
   PartnerType,
+  BlogType,
   GenericResponse,
   PartnerEvent
 };
 
 export type {
   Legend,
+  BlogLegend,
   PartnerNeeds,
   PartnerPageParams,
   HomeSearchParams,

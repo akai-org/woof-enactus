@@ -1,6 +1,7 @@
 import { MapNoSSR as Map } from "./map";
 import { Table } from "./partners-table";
 import { JoinUsContainer } from "./joinus";
+import { BlogContainer } from "./blog";
 
 import { Footer, Nav } from "./layout";
 
@@ -22,5 +23,6 @@ export {
   Toaster,
   Table,
   JoinUsContainer,
+  BlogContainer,
   Logo,
 };

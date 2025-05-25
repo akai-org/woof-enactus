@@ -1,4 +1,4 @@
-import type { Legend } from "@/types";
+import type { Legend,BlogLegend } from "@/types";
 
 const legendItems: Legend[] = [
   {
@@ -27,4 +27,27 @@ const legendItems: Legend[] = [
   },
 ];
 
-export { legendItems };
+const blogLegendItems: BlogLegend[] = [
+  {
+    name: "Zdrowie",
+    color: "brand.700",
+    type: "HEALTH",
+  },
+  {
+    name: "Rozrywka",
+    color: "brand.400",
+    type: "FUN",
+  },
+  {
+    name: "Weterynaria",
+    color: "accent.yellow",
+    type: "VET",
+  },
+  {
+    name: "Inne",
+    color: "brand.500",
+    type: "OTHER",
+  },
+];
+
+export { legendItems,blogLegendItems };
