@@ -21,8 +21,6 @@ declare module "woof" {
 
   type PartnerType = "VET" | "ORG" | "SHOP" | "SHELTER";
   
-  type BlogType = "HEALTH" | "FUN" | "VET" | "OTHER";
-
   interface CreatePartnerDto {
     name: string;
     type: PartnerType;

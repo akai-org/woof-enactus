@@ -12,7 +12,7 @@ import { TiArrowRight } from "react-icons/ti";
 import React from "react";
 import NextLink from "next/link";
 import type { PartnerData } from "@/types";
-import { legendItems } from "@/constants";
+import { mapLegendItems } from "@/constants";
 
 type MobileTableProps = {
   data: PartnerData[];
@@ -71,8 +71,9 @@ function MobileTable({ data, firstItem, lastItem }: MobileTableProps) {
                   boxSize="15px"
                   borderRadius="sm"
                   bg={
-                    legendItems.find(legendItem => legendItem.type == item.type)
-                      ?.color
+                    mapLegendItems.find(
+                      legendItem => legendItem.type == item.type,
+                    )?.color
                   }
                 />
                 <Text fontSize="md">{getPartnerTypeName(item.type)}</Text>

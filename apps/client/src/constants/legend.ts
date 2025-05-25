@@ -1,6 +1,6 @@
-import type { Legend,BlogLegend } from "@/types";
+import type { Legend, BlogLegend } from "@/types";
 
-const legendItems: Legend[] = [
+const mapLegendItems: Legend[] = [
   {
     name: "Schroniska",
     color: "brand.700",
@@ -27,7 +27,7 @@ const legendItems: Legend[] = [
   },
 ];
 
-const blogLegendItems: BlogLegend[] = [
+const blogCategoryItems: BlogLegend[] = [
   {
     name: "Zdrowie",
     color: "brand.700",
@@ -50,4 +50,4 @@ const blogLegendItems: BlogLegend[] = [
   },
 ];
 
-export { legendItems,blogLegendItems };
+export { mapLegendItems, blogCategoryItems };

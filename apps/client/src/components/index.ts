@@ -1,5 +1,4 @@
 import { Table } from "./partners-table";
-import { BlogContainer } from "./blog";
 import { JoinUsContainer } from "./join-us";
 import { Footer, Nav } from "./layout";
 import { Checkbox, Tooltip, Toaster, Logo, GoBackButton } from "./ui";
@@ -22,7 +21,6 @@ export {
   Toaster,
   Table,
   JoinUsContainer,
-  BlogContainer,
   Logo,
   GoBackButton,
   OrgTypeGuard,

@@ -1,4 +1,4 @@
 import { system } from "./theme";
-import { legendItems,blogLegendItems } from "./legend";
+import { mapLegendItems, blogCategoryItems } from "./legend";
 import { toaster } from "./toaster";
-export { system, legendItems,blogLegendItems, toaster };
+export { system, mapLegendItems, blogCategoryItems, toaster };

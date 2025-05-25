@@ -8,11 +8,10 @@ import type {
   Partner,
   NeededGoodsMeta,
   PartnerEvent,
-  BlogType,
   GoodsState,
 } from "woof";
 
-// ====== altered types from woof package ======
+// ====== altered types based on woof package ======
 type WorkingHours = Omit<InternalWorkingHours, keyof DatabaseEntity>;
 
 type PartnerData = RequireKey<
@@ -27,6 +26,17 @@ type PartnerNeeds = {
 } & Omit<NeededGoodsMeta, keyof DatabaseEntity>;
 
 // ====== Client-defined types ======
+type BlogPostCategory = "HEALTH" | "FUN" | "VET" | "OTHER";
+
+interface IBlogPost {
+  id: number;
+  imageUrl: string;
+  title: string;
+  description: string;
+  date: string;
+  type: BlogPostCategory;
+}
+
 type Legend = {
   name: string;
   color: string;
@@ -37,8 +47,7 @@ type Legend = {
 type BlogLegend = {
   name: string;
   color: string;
-  markerPath?: string;
-  type: BlogType;
+  type: BlogPostCategory;
 };
 
 type PartnersParams = {
@@ -60,14 +69,13 @@ type HomeSearchParams = Partial<{
 type AuthProps = {
   username: string;
   password: string;
-}
+};
 
 export type {
   PartnerData,
   WorkingHours,
   PartnerProfile,
   PartnerType,
-  BlogType,
   GenericResponse,
   PartnerEvent,
   GoodsState,
@@ -75,11 +83,13 @@ export type {
 
 export type {
   Legend,
-  BlogLegend,
   PartnerNeeds,
   PartnerPageParams,
   HomeSearchParams,
   PartnersParams,
   RequireKey,
-  AuthProps
+  AuthProps,
+  BlogPostCategory,
+  IBlogPost,
+  BlogLegend,
 };

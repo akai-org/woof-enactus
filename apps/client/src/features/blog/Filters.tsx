@@ -1,4 +1,6 @@
-import { blogLegendItems } from "@/constants";
+"use client";
+
+import { blogCategoryItems } from "@/constants";
 import {
   Button,
   Fieldset,
@@ -11,7 +13,7 @@ import React, { useCallback, useMemo } from "react";
 import { IoClose, IoFilterSharp } from "react-icons/io5";
 import { Checkbox } from "@/components";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import type { BlogType } from "@/types";
+import type { BlogPostCategory } from "@/types";
 
 export default function Filters() {
   const searchParams = useSearchParams();
@@ -37,7 +39,7 @@ export default function Filters() {
   );
 
   const handleFilterChange = useCallback(
-    (isChecked: boolean, BlogType: BlogType) => {
+    (isChecked: boolean, BlogType: BlogPostCategory) => {
       let typeParam = [...prevTypes];
 
       if (isChecked && !typeParam.includes(BlogType)) {
@@ -93,7 +95,7 @@ export default function Filters() {
               <Fieldset.Root paddingTop={6}>
                 <VStack>
                   <Fieldset.Content>
-                    <For each={blogLegendItems}>
+                    <For each={blogCategoryItems}>
                       {({ name, type }) => (
                         <Checkbox
                           key={name}
