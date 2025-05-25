@@ -1,15 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Center, Spinner, Button, Flex, SimpleGrid } from "@chakra-ui/react";
 import type { IBlogPost } from "@/types";
 import BlogPost from "./BlogPost";
+import {
+  useIntersectionObserver,
+  type IntersectionObserverOptions,
+} from "@/hooks";
 
 interface BlogListProps {
   posts: IBlogPost[];
   initialCount?: number;
   incrementBy?: number;
 }
+
+const OBSERVER_OPTIONS: IntersectionObserverOptions = {
+  threshold: 0.5,
+};
 
 export default function BlogList({
   posts,
@@ -18,31 +26,21 @@ export default function BlogList({
 }: BlogListProps) {
   const [count, setCount] = useState(initialCount);
   const [showObserver, setShowObserver] = useState(false);
-  const loaderRef = useRef<HTMLDivElement | null>(null);
+  const loaderRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!showObserver) return;
+  const handleIntersect = useCallback(() => {
+    setCount(prev => Math.min(prev + incrementBy, posts.length));
+  }, [incrementBy, posts.length]);
 
-    const observer = new IntersectionObserver(
-      entries => {
-        const [entry] = entries;
-        if (entry.isIntersecting) {
-          setCount(prev => Math.min(prev + incrementBy, posts.length));
-        }
-      },
-      {
-        rootMargin: "200px",
-        threshold: 0.1,
-      },
-    );
+  useIntersectionObserver({
+    target: loaderRef,
+    onIntersect: handleIntersect,
+    enabled: showObserver,
+    options: OBSERVER_OPTIONS,
+  });
 
-    const currentLoader = loaderRef.current;
-    if (currentLoader) observer.observe(currentLoader);
-
-    return () => {
-      if (currentLoader) observer.unobserve(currentLoader);
-    };
-  }, [showObserver, incrementBy, posts.length]);
+  const displayedPosts = posts.slice(0, count);
+  const hasMorePosts = count < posts.length;
 
   return (
     <Flex
@@ -52,23 +50,45 @@ export default function BlogList({
       flexDirection="column"
     >
       <SimpleGrid marginBottom="10" gap="8" columns={{ base: 1, md: 2, lg: 3 }}>
-        {posts.slice(0, count).map(post => (
-          <BlogPost key={post.id} {...post} />
-        ))}
+        {displayedPosts.map(
+          ({
+            createdAt,
+            thumbnail,
+            title,
+            slug,
+            type,
+            documentId,
+            description,
+          }) => (
+            <BlogPost
+              key={documentId}
+              imageUrl={(thumbnail as Record<string, string>).url}
+              date={createdAt}
+              title={title}
+              description={description}
+              type={type}
+              slug={slug}
+            />
+          ),
+        )}
       </SimpleGrid>
-      {!showObserver && count < posts.length && (
-        <Center>
-          <Button variant="cta" size="xl" onClick={() => setShowObserver(true)}>
-            Pokaż więcej
-          </Button>
-        </Center>
-      )}
 
-      {showObserver && count < posts.length && (
-        <Center ref={loaderRef}>
-          <Spinner size="lg" />
-        </Center>
-      )}
+      {hasMorePosts &&
+        (showObserver ? (
+          <Center ref={loaderRef}>
+            <Spinner size="lg" />
+          </Center>
+        ) : (
+          <Center>
+            <Button
+              variant="cta"
+              size="xl"
+              onClick={() => setShowObserver(true)}
+            >
+              Pokaż więcej
+            </Button>
+          </Center>
+        ))}
     </Flex>
   );
 }

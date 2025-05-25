@@ -1,9 +1,11 @@
 "use client";
 
-import { Box, Image, Badge, Text, Flex, Heading } from "@chakra-ui/react";
+import { Box, Badge, Text, Flex, Image, Heading } from "@chakra-ui/react";
 import type { BlogPostCategory } from "@/types";
 import { blogCategoryItems } from "@/constants";
 import { truncate } from "@/utils";
+import { NullishGuard } from "@/components";
+import NextLink from "next/link";
 
 interface BlogPostProps {
   imageUrl: string;
@@ -11,6 +13,7 @@ interface BlogPostProps {
   description: string;
   date: string;
   type: BlogPostCategory;
+  slug: string;
 }
 
 const checkColor = (type: BlogPostCategory) =>
@@ -24,6 +27,7 @@ export default function BlogPost({
   description,
   date,
   type,
+  slug,
 }: BlogPostProps) {
   return (
     <Box
@@ -35,7 +39,11 @@ export default function BlogPost({
       display="flex"
       flexDirection="column"
     >
-      <Image src={imageUrl} alt="" />
+      <NullishGuard check={[imageUrl, slug]} fallback={""}>
+        <NextLink href={`/${slug}`}>
+          <Image src={process.env.NEXT_PUBLIC_BLOG_API_URL + imageUrl} alt="" />
+        </NextLink>
+      </NullishGuard>
 
       <Flex
         alignItems="flex-start"
@@ -53,14 +61,20 @@ export default function BlogPost({
           {type}
         </Badge>
 
-        <Heading as="h3" fontSize="2xl" color="brand.700">
-          {title}
-        </Heading>
+        <NextLink href={`/blog/${slug}`}>
+          <Heading as="h3" fontSize="2xl" color="brand.700">
+            {title}
+          </Heading>
+        </NextLink>
 
         <Text flex="1">{truncate(description, DESC_MAX_CHARACTERS)}</Text>
 
         <Text color="brand.600" fontWeight="bold">
-          {date}
+          {new Date(date).toLocaleString("pl-PL", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })}
         </Text>
       </Flex>
     </Box>

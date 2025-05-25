@@ -26,15 +26,18 @@ type PartnerNeeds = {
 } & Omit<NeededGoodsMeta, keyof DatabaseEntity>;
 
 // ====== Client-defined types ======
-type BlogPostCategory = "HEALTH" | "FUN" | "VET" | "OTHER";
+type BlogPostCategory = "zdrowie" | "rozrywka" | "weterynarz";
 
 interface IBlogPost {
-  id: number;
-  imageUrl: string;
   title: string;
-  description: string;
-  date: string;
   type: BlogPostCategory;
+  createdAt: string;
+  documentId: string;
+  id: string;
+  thumbnail?: unknown;
+  description: string;
+  content: string;
+  slug: string;
 }
 
 type Legend = {

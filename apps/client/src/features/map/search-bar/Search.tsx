@@ -17,6 +17,7 @@ type SearchProps = {
   onLocate: () => void;
 };
 
+//TODO: better (more intuitive) searching by address
 export default function Search({ onLocate }: SearchProps) {
   const { replace } = useRouter();
   const pathname = usePathname();

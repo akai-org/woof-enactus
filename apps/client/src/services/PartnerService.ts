@@ -7,7 +7,7 @@ import type {
 import type { IPartnerService } from "@/services";
 import { endpoints } from "@/api/api.config";
 import type { IApiClient, Result } from "@/api";
-import type { PartnerError } from "./types";
+import type { ServiceError } from "./types";
 
 //TODO: add LoggerService
 
@@ -20,7 +20,7 @@ export class PartnerService implements IPartnerService {
 
   async getAll(
     params?: Partial<PartnersParams>,
-  ): Promise<Result<PartnerData[], PartnerError>> {
+  ): Promise<Result<PartnerData[], ServiceError>> {
     const searchParams = new URLSearchParams(params);
 
     const result = await this._apiClient.get<PartnerData[]>(
@@ -46,7 +46,7 @@ export class PartnerService implements IPartnerService {
     return result;
   }
 
-  async getProfile(slug: string): Promise<Result<PartnerData, PartnerError>> {
+  async getProfile(slug: string): Promise<Result<PartnerData, ServiceError>> {
     const result = await this._apiClient.get<PartnerData>(
       endpoints.partnerProfile(slug),
     );
@@ -69,7 +69,7 @@ export class PartnerService implements IPartnerService {
     return result;
   }
 
-  async getNeeds(slug: string): Promise<Result<PartnerNeeds, PartnerError>> {
+  async getNeeds(slug: string): Promise<Result<PartnerNeeds, ServiceError>> {
     const result = await this._apiClient.get<PartnerNeeds>(
       endpoints.partnerNeeds(slug),
     );
@@ -92,7 +92,7 @@ export class PartnerService implements IPartnerService {
     return result;
   }
 
-  async getEvents(slug: string): Promise<Result<PartnerEvent[], PartnerError>> {
+  async getEvents(slug: string): Promise<Result<PartnerEvent[], ServiceError>> {
     const result = await this._apiClient.get<PartnerEvent[]>(
       endpoints.partnerEvents(slug),
     );

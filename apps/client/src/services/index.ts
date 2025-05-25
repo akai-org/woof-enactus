@@ -1,5 +1,6 @@
 import { PartnerService } from "./PartnerService";
-import type { IPartnerService } from "./types";
+import { BlogService } from "./BlogService";
+import type { IPartnerService, IBlogService } from "./types";
 
-export { PartnerService };
-export type { IPartnerService };
+export { PartnerService, BlogService };
+export type { IPartnerService, IBlogService };

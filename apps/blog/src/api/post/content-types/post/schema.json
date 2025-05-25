@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "posts",
+  "info": {
+    "singularName": "post",
+    "pluralName": "posts",
+    "displayName": "Post",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "maxLength": 100,
+      "required": true,
+      "unique": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "zdrowie",
+        "rozrywka",
+        "weterynarz"
+      ],
+      "required": true
+    },
+    "creationDate": {
+      "type": "date",
+      "required": true
+    },
+    "uuid": {
+      "type": "uid",
+      "required": true
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "description": {
+      "type": "text",
+      "required": true,
+      "maxLength": 200
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200,
+      "unique": true
+    }
+  }
+}
