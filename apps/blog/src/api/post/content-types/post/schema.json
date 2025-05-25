@@ -17,21 +17,13 @@
       "required": true,
       "unique": true
     },
-    "type": {
+    "category": {
       "type": "enumeration",
       "enum": [
         "zdrowie",
         "rozrywka",
         "weterynarz"
       ],
-      "required": true
-    },
-    "creationDate": {
-      "type": "date",
-      "required": true
-    },
-    "uuid": {
-      "type": "uid",
       "required": true
     },
     "thumbnail": {

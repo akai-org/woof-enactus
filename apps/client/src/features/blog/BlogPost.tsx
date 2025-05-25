@@ -2,8 +2,7 @@
 
 import { Box, Badge, Text, Flex, Image, Heading } from "@chakra-ui/react";
 import type { BlogPostCategory } from "@/types";
-import { blogCategoryItems } from "@/constants";
-import { truncate } from "@/utils";
+import { getPostCategoryColor, truncate } from "@/utils";
 import { NullishGuard } from "@/components";
 import NextLink from "next/link";
 
@@ -12,12 +11,9 @@ interface BlogPostProps {
   title: string;
   description: string;
   date: string;
-  type: BlogPostCategory;
+  category: BlogPostCategory;
   slug: string;
 }
-
-const checkColor = (type: BlogPostCategory) =>
-  blogCategoryItems.find(item => item.type === type)?.color ?? "brand.600";
 
 const DESC_MAX_CHARACTERS = 150;
 
@@ -26,7 +22,7 @@ export default function BlogPost({
   title,
   description,
   date,
-  type,
+  category,
   slug,
 }: BlogPostProps) {
   return (
@@ -40,7 +36,7 @@ export default function BlogPost({
       flexDirection="column"
     >
       <NullishGuard check={[imageUrl, slug]} fallback={""}>
-        <NextLink href={`/${slug}`}>
+        <NextLink href={`/blog/${slug}`}>
           <Image src={process.env.NEXT_PUBLIC_CMS_API_URL + imageUrl!} alt="" />
         </NextLink>
       </NullishGuard>
@@ -55,10 +51,10 @@ export default function BlogPost({
         <Badge
           fontWeight="bold"
           size="md"
-          backgroundColor={checkColor(type)}
+          backgroundColor={getPostCategoryColor(category)}
           variant="solid"
         >
-          {type}
+          {category}
         </Badge>
 
         <NextLink href={`/blog/${slug}`}>

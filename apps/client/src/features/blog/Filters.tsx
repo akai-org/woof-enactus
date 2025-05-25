@@ -96,14 +96,14 @@ export default function Filters() {
                 <VStack>
                   <Fieldset.Content>
                     <For each={blogCategoryItems}>
-                      {({ name, type }) => (
+                      {({ name, category }) => (
                         <Checkbox
                           key={name}
                           value={name}
                           onCheckedChange={details =>
-                            handleFilterChange(!!details.checked, type)
+                            handleFilterChange(!!details.checked, category)
                           }
-                          defaultChecked={prevTypes.includes(type)}
+                          defaultChecked={prevTypes.includes(category)}
                         >
                           {name}
                         </Checkbox>

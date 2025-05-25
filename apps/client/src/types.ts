@@ -39,7 +39,7 @@ interface IBlogPost {
   publishedAt: string;
   thumbnail?: FileResponse;
   title: string;
-  type: BlogPostCategory;
+  category: BlogPostCategory;
 }
 
 type Legend = {
@@ -52,7 +52,7 @@ type Legend = {
 type BlogLegend = {
   name: string;
   color: string;
-  type: BlogPostCategory;
+  category: BlogPostCategory;
 };
 
 type PartnersParams = {

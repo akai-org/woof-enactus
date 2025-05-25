@@ -1,7 +1,8 @@
-import { ErrorMessage } from "@/components";
+import { ErrorMessage, GoBackButton } from "@/components";
+import { PostContent } from "@/features/blog";
 import { container } from "@/features/di";
 import type { IBlogService } from "@/services";
-import { Center, Container, Spinner, Text } from "@chakra-ui/react";
+import { Center, Container, Spinner } from "@chakra-ui/react";
 import React, { Suspense } from "react";
 
 export default async function PostPage({
@@ -16,10 +17,10 @@ export default async function PostPage({
 
   if (!post.success) return <ErrorMessage message={post.error.userMessage} />;
 
-  const { title } = post.data;
+  const { category, title, content } = post.data;
 
   return (
-    <Container marginY="20">
+    <Container marginY="10">
       <Suspense
         fallback={
           <Center>
@@ -27,7 +28,8 @@ export default async function PostPage({
           </Center>
         }
       >
-        <Text>{title}</Text>
+        <GoBackButton />
+        <PostContent category={category} title={title} content={content} />
       </Suspense>
     </Container>
   );

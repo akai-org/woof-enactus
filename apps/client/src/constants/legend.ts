@@ -31,17 +31,17 @@ const blogCategoryItems: BlogLegend[] = [
   {
     name: "Zdrowie",
     color: "brand.700",
-    type: "zdrowie",
+    category: "zdrowie",
   },
   {
     name: "Rozrywka",
     color: "brand.400",
-    type: "rozrywka",
+    category: "rozrywka",
   },
   {
     name: "Weterynaria",
     color: "accent.yellow",
-    type: "weterynarz",
+    category: "weterynarz",
   },
 ];
 

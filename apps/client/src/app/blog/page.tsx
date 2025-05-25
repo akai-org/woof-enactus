@@ -5,7 +5,7 @@ import { container } from "@/features/di";
 import type { IBlogService } from "@/services";
 import { ErrorMessage } from "@/components";
 
-//TODO: add posts filtering, refactor and rewrite blog
+//TODO: add posts filtering by category
 
 export default async function BlogPage() {
   const posts = await container.resolve<IBlogService>("BlogService").getPosts();

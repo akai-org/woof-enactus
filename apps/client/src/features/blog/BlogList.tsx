@@ -56,7 +56,7 @@ export default function BlogList({
             thumbnail,
             title,
             slug,
-            type,
+            category,
             documentId,
             description,
           }) => (
@@ -66,7 +66,7 @@ export default function BlogList({
               date={createdAt}
               title={title}
               description={description}
-              type={type}
+              category={category}
               slug={slug}
             />
           ),

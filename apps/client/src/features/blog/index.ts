@@ -1,4 +1,4 @@
 import BlogList from "./BlogList";
 import Filters from "./Filters";
-
-export { BlogList, Filters as BlogFilters };
+import PostContent from "./PostContent";
+export { BlogList, Filters as BlogFilters, PostContent };

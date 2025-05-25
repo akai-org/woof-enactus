@@ -446,11 +446,14 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    category: Schema.Attribute.Enumeration<
+      ["zdrowie", "rozrywka", "weterynarz"]
+    > &
+      Schema.Attribute.Required;
     content: Schema.Attribute.RichText & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private;
-    creationDate: Schema.Attribute.Date & Schema.Attribute.Required;
     description: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -473,12 +476,9 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
       }>;
-    type: Schema.Attribute.Enumeration<["zdrowie", "rozrywka", "weterynarz"]> &
-      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private;
-    uuid: Schema.Attribute.UID & Schema.Attribute.Required;
   };
 }
 
