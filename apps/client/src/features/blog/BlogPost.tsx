@@ -8,7 +8,7 @@ import { NullishGuard } from "@/components";
 import NextLink from "next/link";
 
 interface BlogPostProps {
-  imageUrl: string;
+  imageUrl?: string;
   title: string;
   description: string;
   date: string;
@@ -41,7 +41,7 @@ export default function BlogPost({
     >
       <NullishGuard check={[imageUrl, slug]} fallback={""}>
         <NextLink href={`/${slug}`}>
-          <Image src={process.env.NEXT_PUBLIC_CMS_API_URL + imageUrl} alt="" />
+          <Image src={process.env.NEXT_PUBLIC_CMS_API_URL + imageUrl!} alt="" />
         </NextLink>
       </NullishGuard>
 

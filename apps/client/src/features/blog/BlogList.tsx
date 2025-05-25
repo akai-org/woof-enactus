@@ -62,7 +62,7 @@ export default function BlogList({
           }) => (
             <BlogPost
               key={documentId}
-              imageUrl={(thumbnail as Record<string, string>).url}
+              imageUrl={thumbnail?.url}
               date={createdAt}
               title={title}
               description={description}

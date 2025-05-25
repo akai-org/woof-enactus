@@ -1,3 +1,4 @@
+import type { FileResponse } from "@strapi/client";
 import type {
   DatabaseEntity,
   PartnerProfile,
@@ -29,14 +30,16 @@ type PartnerNeeds = {
 type BlogPostCategory = "zdrowie" | "rozrywka" | "weterynarz";
 
 interface IBlogPost {
-  title: string;
-  type: BlogPostCategory;
-  createdAt: string;
-  documentId: string;
-  thumbnail?: unknown;
+  documentId: string; // uuid
+  slug: string;
   description: string;
   content: string;
-  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  thumbnail?: FileResponse;
+  title: string;
+  type: BlogPostCategory;
 }
 
 type Legend = {
