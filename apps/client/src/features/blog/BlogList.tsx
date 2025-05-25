@@ -8,6 +8,8 @@ import {
   useIntersectionObserver,
   type IntersectionObserverOptions,
 } from "@/hooks";
+import { EmptyArrayGuard } from "@/components";
+import EmptyPostsList from "./EmptyPostsList";
 
 interface BlogListProps {
   posts: IBlogPost[];
@@ -49,29 +51,35 @@ export default function BlogList({
       alignItems="center"
       flexDirection="column"
     >
-      <SimpleGrid marginBottom="10" gap="8" columns={{ base: 1, md: 2, lg: 3 }}>
-        {displayedPosts.map(
-          ({
-            createdAt,
-            thumbnail,
-            title,
-            slug,
-            category,
-            documentId,
-            description,
-          }) => (
-            <BlogPost
-              key={documentId}
-              imageUrl={thumbnail?.url}
-              date={createdAt}
-              title={title}
-              description={description}
-              category={category}
-              slug={slug}
-            />
-          ),
-        )}
-      </SimpleGrid>
+      <EmptyArrayGuard check={displayedPosts} fallback={<EmptyPostsList />}>
+        <SimpleGrid
+          marginBottom="10"
+          gap="8"
+          columns={{ base: 1, md: 2, lg: 3 }}
+        >
+          {displayedPosts.map(
+            ({
+              createdAt,
+              thumbnail,
+              title,
+              slug,
+              category,
+              documentId,
+              description,
+            }) => (
+              <BlogPost
+                key={documentId}
+                imageUrl={thumbnail?.url}
+                date={createdAt}
+                title={title}
+                description={description}
+                category={category}
+                slug={slug}
+              />
+            ),
+          )}
+        </SimpleGrid>
+      </EmptyArrayGuard>
 
       {hasMorePosts &&
         (showObserver ? (
