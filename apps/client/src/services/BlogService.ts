@@ -12,16 +12,16 @@ export class BlogService implements IBlogService {
   }
 
   async getPosts(): Promise<Result<IBlogPost[], ServiceError>> {
-    const result = await this._apiClient.get<IBlogPost[]>(
-      endpoints.blogPosts,
-      "populate=*", //TODO: parse url search params instead of hardcoding them
-    );
+    const result = await this._apiClient.get<IBlogPost[]>(endpoints.blogPosts);
+
     if (!result.success) {
       const errMsg = this.getUserMessage(
         result.error.statusCode,
         "Nie udało się pobrać artykułów.",
       );
+
       console.error(result.error);
+
       return {
         success: false,
         error: {
@@ -34,8 +34,7 @@ export class BlogService implements IBlogService {
 
   async getPost(slug: string): Promise<Result<IBlogPost, ServiceError>> {
     const result = await this._apiClient.get<IBlogPost>(
-      endpoints.blogPosts,
-      `populate=*&filters[slug][$eq]=${slug}`, //TODO: parse url search params instead of hardcoding them
+      endpoints.blogPost(slug),
     );
 
     if (!result.success) {
@@ -43,7 +42,9 @@ export class BlogService implements IBlogService {
         result.error.statusCode,
         "Nie udało się pobrać zawartości artykułu.",
       );
+
       console.error(result.error);
+
       return {
         success: false,
         error: {

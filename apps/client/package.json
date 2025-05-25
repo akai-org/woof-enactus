@@ -17,6 +17,7 @@
     "@chakra-ui/react": "^3.8.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@strapi/client": "^1.4.0",
     "framer-motion": "^12.4.9",
     "leaflet": "^1.9.4",
     "next": "15.3.2",

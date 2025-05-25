@@ -33,7 +33,6 @@ interface IBlogPost {
   type: BlogPostCategory;
   createdAt: string;
   documentId: string;
-  id: string;
   thumbnail?: unknown;
   description: string;
   content: string;

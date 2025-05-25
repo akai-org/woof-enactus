@@ -6,7 +6,7 @@ const endpoints = {
   partnerNeeds: (partnerSlug: string) => `/goods/${partnerSlug}/goods`,
   partnerEvents: (partnerSlug: string) => `/events/partner/${partnerSlug}`,
   blogPosts: `/posts`,
-  blogPost: `/posts`, //TODO: Change it. Currenty it uses search params (from cms) to return single posts.
+  blogPost: (slug: string) => `/posts/${slug}`,
 } as const;
 
 const apiClientOptions: ApiClientOptions = {
@@ -14,13 +14,8 @@ const apiClientOptions: ApiClientOptions = {
 } as const;
 
 const blogApiClientOptions: ApiClientOptions = {
-  baseUrl: process.env.NEXT_PUBLIC_BLOG_API_URL! + "/api",
-  globalFetchOptions: {
-    headers: {
-      Authorization: `Bearer ${process.env.BLOG_ACCESS_TOKEN}`,
-      "Content-Type": "application/json",
-    },
-  },
+  baseUrl: process.env.NEXT_PUBLIC_CMS_API_URL! + "/api",
+  authToken: process.env.CMS_ACCESS_TOKEN,
 } as const;
 
 export { endpoints, apiClientOptions, blogApiClientOptions };
