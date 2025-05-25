@@ -1,13 +1,11 @@
+import { PartnerInfo, PartnerNeeds, PartnerEvents } from "@/features/partners";
+import { container } from "@/features/di";
+import { ErrorMessage, GoBackButton } from "@/components";
+
 import { Box, Container, For, Heading, Tabs } from "@chakra-ui/react";
-import { notFound } from "next/navigation";
-import {
-  PartnerInfo,
-  PartnerNeeds,
-  PartnerEvents,
-  GoBackButton,
-} from "@/components";
-import { getPartnerProfile } from "@/api";
+
 import type { PartnerPageParams } from "@/types";
+import type { IPartnerService } from "@/services";
 
 const tabs = [
   {
@@ -27,18 +25,9 @@ const tabs = [
   },
 ];
 
-export default async function PartnerPage({
-  params,
-}: {
-  params: Promise<PartnerPageParams>;
-}) {
-  const { slug } = await params;
-  const profileData = await getPartnerProfile(slug);
-
-  if (!profileData) notFound();
-
+const getTabs = (type: string) => {
   const tabsToShow = [];
-  switch (profileData.type) {
+  switch (type) {
     case "VET":
       tabsToShow.push(tabs[1]);
       break;
@@ -48,6 +37,26 @@ export default async function PartnerPage({
     default:
       tabsToShow.push(tabs[0], tabs[1], tabs[2]);
   }
+
+  return tabsToShow;
+};
+
+export default async function PartnerPage({
+  params,
+}: {
+  params: Promise<PartnerPageParams>;
+}) {
+  const { slug } = await params;
+
+  const profile = await container
+    .resolve<IPartnerService>("PartnerService")
+    .getProfile(slug);
+
+  if (!profile.success)
+    return <ErrorMessage message={profile.error.userMessage} />;
+
+  const tabsToShow = getTabs(profile.data.type);
+  const profileData = profile.data;
 
   return (
     <Container mt={8} maxW="breakpoint-xl">
@@ -66,6 +75,7 @@ export default async function PartnerPage({
             {tab => (
               <Tabs.Trigger
                 value={tab.id}
+                key={tab.id}
                 justifyContent="center"
                 py={{ base: "8", md: "10" }}
                 borderColor={tab.color}
@@ -84,7 +94,12 @@ export default async function PartnerPage({
         </Tabs.List>
         <For each={tabsToShow}>
           {tab => (
-            <Tabs.Content bg={tab.color} value={tab.id} p={[2, undefined, 8]}>
+            <Tabs.Content
+              bg={tab.color}
+              value={tab.id}
+              key={tab.id}
+              p={[2, undefined, 8]}
+            >
               <Box bg="brand.100" borderRadius="md" p={[3, 8]}>
                 {tab.id == "info" && <PartnerInfo profileData={profileData} />}
                 {tab.id == "stuff" && <PartnerNeeds slug={slug} />}

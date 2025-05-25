@@ -3,19 +3,29 @@ name: Release
 on:
   push:
     tags:
-      - '*'
+      - "v*"
 
 jobs:
   release:
     name: Build Docker images and push to GCP Aritfact Registry
     runs-on: ubuntu-latest
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
+      - name: Verify tag source branch
+        run: |
+          git fetch origin release --quiet
+          if git merge-base --is-ancestor $GITHUB_SHA origin/release; then
+            echo "Tag commit is on release branch – proceeding."
+          else
+            echo "Tag commit is NOT from release branch – stopping workflow."
+            exit 1
+          fi
       - id: auth
         name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
@@ -24,10 +34,10 @@ jobs:
           project_id: angular-amp-459415-h8
           workload_identity_provider: projects/782854916885/locations/global/workloadIdentityPools/haumaps/providers/github
           service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
-          access_token_lifetime: 300s
+          access_token_lifetime: 600s
 
       - name: Login to Artifact Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: europe-north1-docker.pkg.dev
           username: oauth2accesstoken
@@ -41,7 +51,8 @@ jobs:
 
       - name: Get image tag
         id: get-tag
-        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+        run: |
+          echo "short_ref=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
       - name: Build and push Frontend Image
         uses: docker/build-push-action@v6
@@ -62,3 +73,12 @@ jobs:
           tags: |
             europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-backend:${{ steps.get-tag.outputs.short_ref }}
             europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-backend:latest
+      - name: Build and push Blog image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          file: prod.Dockerfile
+          target: blog
+          tags: |
+            europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-blog:${{ steps.get-tag.outputs.short_ref }}
+            europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-blog:latest

@@ -8,7 +8,7 @@ const legendItems: Legend[] = [
     type: "SHELTER",
   },
   {
-    name: "Organizacje prozwierzęce",
+    name: "Organizacje",
     color: "brand.400",
     markerPath: "marker-200-green.svg",
     type: "ORG",

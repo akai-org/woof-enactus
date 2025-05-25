@@ -10,6 +10,8 @@ import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/styles";
 import "../style.css";
 
+import "@/features/di"; // di container setup
+
 export const metadata: Metadata = {
   title: "HauMaps",
   description: "Baza danych organizacji pomocy zwierzętom",

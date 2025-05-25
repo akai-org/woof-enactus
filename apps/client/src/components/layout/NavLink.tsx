@@ -20,6 +20,7 @@ function NavLink({ name, href }: NavLinkProps) {
       position: "absolute",
       bottom: "-10px",
       left: 0,
+      fontSize: "md",
       display: "block",
       width: "100%",
       height: "0.5",

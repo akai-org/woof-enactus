@@ -18,13 +18,13 @@ function Footer() {
               fontWeight="bold"
               href="mailto:kontaktwithenactus@gmail.com"
             >
-              kontaktwithenactus@gmail.com
+              enactusput@gmail.com
             </Link>
           </Flex>
 
           <Flex flex="1" justifyContent="center">
             <Text fontWeight="bold" whiteSpace="nowrap">
-              &#169; Enactus Poland
+              &#169; WOOF by Enactus PUT
             </Text>
           </Flex>
 
