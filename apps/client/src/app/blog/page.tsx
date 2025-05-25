@@ -208,8 +208,6 @@ export default function Blog() {
       type: "OTHER",
     },
   ];
-
-  // IntersectionObserver
   useEffect(() => {
     if (!showObserver) return;
 
@@ -217,7 +215,7 @@ export default function Blog() {
       entries => {
         const [entry] = entries;
         if (entry.isIntersecting) {
-          setCount(prev => Math.min(prev + 5, data.length)); // Ładuj kolejne 5
+          setCount(prev => Math.min(prev + 5, data.length));
         }
       },
       {
