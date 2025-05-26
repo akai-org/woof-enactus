@@ -3,3 +3,4 @@ node_modules
 /apps/client/.idea
 .vscode
 .DS_Store
+.env

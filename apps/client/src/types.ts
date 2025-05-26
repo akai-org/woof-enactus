@@ -1,3 +1,4 @@
+import type { FileResponse } from "@strapi/client";
 import type {
   DatabaseEntity,
   PartnerProfile,
@@ -11,7 +12,7 @@ import type {
   GoodsState,
 } from "woof";
 
-// ====== altered types from woof package ======
+// ====== altered types based on woof package ======
 type WorkingHours = Omit<InternalWorkingHours, keyof DatabaseEntity>;
 
 type PartnerData = RequireKey<
@@ -26,11 +27,32 @@ type PartnerNeeds = {
 } & Omit<NeededGoodsMeta, keyof DatabaseEntity>;
 
 // ====== Client-defined types ======
+type BlogPostCategory = "zdrowie" | "rozrywka" | "weterynarz";
+
+interface IBlogPost {
+  documentId: string; // uuid
+  slug: string;
+  description: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  thumbnail?: FileResponse;
+  title: string;
+  category: BlogPostCategory;
+}
+
 type Legend = {
   name: string;
   color: string;
-  markerPath: string;
+  markerPath?: string;
   type: PartnerType;
+};
+
+type BlogLegend = {
+  name: string;
+  color: string;
+  category: BlogPostCategory;
 };
 
 type PartnersParams = {
@@ -52,7 +74,7 @@ type HomeSearchParams = Partial<{
 type AuthProps = {
   username: string;
   password: string;
-}
+};
 
 export type {
   PartnerData,
@@ -71,5 +93,8 @@ export type {
   HomeSearchParams,
   PartnersParams,
   RequireKey,
-  AuthProps
+  AuthProps,
+  BlogPostCategory,
+  IBlogPost,
+  BlogLegend,
 };

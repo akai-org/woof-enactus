@@ -1,4 +1,5 @@
 import { ApiClient } from "./ApiClient";
+import { CMSApiClient } from "./CMSApiClient";
 import * as config from "./api.config";
 
 import type {
@@ -8,5 +9,5 @@ import type {
   ApiClientOptions,
 } from "./types";
 
-export { ApiClient, config };
+export { ApiClient, CMSApiClient, config };
 export type { IApiClient, Result, ApiErrorDetails, ApiClientOptions };

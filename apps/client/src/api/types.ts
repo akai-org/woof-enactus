@@ -1,6 +1,7 @@
 type ApiClientOptions = Readonly<{
   baseUrl: string;
   globalFetchOptions?: RequestInit;
+  authToken?: string;
 }>;
 
 interface IApiClient {

@@ -8,6 +8,7 @@ FROM base AS deps
 WORKDIR /woof-enactus
 VOLUME [ "/woof-enactus/apps/client" ]
 VOLUME [ "/woof-enactus/apps/server" ]
+VOLUME [ "/woof-enactus/apps/blog" ]
 
 COPY package.json .
 COPY pnpm-lock.yaml .
@@ -16,5 +17,6 @@ COPY packages ./packages
 
 COPY apps/server/package.json ./apps/server/package.json
 COPY apps/client/package.json ./apps/client/package.json
+COPY apps/blog/package.json ./apps/blog/package.json
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
