@@ -7,7 +7,7 @@ import { Marker, Popup } from "react-leaflet";
 import type { PartnerData, PartnerType } from "@/types";
 import { Box, List, Text, Button, Link, Flex, Span } from "@chakra-ui/react";
 import { MdLanguage, MdLocalPhone } from "react-icons/md";
-import { legendItems } from "@/constants";
+import { mapLegendItems } from "@/constants";
 import { TiArrowRight } from "react-icons/ti";
 import NextLink from "next/link";
 
@@ -16,7 +16,9 @@ type MapMarkerProps = {
 };
 
 const createIcon = (type: PartnerType) => {
-  const markerPath = legendItems.find(item => item.type === type)?.markerPath;
+  const markerPath = mapLegendItems.find(
+    item => item.type === type,
+  )?.markerPath;
   return icon({
     iconUrl: markerPath ?? "",
     iconSize: [35, 35],

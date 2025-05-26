@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+//TODO: complete authentication logic
 function useAuth() {
   const [isLogged, setisLogged] = useState(false);
   useEffect(() => {

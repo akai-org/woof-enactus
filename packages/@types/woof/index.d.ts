@@ -20,7 +20,7 @@ declare module "woof" {
   interface UpdateNeededGoodsDto extends Partial<CreateNeededGoodsDto> {}
 
   type PartnerType = "VET" | "ORG" | "SHOP" | "SHELTER";
-
+  
   interface CreatePartnerDto {
     name: string;
     type: PartnerType;

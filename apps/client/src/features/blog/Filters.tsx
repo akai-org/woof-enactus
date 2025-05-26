@@ -1,4 +1,6 @@
-import { mapLegendItems } from "@/constants";
+"use client";
+
+import { blogCategoryItems } from "@/constants";
 import {
   Button,
   Fieldset,
@@ -11,9 +13,7 @@ import React, { useCallback, useMemo } from "react";
 import { IoClose, IoFilterSharp } from "react-icons/io5";
 import { Checkbox } from "@/components";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import type { PartnerType } from "@/types";
-
-const PARTNER_TYPE_SEARCH_PARAM = "type";
+import type { BlogPostCategory } from "@/types";
 
 export default function Filters() {
   const searchParams = useSearchParams();
@@ -21,7 +21,7 @@ export default function Filters() {
   const { replace } = useRouter();
 
   const prevTypes = useMemo(() => {
-    const types = searchParams.get(PARTNER_TYPE_SEARCH_PARAM);
+    const types = searchParams.get("type");
     return types ? types.split(",") : [];
   }, [searchParams]);
 
@@ -39,22 +39,22 @@ export default function Filters() {
   );
 
   const handleFilterChange = useCallback(
-    (isChecked: boolean, partnerType: PartnerType) => {
+    (isChecked: boolean, BlogType: BlogPostCategory) => {
       let typeParam = [...prevTypes];
 
-      if (isChecked && !typeParam.includes(partnerType)) {
-        typeParam.push(partnerType);
+      if (isChecked && !typeParam.includes(BlogType)) {
+        typeParam.push(BlogType);
       } else if (!isChecked) {
-        typeParam = typeParam.filter(type => type !== partnerType);
+        typeParam = typeParam.filter(type => type !== BlogType);
       }
 
-      updateSearchParam(typeParam, PARTNER_TYPE_SEARCH_PARAM);
+      updateSearchParam(typeParam, "type");
     },
     [prevTypes, updateSearchParam],
   );
 
   return (
-    <Popover.Root positioning={{ placement: "bottom-end" }}>
+    <Popover.Root positioning={{ placement: "bottom" }}>
       <Popover.Trigger asChild>
         <Button
           variant="surface"
@@ -95,15 +95,15 @@ export default function Filters() {
               <Fieldset.Root paddingTop={6}>
                 <VStack>
                   <Fieldset.Content>
-                    <For each={mapLegendItems}>
-                      {({ name, type }) => (
+                    <For each={blogCategoryItems}>
+                      {({ name, category }) => (
                         <Checkbox
                           key={name}
                           value={name}
                           onCheckedChange={details =>
-                            handleFilterChange(!!details.checked, type)
+                            handleFilterChange(!!details.checked, category)
                           }
-                          defaultChecked={prevTypes.includes(type)}
+                          defaultChecked={prevTypes.includes(category)}
                         >
                           {name}
                         </Checkbox>
