@@ -7,6 +7,8 @@ import {
   Heading,
   Image,
   Link,
+  Strong,
+  Text,
 } from "@chakra-ui/react";
 import { FiCoffee } from "react-icons/fi";
 
@@ -36,19 +38,43 @@ export default function SupportPage() {
             >
               <Box flex={1} width={{ base: "100%", md: "50%" }}>
                 <Card.Description lineHeight="25px" fontWeight="500">
-                  lacinia non. Sed dignissim tortor ac sapien volutpat pretium.
-                  Donec tincidunt mauris risus, id interdum nulla consectetur
-                  eget. Curabitur sit amet massa nec justo tempus dignissim sed
-                  id lacus. Proin dignissim mi in nisi mollis, in imperdiet dui
-                  viverra. Integer tristique porttitor tristique. Nulla nec
-                  commodo turpis. Mauris vitae dictum est. Aenean a felis ac
-                  velit condimentum vestibulum id nec magna. Ut et velit id erat
-                  finibus porttitor at id sem. Sed vulputate tempor ex eget
-                  molestie. Etiam nibh ligula, blandit ornare magna laoreet,
-                  iaculis laoreet eros. Aliquam tempor sollicitudin iaculis.
-                  Praesent sit amet massa id felis mattis ultrices id faucibus
-                  eros. Sed et urna arcu. Integer ut elit sit amet magna
-                  vestibulum pulvinar. Fusce id lacus vitae odio
+                  Tworzymy WOOF z myślą o zwierzętach, które każdego dnia
+                  potrzebują pomocy a Twoje wsparcie finansowe może realnie
+                  przyczynić się do poprawy ich losu. Każda wpłata to krok
+                  bliżej do uruchomienia w pełni funkcjonalnej aplikacji, która
+                  połączy ludzi dobrej woli ze schroniskami i organizacjami pro
+                  zwierzęcymi w całej Polsce. Twoja darowizna pomoże nam
+                  rozwijać technologię, utrzymywać serwery, tworzyć nowe funkcje
+                  oraz szerzyć wiedzę i empatię wobec zwierząt.
+                  <br />
+                  <br />
+                  <Strong>
+                    Hej, jesteś przedsiębiorcą i szukasz wartościowego projektu
+                    CSR?
+                  </Strong>
+                  <br />
+                  WOOF to idealna przestrzeń do pokazania społecznego
+                  zaangażowania. Wspierając nas, stajesz się partnerem realnej
+                  zmiany. Twoja firma może wesprzeć finansowo konkretne
+                  schronisko, ufundować potrzebne narzędzia do działania
+                  platformy lub wesprzeć projekt, pomagając dotrzeć z naszą
+                  misją do jeszcze szerszego grona odbiorców.
+                  <br />
+                  <br />
+                  <Strong>
+                    A może po prostu kochasz zwierzęta i chcesz zrobić coś
+                    dobrego?
+                  </Strong>
+                  <br />
+                   Wesprzyj nasz projekt jako osoba prywatna. Każda
+                  złotówka naprawdę się liczy! Nawet najmniejsza wpłata zbliża
+                  nas do uruchomienia aplikacji, która ułatwi pomaganie i dotrze
+                  tam, gdzie potrzeba jest największa. Jeśli chcesz stać się
+                  częścią tej zmiany – wesprzyj nasz projekt! 
+                  <br/>
+                  <br/>
+                  Dziękujemy, że
+                  jesteś z nami!
                 </Card.Description>
               </Box>
               {/* <Image

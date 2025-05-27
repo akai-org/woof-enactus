@@ -1,5 +1,4 @@
 import { Box, Card, Container, Grid, Heading } from "@chakra-ui/react";
-import Image from "next/image";
 import AboutUsBg from "@/assets/about-us-bg.png";
 
 //const images = [AboutUs1, AboutUs2, AboutUs3, AboutUs4];
@@ -26,37 +25,21 @@ export default function AboutUsPage() {
           </Card.Header>
           <Card.Body>
             <Card.Description>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-              tempus condimentum orci, vel suscipit nisi pellentesque sit amet.
-              Quisque volutpat mauris non aliquam sagittis. Maecenas eget enim
-              elementum, faucibus leo eu, volutpat lorem. Cras consequat ligula
-              ut blandit accumsan. Quisque pulvinar placerat neque, non
-              fermentum nisl finibus a. Nunc rhoncus consectetur lectus.
-              Praesent at orci dictum, egestas tortor sed, consequat ipsum. Sed
-              eget leo nec metus blandit ultricies. Curabitur ut tellus lacus.
-              Morbi lectus arcu, condimentum in volutpat vel, dictum quis
-              libero. Sed quis lorem rhoncus, lobortis massa et, pellentesque
-              risus. Curabitur dapibus tellus eget sem commodo semper. Aenean
-              ultricies nibh ipsum, quis ultrices justo lacinia non. Sed
-              dignissim tortor ac sapien volutpat pretium. Donec tincidunt
-              mauris risus, id interdum nulla consectetur eget. Curabitur sit
-              amet massa nec justo tempus dignissim sed id lacus. Proin
-              dignissim mi in nisi mollis, in imperdiet dui viverra. Integer
-              tristique porttitor tristique. Nulla nec commodo turpis. Mauris
-              vitae dictum est. Aenean a felis ac velit condimentum vestibulum
-              id nec magna. Ut et velit id erat finibus porttitor at id sem. Sed
-              vulputate tempor ex eget molestie. Etiam nibh ligula, blandit
-              ornare magna laoreet, iaculis laoreet eros. Aliquam tempor
-              sollicitudin iaculis. Praesent sit amet massa id felis mattis
-              ultrices id faucibus eros. Sed et urna arcu. Integer ut elit sit
-              amet magna vestibulum pulvinar. Fusce id lacus vitae odio dictum
-              fringilla. Nunc erat enim, sagittis at pretium quis, accumsan sed
-              ligula. Nam turpis enim, consequat eu ligula quis, suscipit
-              lobortis magna. Praesent aliquam, elit a placerat mattis, diam
-              magna pellentesque mauris, id faucibus leo purus sed augue.
-              Phasellus semper, urna vitae mollis cursus, elit turpis vehicula
-              arcu, nec maximus ex massa et ante. Sed vulputate risus a viverra
-              tempor. Sed accumsan finibus pulvinar.
+              Misją WOOF jest tworzenie realnych i trwałych możliwości niesienia
+              pomocy zwierzętom poprzez innowacyjną aplikację internetową, która
+              w sposób przemyślany i kompleksowy łączy ludzi dobrej woli ze
+              schroniskami, organizacjami pro zwierzęcymi oraz lokalnymi
+              inicjatywami. Naszym celem jest nie tylko poprawa warunków życia
+              zwierząt w Polsce, ale przede wszystkim budowanie świadomego,
+              empatycznego i odpowiedzialnego społeczeństwa poprzez tworzenie
+              efektywnych i trwałych mostów pomiędzy wszystkimi, którym los
+              zwierząt nie jest obojętny. Chcemy aktywnie wspierać współpracę
+              między schroniskami i instytucjami a osobami prywatnymi czy
+              firmami, ułatwiając im niesienie pomocy w sposób dostosowany do
+              realnych potrzeb – od wolontariatu i wsparcia rzeczowego, po
+              działania CSR. Wierzymy, że skuteczna pomoc zaczyna się od dostępu
+              do rzetelnych informacji i intuicyjnych narzędzi, które
+              umożliwiają optymalne wykorzystanie dostępnych zasobów.
             </Card.Description>
           </Card.Body>
         </Card.Root>
@@ -73,37 +56,17 @@ export default function AboutUsPage() {
             </Card.Header>
             <Card.Body>
               <Card.Description>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                tempus condimentum orci, vel suscipit nisi pellentesque sit
-                amet. Quisque volutpat mauris non aliquam sagittis. Maecenas
-                eget enim elementum, faucibus leo eu, volutpat lorem. Cras
-                consequat ligula ut blandit accumsan. Quisque pulvinar placerat
-                neque, non fermentum nisl finibus a. Nunc rhoncus consectetur
-                lectus. Praesent at orci dictum, egestas tortor sed, consequat
-                ipsum. Sed eget leo nec metus blandit ultricies. Curabitur ut
-                tellus lacus. Morbi lectus arcu, condimentum in volutpat vel,
-                dictum quis libero. Sed quis lorem rhoncus, lobortis massa et,
-                pellentesque risus. Curabitur dapibus tellus eget sem commodo
-                semper. Aenean ultricies nibh ipsum, quis ultrices justo lacinia
-                non. Sed dignissim tortor ac sapien volutpat pretium. Donec
-                tincidunt mauris risus, id interdum nulla consectetur eget.
-                Curabitur sit amet massa nec justo tempus dignissim sed id
-                lacus. Proin dignissim mi in nisi mollis, in imperdiet dui
-                viverra. Integer tristique porttitor tristique. Nulla nec
-                commodo turpis. Mauris vitae dictum est. Aenean a felis ac velit
-                condimentum vestibulum id nec magna. Ut et velit id erat finibus
-                porttitor at id sem. Sed vulputate tempor ex eget molestie.
-                Etiam nibh ligula, blandit ornare magna laoreet, iaculis laoreet
-                eros. Aliquam tempor sollicitudin iaculis. Praesent sit amet
-                massa id felis mattis ultrices id faucibus eros. Sed et urna
-                arcu. Integer ut elit sit amet magna vestibulum pulvinar. Fusce
-                id lacus vitae odio dictum fringilla. Nunc erat enim, sagittis
-                at pretium quis, accumsan sed ligula. Nam turpis enim, consequat
-                eu ligula quis, suscipit lobortis magna. Praesent aliquam, elit
-                a placerat mattis, diam magna pellentesque mauris, id faucibus
-                leo purus sed augue. Phasellus semper, urna vitae mollis cursus,
-                elit turpis vehicula arcu, nec maximus ex massa et ante. Sed
-                vulputate risus a viverra tempor. Sed accumsan finibus pulvinar.
+                Jesteśmy zespołem studentów z Politechniki Poznańskiej, których
+                połączyła wspólna misja: realna pomoc zwierzętom poprzez
+                nowoczesne technologie. HauMaps to dla nas coś więcej niż
+                aplikacja - to odpowiedź na potrzebę działania, która łączy
+                empatię z wiedzą. W naszym zespole znajdziesz wszystkich
+                zaangażowanych w tworzenie narzędzia, które realnie zmienia
+                świat zwierząt na lepsze. Wierzymy, że technologia może być siłą
+                napędową dobra, a innowacyjne rozwiązania – mostem między ludźmi
+                a potrzebującymi zwierzętami. Działamy z pasją,
+                odpowiedzialnością i wiarą, że wspólnie,jako społeczność, możemy
+                więcej. Poznaj nas bliżej i zobacz, kto stoi za projektem WOOF!
               </Card.Description>
             </Card.Body>
           </div>
@@ -133,7 +96,8 @@ export default function AboutUsPage() {
           <Card.Body>
             <Card.Description color="brand.700" fontWeight="semibold">
               Odwiedź nasz profil na platformie Instagram lub Facebook
-              @woof_put! Jesteśmy również aktywni na LinkedIn jako @
+              @woof_put! 
+              {/* Jesteśmy również aktywni na LinkedIn jako @ */}
             </Card.Description>
           </Card.Body>
         </Card.Root>
