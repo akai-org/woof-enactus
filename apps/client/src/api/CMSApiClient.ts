@@ -1,8 +1,6 @@
 import { strapi, type StrapiClient } from "@strapi/client";
 import type { ApiClientOptions, ApiResult, IApiClient } from "./types";
 
-const POSTS_COLLECTION_NAME = "posts";
-
 export class CMSApiClient implements IApiClient {
   private readonly _baseUrl: string;
   private readonly _cmsClient: StrapiClient;
@@ -23,7 +21,9 @@ export class CMSApiClient implements IApiClient {
     try {
       const parts = endpoint.split("/").filter(Boolean);
       const searchParams = params ? JSON.parse(params) : {};
-      const posts = this._cmsClient.collection(POSTS_COLLECTION_NAME);
+
+      const collectionName = parts[0];
+      const posts = this._cmsClient.collection(collectionName);
 
       if (parts.length > 2)
         throw new Error("provided endpoint contains more than 2 parts!");
