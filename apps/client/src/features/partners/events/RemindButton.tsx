@@ -39,7 +39,6 @@ function RemindButton(props: Props) {
         Przypomnij mi o wydarzeniu!
       </Button>
       {status == "error" && "Coś poszło nie tak..."}
-      {status == "success" && "Plik jest w trakcie pobierania"}
     </>
   );
 }

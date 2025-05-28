@@ -64,7 +64,11 @@ export default async function PartnerEvents({ slug }: PartnerEventsProps) {
                     maxHeight={200}
                   />
                 </NullishGuard>
-                <RemindButton title={title} description={description} start={new Date(eventDate).toISOString()} />
+                <RemindButton
+                  title={title}
+                  description={description}
+                  start={new Date(eventDate).toISOString()}
+                />
               </Flex>
             </Card.Root>
           ),
