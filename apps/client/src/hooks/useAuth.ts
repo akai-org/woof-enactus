@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 function useAuth() {
   const [isLogged, setisLogged] = useState(false);
   useEffect(() => {
-    fetch(`/api/auth`).then(res => setisLogged(res.status == 200));
+    // fetch(`/api/auth`).then(res => setisLogged(res.status == 200));
   }, []);
 
   return isLogged;
