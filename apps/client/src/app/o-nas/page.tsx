@@ -1,7 +1,7 @@
-import { Box, Card, Container, Grid, Heading } from "@chakra-ui/react";
+import Image from "next/image";
+import { Box, Card, Container, Heading } from "@chakra-ui/react";
 import AboutUsBg from "@/assets/about-us-bg.png";
-
-//const images = [AboutUs1, AboutUs2, AboutUs3, AboutUs4];
+import AboutUsImg from "@/../public/o-nas.jpg";
 
 export default function AboutUsPage() {
   return (
@@ -43,44 +43,33 @@ export default function AboutUsPage() {
             </Card.Description>
           </Card.Body>
         </Card.Root>
-        <Card.Root
-          padding={{ base: "0", sm: "4" }}
-          //  display="grid"
-          // gridTemplateColumns={{ base: "1fr", md: "1fr 1fr" }}
-        >
-          <div>
-            <Card.Header>
-              <Heading color="brand.500" size="3xl">
-                Kim jesteśmy? Odkryj nasz zespół!
-              </Heading>
-            </Card.Header>
-            <Card.Body>
-              <Card.Description>
-                Jesteśmy zespołem studentów z Politechniki Poznańskiej, których
-                połączyła wspólna misja: realna pomoc zwierzętom poprzez
-                nowoczesne technologie. HauMaps to dla nas coś więcej niż
-                aplikacja - to odpowiedź na potrzebę działania, która łączy
-                empatię z wiedzą. W naszym zespole znajdziesz wszystkich
-                zaangażowanych w tworzenie narzędzia, które realnie zmienia
-                świat zwierząt na lepsze. Wierzymy, że technologia może być siłą
-                napędową dobra, a innowacyjne rozwiązania – mostem między ludźmi
-                a potrzebującymi zwierzętami. Działamy z pasją,
-                odpowiedzialnością i wiarą, że wspólnie,jako społeczność, możemy
-                więcej. Poznaj nas bliżej i zobacz, kto stoi za projektem WOOF!
-              </Card.Description>
-            </Card.Body>
-          </div>
-          {/* <Grid templateColumns="1fr 1fr" gap={5} m="auto" py={5}>
-            {images.map(i => (
-              <Image
-                key={i.src}
-                src={i}
-                placeholder="blur"
-                alt="HauMaps Team photo"
-                style={{ height: "200px", width: "200px" }}
-              />
-            ))}
-          </Grid> */}
+        <Card.Root padding={{ base: "0", sm: "4" }}>
+          <Card.Header>
+            <Heading color="brand.500" size="3xl">
+              Kim jesteśmy? Odkryj nasz zespół!
+            </Heading>
+          </Card.Header>
+          <Card.Body>
+            <Card.Description pb={5}>
+              Jesteśmy zespołem studentów z Politechniki Poznańskiej, których
+              połączyła wspólna misja: realna pomoc zwierzętom poprzez
+              nowoczesne technologie. HauMaps to dla nas coś więcej niż
+              aplikacja - to odpowiedź na potrzebę działania, która łączy
+              empatię z wiedzą. W naszym zespole znajdziesz wszystkich
+              zaangażowanych w tworzenie narzędzia, które realnie zmienia świat
+              zwierząt na lepsze. Wierzymy, że technologia może być siłą
+              napędową dobra, a innowacyjne rozwiązania – mostem między ludźmi a
+              potrzebującymi zwierzętami. Działamy z pasją, odpowiedzialnością i
+              wiarą, że wspólnie,jako społeczność, możemy więcej. Poznaj nas
+              bliżej i zobacz, kto stoi za projektem WOOF!
+            </Card.Description>
+            <Image
+              src={AboutUsImg}
+              placeholder="blur"
+              alt="HauMaps Team photo"
+              style={{width: "100%", height: "auto"}}
+            />
+          </Card.Body>
         </Card.Root>
         <Card.Root
           w={{ base: "full", md: "2/3" }}
@@ -94,10 +83,16 @@ export default function AboutUsPage() {
             </Heading>
           </Card.Header>
           <Card.Body>
-            <Card.Description color="brand.700" fontWeight="semibold">
-              Odwiedź nasz profil na platformie Instagram lub Facebook
-              @woof_put! 
-              {/* Jesteśmy również aktywni na LinkedIn jako @ */}
+            <Card.Description
+              color="brand.700"
+              fontWeight="semibold"
+              textAlign="center"
+            >
+              Odwiedź nasz profil na platformie Instagram @woof_put
+              <br />
+              lub Facebook @WOOF by Enactus PUT!
+              <br />
+              Jesteśmy również aktywni na LinkedIn jako @enactus-put
             </Card.Description>
           </Card.Body>
         </Card.Root>

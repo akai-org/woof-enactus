@@ -5,12 +5,12 @@ import {
   Container,
   Flex,
   Heading,
-  Image,
   Link,
   Strong,
-  Text,
 } from "@chakra-ui/react";
 import { FiCoffee } from "react-icons/fi";
+import SupportImg from "@/../public/wsparcie.jpg";
+import Image from "next/image";
 
 export default function SupportPage() {
   return (
@@ -31,12 +31,8 @@ export default function SupportPage() {
             </Heading>
           </Card.Header>
           <Card.Body>
-            <Flex
-              alignItems="flex-start"
-              flexDirection={{ base: "column-reverse", md: "row" }}
-              gap="20px"
-            >
-              <Box flex={1} width={{ base: "100%", md: "50%" }}>
+            <Flex alignItems="flex-start" flexDirection="column" gap="20px">
+              <Box flex={1}>
                 <Card.Description lineHeight="25px" fontWeight="500">
                   Tworzymy WOOF z myślą o zwierzętach, które każdego dnia
                   potrzebują pomocy a Twoje wsparcie finansowe może realnie
@@ -66,23 +62,22 @@ export default function SupportPage() {
                     dobrego?
                   </Strong>
                   <br />
-                   Wesprzyj nasz projekt jako osoba prywatna. Każda
-                  złotówka naprawdę się liczy! Nawet najmniejsza wpłata zbliża
-                  nas do uruchomienia aplikacji, która ułatwi pomaganie i dotrze
-                  tam, gdzie potrzeba jest największa. Jeśli chcesz stać się
-                  częścią tej zmiany – wesprzyj nasz projekt! 
-                  <br/>
-                  <br/>
-                  Dziękujemy, że
-                  jesteś z nami!
+                  Wesprzyj nasz projekt jako osoba prywatna. Każda złotówka
+                  naprawdę się liczy! Nawet najmniejsza wpłata zbliża nas do
+                  uruchomienia aplikacji, która ułatwi pomaganie i dotrze tam,
+                  gdzie potrzeba jest największa. Jeśli chcesz stać się częścią
+                  tej zmiany – wesprzyj nasz projekt!
+                  <br />
+                  <br />
+                  Dziękujemy, że jesteś z nami!
                 </Card.Description>
               </Box>
-              {/* <Image
-                width={{ base: "100%", md: "50%" }}
-                src={AboutUs1.src}
-                alt=""
-                padding="5"
-              /> */}
+              <Image
+                src={SupportImg}
+                placeholder="blur"
+                alt="Enactus"
+                style={{ width: "100%", height: "auto" }}
+              />
             </Flex>
             <Button variant="cta" size="2xl" alignSelf="center" mt="8" asChild>
               <Link href="https://ko-fi.com" color="brand.100">
