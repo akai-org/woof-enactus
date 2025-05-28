@@ -23,7 +23,7 @@ export default function PartnerInfo({ profileData }: PartnerInfoProps) {
   const type = profileData.type;
 
   return (
-    <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={4}>
+    <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={4} w="full">
       <VStack gap={4} align="start">
         <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
           <Card.Header>
@@ -45,9 +45,11 @@ export default function PartnerInfo({ profileData }: PartnerInfoProps) {
 
             <VetTypeGuard partnerType={type}>
               <InfoBox title="Linia nagłego kontaktu">
-                <Link color="brand.900" href={`tel:${data.phone}`}>
-                  BRAK W BAZIE DANYCH
-                </Link>
+                <NullishGuard check={null}>
+                  <Link color="brand.900" href={`tel:${data.phone}`}>
+                    BRAK W BAZIE DANYCH
+                  </Link>
+                </NullishGuard>
               </InfoBox>
             </VetTypeGuard>
 
@@ -90,7 +92,7 @@ export default function PartnerInfo({ profileData }: PartnerInfoProps) {
         <NullishGuard check={data.image} fallback={null}>
           <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
             <Card.Body p={[2, 6]}>
-              <Image src={data.image} alt="" />
+              <Image src={data.image} alt="Zdjęcie placówki" />
             </Card.Body>
           </Card.Root>
         </NullishGuard>

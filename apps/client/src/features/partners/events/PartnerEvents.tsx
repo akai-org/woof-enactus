@@ -1,9 +1,10 @@
 import { container } from "@/features/di";
 
-import { Box, Button, Card, Flex, Image, Stack } from "@chakra-ui/react";
+import { Box, Card, Flex, Image, Stack } from "@chakra-ui/react";
 import type { IPartnerService } from "@/services";
 import { EmptyArrayGuard, ErrorMessage, NullishGuard } from "@/components";
 import EmptyEventsList from "./EmptyEventsList";
+import { RemindButton } from "./RemindButton";
 
 type PartnerEventsProps = {
   slug: string;
@@ -63,9 +64,11 @@ export default async function PartnerEvents({ slug }: PartnerEventsProps) {
                     maxHeight={200}
                   />
                 </NullishGuard>
-                <Button variant="gray" size="lg">
-                  Przypomnij mi o wydarzeniu!
-                </Button>
+                <RemindButton
+                  title={title}
+                  description={description}
+                  start={new Date(eventDate).toISOString()}
+                />
               </Flex>
             </Card.Root>
           ),

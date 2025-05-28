@@ -10,6 +10,8 @@ import { MdLanguage, MdLocalPhone } from "react-icons/md";
 import { mapLegendItems } from "@/constants";
 import { TiArrowRight } from "react-icons/ti";
 import NextLink from "next/link";
+import { NullishGuard } from "@/components";
+import { truncate } from "@/utils";
 
 type MapMarkerProps = {
   markerData: PartnerData;
@@ -46,26 +48,22 @@ function MapMarker({ markerData }: MapMarkerProps) {
               <List.Indicator asChild>
                 <MdLocalPhone />
               </List.Indicator>
-              {profile.phone ? (
+              <NullishGuard check={profile.phone}>
                 <Link color="brand.500" href={`tel:${profile.phone}`}>
                   {profile.phone}
                 </Link>
-              ) : (
-                "-"
-              )}
+              </NullishGuard>
             </List.Item>
 
             <List.Item>
               <List.Indicator asChild>
                 <MdLanguage />
               </List.Indicator>
-              {profile.website ? (
+              <NullishGuard check={profile.website}>
                 <Link color="brand.500" href={profile.website}>
-                  {profile.website}
+                  {truncate(profile.website ?? "")}
                 </Link>
-              ) : (
-                "-"
-              )}
+              </NullishGuard>
             </List.Item>
           </List.Root>
           <Button variant="cta" asChild>
