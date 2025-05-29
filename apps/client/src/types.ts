@@ -27,7 +27,7 @@ type PartnerNeeds = {
 } & Omit<NeededGoodsMeta, keyof DatabaseEntity>;
 
 // ====== Client-defined types ======
-type BlogPostCategory = "zdrowie" | "rozrywka" | "weterynarz";
+type BlogPostCategory = "zdrowie" | "opieka" | "podróże";
 
 interface IBlogPost {
   documentId: string; // uuid
