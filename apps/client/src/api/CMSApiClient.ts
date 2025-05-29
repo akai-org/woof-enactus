@@ -3,14 +3,18 @@ import type { ApiClientOptions, ApiResult, IApiClient } from "./types";
 
 export class CMSApiClient implements IApiClient {
   private readonly _baseUrl: string;
-  private readonly _cmsClient: StrapiClient;
+  private readonly _cmsClient: StrapiClient | null = null;
 
   constructor({ baseUrl, authToken }: ApiClientOptions) {
     this._baseUrl = baseUrl;
-    this._cmsClient = strapi({
-      baseURL: baseUrl,
-      auth: authToken,
-    });
+    try {
+      this._cmsClient = strapi({
+        baseURL: baseUrl,
+        auth: authToken,
+      });
+    } catch (err) {
+      console.error("Strapi client can't be initialized. ", err);
+    }
   }
 
   public get baseUrl(): string {
@@ -18,6 +22,18 @@ export class CMSApiClient implements IApiClient {
   }
 
   async get<T>(endpoint: string, params?: string): Promise<ApiResult<T>> {
+    if (!this._cmsClient) {
+      return {
+        success: false,
+        error: {
+          statusCode: 500,
+          message: "Strapi client can't be initialized. Check .env config",
+          endpoint,
+          error: "Strapi client error",
+        },
+      };
+    }
+
     try {
       const parts = endpoint.split("/").filter(Boolean);
       const searchParams = params ? JSON.parse(params) : {};
