@@ -1,4 +1,4 @@
-import { legendItems } from "@/constants";
+import { mapLegendItems } from "@/constants";
 import {
   Box,
   Button,
@@ -52,7 +52,7 @@ export default function Legend() {
                 <IoClose />
               </Popover.CloseTrigger>
               <VStack align="self-start" gap={4}>
-                <For each={legendItems}>
+                <For each={mapLegendItems}>
                   {value => (
                     <Flex align="center" gap={4} key={value.name}>
                       <Box boxSize={4} rounded="sm" bg={value.color} />

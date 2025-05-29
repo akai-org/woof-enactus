@@ -30,7 +30,7 @@ function Footer() {
 
           <Flex flex="1" justifyContent="flex-end" gap="4">
             <Link
-              href="https://facebook.com"
+              href="https://www.facebook.com/people/WOOF-by-Enactus-PUT/100093005164531/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -40,7 +40,7 @@ function Footer() {
             </Link>
 
             <Link
-              href="https://instagram.com"
+              href="https://www.instagram.com/woof_put/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -50,7 +50,7 @@ function Footer() {
             </Link>
 
             <Link
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/enactus-put/"
               target="_blank"
               rel="noopener noreferrer"
             >

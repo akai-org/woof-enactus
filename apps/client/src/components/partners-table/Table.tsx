@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { TiArrowRight } from "react-icons/ti";
 import NextLink from "next/link";
-import { legendItems } from "@/constants";
+import { mapLegendItems } from "@/constants";
 import { getPartnerTypeName, truncate } from "@/utils";
 
 import TableHeader from "./TableHeader";
@@ -88,7 +88,7 @@ export default function PartnersTable({ data }: TableProps) {
                         boxSize="15px"
                         borderRadius="sm"
                         bg={
-                          legendItems.find(
+                          mapLegendItems.find(
                             legendItem => legendItem.type == item.type,
                           )?.color
                         }

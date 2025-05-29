@@ -1,4 +1,4 @@
-import { legendItems } from "@/constants";
+import { mapLegendItems } from "@/constants";
 import {
   Button,
   Fieldset,
@@ -95,7 +95,7 @@ export default function Filters() {
               <Fieldset.Root paddingTop={6}>
                 <VStack>
                   <Fieldset.Content>
-                    <For each={legendItems}>
+                    <For each={mapLegendItems}>
                       {({ name, type }) => (
                         <Checkbox
                           key={name}

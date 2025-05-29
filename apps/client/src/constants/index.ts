@@ -1,5 +1,5 @@
 import { system } from "./theme";
-import { legendItems } from "./legend";
+import { mapLegendItems, blogCategoryItems } from "./legend";
 import { toaster } from "./toaster";
 
-export { system, legendItems, toaster };
+export { system, mapLegendItems, blogCategoryItems, toaster };

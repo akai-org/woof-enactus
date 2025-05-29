@@ -44,14 +44,14 @@ function WorkingHours({ workingHours }: WorkingHoursProps) {
                 <DayOfTheWeek
                   dayName={day}
                   openHours={hours}
-                  isWeekend={i > 5}
+                  isWeekend={i > 4}
                   key={day}
                 />
               ))
             : Object.entries(POLISH_DAYS).map(([day, _], i) => (
                 <DayOfTheWeek
                   dayName={day}
-                  isWeekend={i > 5}
+                  isWeekend={i > 4}
                   openHours={null}
                   key={day}
                 />
