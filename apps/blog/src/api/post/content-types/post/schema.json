@@ -4,8 +4,7 @@
   "info": {
     "singularName": "post",
     "pluralName": "posts",
-    "displayName": "Post",
-    "description": ""
+    "displayName": "Post"
   },
   "options": {
     "draftAndPublish": true
@@ -13,26 +12,13 @@
   "attributes": {
     "title": {
       "type": "string",
-      "maxLength": 100,
       "required": true,
       "unique": true
     },
-    "category": {
-      "type": "enumeration",
-      "enum": [
-        "zdrowie",
-        "rozrywka",
-        "weterynarz"
-      ],
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
       "required": true
-    },
-    "thumbnail": {
-      "type": "media",
-      "multiple": false,
-      "required": true,
-      "allowedTypes": [
-        "images"
-      ]
     },
     "description": {
       "type": "text",
@@ -40,14 +26,25 @@
       "maxLength": 200
     },
     "content": {
-      "type": "richtext",
+      "type": "blocks",
       "required": true
     },
-    "slug": {
-      "type": "string",
-      "required": true,
-      "maxLength": 200,
-      "unique": true
+    "thumbnail": {
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "zdrowie",
+        "opieka",
+        "podróże"
+      ],
+      "required": true
     }
   }
 }
