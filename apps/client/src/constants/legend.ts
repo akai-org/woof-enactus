@@ -34,14 +34,14 @@ const blogCategoryItems: BlogLegend[] = [
     category: "zdrowie",
   },
   {
-    name: "Rozrywka",
+    name: "Opieka",
     color: "brand.400",
-    category: "rozrywka",
+    category: "opieka",
   },
   {
-    name: "Weterynaria",
+    name: "Podróże",
     color: "accent.yellow",
-    category: "weterynarz",
+    category: "podróże",
   },
 ];
 
