@@ -14,8 +14,10 @@ const apiClientOptions: ApiClientOptions = {
 } as const;
 
 const blogApiClientOptions: ApiClientOptions = {
-  baseUrl: process.env.NEXT_PUBLIC_CMS_API_URL! + "/api",
-  authToken: process.env.CMS_ACCESS_TOKEN,
+  baseUrl: process.env.NEXT_PUBLIC_CMS_API_URL
+    ? process.env.NEXT_PUBLIC_CMS_API_URL + "/api"
+    : "",
+  authToken: process.env.CMS_ACCESS_TOKEN ?? "",
 } as const;
 
 export { endpoints, apiClientOptions, blogApiClientOptions };
