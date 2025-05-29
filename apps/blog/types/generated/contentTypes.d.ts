@@ -402,6 +402,46 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiBlogPostBlogPost extends Struct.CollectionTypeSchema {
+  collectionName: "blog_posts";
+  info: {
+    displayName: "BlogPost";
+    pluralName: "blog-posts";
+    singularName: "blog-post";
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Enumeration<
+      ["zdrowie", "rozrywka", "weterynarz"]
+    >;
+    Content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::blog-post.blog-post"
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<"title"> & Schema.Attribute.Required;
+    thumbnail: Schema.Attribute.Media<"images" | "files" | "videos" | "audios">;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: "globals";
   info: {
@@ -992,6 +1032,7 @@ declare module "@strapi/strapi" {
       "admin::transfer-token-permission": AdminTransferTokenPermission;
       "admin::user": AdminUser;
       "api::about.about": ApiAboutAbout;
+      "api::blog-post.blog-post": ApiBlogPostBlogPost;
       "api::global.global": ApiGlobalGlobal;
       "api::post.post": ApiPostPost;
       "plugin::content-releases.release": PluginContentReleasesRelease;
