@@ -1,7 +1,7 @@
 import { Map } from "@/features/map";
 import { Table } from "@/components";
 import { JoinUsContainer } from "@/components";
-import { container } from "@/features/di";
+import { getContainer } from "@/features/di";
 
 import { Container, Heading } from "@chakra-ui/react";
 
@@ -23,7 +23,7 @@ export default async function Home({
     ...(street && { street }),
   };
 
-  const partners = await container
+  const partners = await getContainer()
     .resolve<IPartnerService>("PartnerService")
     .getAll({ types: type, ...params });
 

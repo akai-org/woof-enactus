@@ -1,3 +1,3 @@
-import JoinUsContainer from "./container";
+import JoinUsContainer from "./JoinUsContainer";
 
-export {JoinUsContainer};
+export { JoinUsContainer };

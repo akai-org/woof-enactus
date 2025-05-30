@@ -1,5 +1,5 @@
 import { PartnerInfo, PartnerNeeds, PartnerEvents } from "@/features/partners";
-import { container } from "@/features/di";
+import { getContainer } from "@/features/di";
 import { ErrorMessage, GoBackButton } from "@/components";
 
 import { Box, Container, For, Heading, Tabs } from "@chakra-ui/react";
@@ -48,7 +48,7 @@ export default async function PartnerPage({
 }) {
   const { slug } = await params;
 
-  const profile = await container
+  const profile = await getContainer()
     .resolve<IPartnerService>("PartnerService")
     .getProfile(slug);
 
