@@ -54,14 +54,16 @@ export default function PartnersTable({ data }: TableProps) {
                   backgroundColor={index % 2 === 0 ? "brand.200" : "white"}
                   height="20"
                 >
-                  <Table.Cell>{item.name}</Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell overflow="hidden">{item.name}</Table.Cell>
+                  <Table.Cell overflow="hidden">
                     {item.profile.postal && item.profile.city
                       ? `${item.profile.postal + " " + item.profile.city}`
                       : "-"}
                   </Table.Cell>
-                  <Table.Cell>{item.profile.street ?? "-"}</Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell overflow="hidden">
+                    {item.profile.street ?? "-"}
+                  </Table.Cell>
+                  <Table.Cell overflow="hidden">
                     {item.profile.phone ? (
                       <Link
                         href={`tel:${item.profile.phone}`}
@@ -73,7 +75,7 @@ export default function PartnersTable({ data }: TableProps) {
                       "-"
                     )}
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell overflow="hidden">
                     {item.profile.website ? (
                       <Link href={item.profile.website} color="brand.900">
                         {truncate(item.profile.website)}

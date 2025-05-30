@@ -3,43 +3,36 @@ import type { ApiClientOptions, ApiResult, IApiClient } from "./types";
 
 export class CMSApiClient implements IApiClient {
   private readonly _baseUrl: string;
-  private readonly _cmsClient: StrapiClient | null = null;
+  private readonly _authToken?: string;
+
+  private _cmsClient: StrapiClient | null = null;
 
   constructor({ baseUrl, authToken }: ApiClientOptions) {
     this._baseUrl = baseUrl;
-    try {
-      this._cmsClient = strapi({
-        baseURL: baseUrl,
-        auth: authToken,
-      });
-    } catch (err) {
-      console.error("Strapi client can't be initialized. ", err);
-    }
+    this._authToken = authToken;
   }
 
   public get baseUrl(): string {
     return this._baseUrl;
   }
 
-  async get<T>(endpoint: string, params?: string): Promise<ApiResult<T>> {
+  private get client(): StrapiClient {
     if (!this._cmsClient) {
-      return {
-        success: false,
-        error: {
-          statusCode: 500,
-          message: "Strapi client can't be initialized. Check .env config",
-          endpoint,
-          error: "Strapi client error",
-        },
-      };
+      this._cmsClient = strapi({
+        baseURL: this._baseUrl,
+        auth: this._authToken,
+      });
     }
+    return this._cmsClient;
+  }
 
+  async get<T>(endpoint: string, params?: string): Promise<ApiResult<T>> {
     try {
       const parts = endpoint.split("/").filter(Boolean);
       const searchParams = params ? JSON.parse(params) : {};
 
       const collectionName = parts[0];
-      const posts = this._cmsClient.collection(collectionName);
+      const posts = this.client.collection(collectionName);
 
       if (parts.length > 2)
         throw new Error("provided endpoint contains more than 2 parts!");

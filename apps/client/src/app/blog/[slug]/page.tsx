@@ -1,6 +1,6 @@
 import { ErrorMessage, GoBackButton } from "@/components";
 import { PostContent } from "@/features/blog";
-import { container } from "@/features/di";
+import { getContainer } from "@/features/di";
 import type { IBlogService } from "@/services";
 import { Center, Container, Spinner } from "@chakra-ui/react";
 import React, { Suspense } from "react";
@@ -11,7 +11,7 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await container
+  const post = await getContainer()
     .resolve<IBlogService>("BlogService")
     .getPost(slug);
 
