@@ -10,7 +10,10 @@ import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/styles";
 import "../style.css";
 
-import "@/features/di"; // di container setup
+import { createDiContainer } from "@/features/di";
+
+// NOTE: this function is invoked for DI setup on app startup
+createDiContainer();
 
 export const metadata: Metadata = {
   title: "HauMaps",

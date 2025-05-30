@@ -1,4 +1,4 @@
-import { container } from "@/features/di";
+import { getContainer } from "@/features/di";
 
 import { Box, Flex, Heading, Table, Text } from "@chakra-ui/react";
 import type { IPartnerService } from "@/services";
@@ -21,7 +21,7 @@ type PartnerNeedsProps = {
 };
 
 export default async function PartnerNeeds({ slug }: PartnerNeedsProps) {
-  const needs = await container
+  const needs = await getContainer()
     .resolve<IPartnerService>("PartnerService")
     .getNeeds(slug);
 

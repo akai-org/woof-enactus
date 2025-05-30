@@ -1,4 +1,4 @@
-import { container } from "@/features/di";
+import { getContainer } from "@/features/di";
 
 import { Box, Card, Flex, Image, Stack } from "@chakra-ui/react";
 import type { IPartnerService } from "@/services";
@@ -11,7 +11,7 @@ type PartnerEventsProps = {
 };
 
 export default async function PartnerEvents({ slug }: PartnerEventsProps) {
-  const events = await container
+  const events = await getContainer()
     .resolve<IPartnerService>("PartnerService")
     .getEvents(slug);
 
