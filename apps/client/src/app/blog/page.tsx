@@ -7,6 +7,14 @@ import { ErrorMessage } from "@/components";
 
 //TODO: add posts filtering by category
 
+/*
+  NOTE: using route segment config option forces to use SSR with dynamic rendering.
+  This skips also Full Route Cache (SSG) and calling inaccessible CMSApiClient during build.
+
+  More info: https://nextjs.org/docs/app/deep-dive/caching#opting-out-2
+*/
+export const dynamic = "force-dynamic";
+
 export default async function BlogPage() {
   const posts = await getContainer()
     .resolve<IBlogService>("BlogService")

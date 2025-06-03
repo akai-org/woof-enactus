@@ -5,6 +5,10 @@ import type { IBlogService } from "@/services";
 import { Center, Container, Spinner } from "@chakra-ui/react";
 import React, { Suspense } from "react";
 
+/*
+ Pages using Dynamic API opt out of Full Route Cache (SSG). Therefore route will be dynamically rendered on each request.
+ More info: https://nextjs.org/docs/app/deep-dive/caching#dynamic-apis
+*/
 export default async function PostPage({
   params,
 }: {
