@@ -1,5 +1,4 @@
-# Ten compose jest przeznaczony do uruchamiania na maszynie produkcyjnej
-# Zaciąga zbudowane obrazy z ghcr (TODO)
+# Ten compose jest przeznaczony do uruchamiania aplikacji w wersji produkcyjnej
 services:
   database:
     image: postgres:alpine
@@ -23,3 +22,11 @@ services:
       - .env
     depends_on:
       - backend
+
+  blog:
+    hostname: blog
+    image: woof-enactus-blog:latest
+    env_file:
+      - .env
+    depends_on:
+      - database
