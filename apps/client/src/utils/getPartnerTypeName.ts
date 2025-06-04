@@ -1,4 +1,6 @@
-export const getPartnerTypeName = (type: string) => {
+import type { PartnerType } from "@/types";
+
+export const getPartnerTypeName = (type: PartnerType) => {
   switch (type) {
     case "VET":
       return "Weterynarz";

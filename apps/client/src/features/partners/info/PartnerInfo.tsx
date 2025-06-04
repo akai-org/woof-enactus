@@ -89,7 +89,7 @@ export default function PartnerInfo({ profileData }: PartnerInfoProps) {
         <WorkingHours workingHours={data.openHours} />
       </VStack>
       <VStack gap={4} align="start">
-        <NullishGuard check={data.image} fallback={null}>
+        <NullishGuard check={data.image} fallback={<></>}>
           <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
             <Card.Body p={[2, 6]}>
               <Image src={data.image} alt="Zdjęcie placówki" />
