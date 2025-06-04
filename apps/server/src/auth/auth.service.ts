@@ -4,6 +4,7 @@ import { AccountsService } from "src/accounts/accounts.service";
 import { GenericResponse, JwtPayload } from "src/types";
 import * as bcrypt from "bcrypt";
 import { PrismaService } from "../prisma/prisma.service";
+import { Response } from "express";
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,8 @@ export class AuthService {
   async signIn(
     username: string,
     pass: string,
-  ): Promise<GenericResponse<Record<string, string>>> {
+    response: Response,
+  ): Promise<void> {
     const account = (await this.accountsService.findOne(username)).data;
     if (!account || !bcrypt.compareSync(pass, account.password)) {
       throw new UnauthorizedException();
@@ -39,15 +41,18 @@ export class AuthService {
     const refreshToken: string =
       await this.jwtService.signAsync(refreshPayload);
 
-    const res: GenericResponse<Record<string, string>> = {
+    const resBody: GenericResponse<Record<string, string>> = {
       ok: true,
       data: {
         accessToken: authToken,
-        refreshToken: refreshToken,
       },
     };
 
-    return res;
+    response
+      .header("Set-Cookie", [
+        `refreshToken=${refreshToken}; HttpOnly; Secure; Max-Age=604800; Path=/;`,
+      ])
+      .json(resBody);
   }
 
   async signUp(username: string, password: string): Promise<GenericResponse> {
