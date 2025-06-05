@@ -8,9 +8,12 @@ const nextConfig: NextConfig = {
   },
   output: "standalone",
   images: {
+    //TEMP
     remotePatterns: [
       new URL("https://cdn.jsdelivr.net/**"),
-      new URL(`${process.env.NEXT_PUBLIC_CMS_API_URL}/uploads/**`),
+      new URL(
+        `https://haumaps-blog-782854916885.europe-north1.run.app/uploads/**`,
+      ),
       new URL("https://avatars.githubusercontent.com/**"),
     ],
   },
