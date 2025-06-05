@@ -7,6 +7,8 @@ import Note from "./Note";
 import NeedsMobile from "./NeedsMobile";
 import { EmptyArrayGuard, ErrorMessage } from "@/components";
 import EmptyNeedsList from "./EmptyNeedsList";
+import type { NeededGoods } from "woof";
+import { randomUUID } from "node:crypto";
 
 const PRIORITY_COLORS: Readonly<Record<GoodsState, string>> = {
   OK: "brand.600",
@@ -29,10 +31,24 @@ export default async function PartnerNeeds({ slug }: PartnerNeedsProps) {
 
   const needsData = needs.data;
 
+  // Potrzebne dla funkcji .reduce(). Jeżeli typem placówki nie jest schornisko
+  // to lista potrzebnych rzeczy nie jest inicjalizowana i reduce wywala TypeError.
+  // Ten fallback zapawnia, że coś jednak w liście będzie, jednak nie będzie ona wyświetlana na froncie.
+  const initialValueFallback: NeededGoods = {
+    id: -1,
+    amountMax: 0,
+    createdAt: new Date(),
+    name: "Fallback",
+    state: "OK",
+    stateInfo: "",
+    updatedAt: new Date(),
+    uuid: randomUUID(),
+  };
+
   const newest = new Date(
     needsData.goods.reduce((latest, current) => {
       return current.updatedAt > latest.updatedAt ? current : latest;
-    }).updatedAt,
+    }, initialValueFallback).updatedAt,
   );
   const newestDate = newest.toLocaleString("pl-PL", {
     year: "numeric",
