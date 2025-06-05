@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64"]
 }
 
 datasource db {
@@ -81,7 +82,7 @@ model NeededGoods {
   id            Int      @id @default(autoincrement())
   uuid          String   @unique @default(uuid())
   partner       Partner  @relation(fields: [partnerId], references: [id], onDelete: Cascade)
-  partnerId     Int      @unique
+  partnerId     Int      
   name          String
   amountCurrent Int?
   amountMax     Int
