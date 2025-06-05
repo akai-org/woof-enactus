@@ -61,7 +61,7 @@ function MapMarker({ markerData }: MapMarkerProps) {
               </List.Indicator>
               <NullishGuard check={profile.website}>
                 <Link color="brand.500" href={profile.website}>
-                  {truncate(profile.website ?? "")}
+                  {truncate(profile.website)}
                 </Link>
               </NullishGuard>
             </List.Item>
