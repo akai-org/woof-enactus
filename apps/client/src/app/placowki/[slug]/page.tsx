@@ -28,14 +28,12 @@ const tabs = [
 const getTabs = (type: PartnerType) => {
   const tabsToShow = [];
   switch (type) {
-    case "VET":
-      tabsToShow.push(tabs[1]);
-      break;
-    case "SHOP":
-      tabsToShow.push(tabs[1]);
-      break;
+    case "ORG":
+    case "SHELTER":
+      tabsToShow.push(tabs[0]);
     default:
-      tabsToShow.push(tabs[0], tabs[1], tabs[2]);
+      tabsToShow.push(tabs[1], tabs[2]);
+      break;
   }
 
   return tabsToShow;
