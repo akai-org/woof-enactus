@@ -7,6 +7,13 @@ const nextConfig: NextConfig = {
     typedEnv: true,
   },
   output: "standalone",
+  images: {
+    remotePatterns: [
+      new URL("https://cdn.jsdelivr.net/**"),
+      new URL(`${process.env.NEXT_PUBLIC_CMS_API_URL}/uploads/**`),
+      new URL("https://avatars.githubusercontent.com/**"),
+    ],
+  },
 };
 
 export default nextConfig;

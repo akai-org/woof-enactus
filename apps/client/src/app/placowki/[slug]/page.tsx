@@ -4,7 +4,7 @@ import { ErrorMessage, GoBackButton } from "@/components";
 
 import { Box, Container, For, Heading, Tabs } from "@chakra-ui/react";
 
-import type { PartnerPageParams } from "@/types";
+import type { PartnerPageParams, PartnerType } from "@/types";
 import type { IPartnerService } from "@/services";
 
 const tabs = [
@@ -25,7 +25,7 @@ const tabs = [
   },
 ];
 
-const getTabs = (type: string) => {
+const getTabs = (type: PartnerType) => {
   const tabsToShow = [];
   switch (type) {
     case "VET":
@@ -101,9 +101,9 @@ export default async function PartnerPage({
               p={[2, undefined, 8]}
             >
               <Box bg="brand.100" borderRadius="md" p={[3, 8]}>
-                {tab.id == "info" && <PartnerInfo profileData={profileData} />}
-                {tab.id == "stuff" && <PartnerNeeds slug={slug} />}
-                {tab.id == "events" && <PartnerEvents slug={slug} />}
+                {tab.id === "info" && <PartnerInfo profileData={profileData} />}
+                {tab.id === "stuff" && <PartnerNeeds slug={slug} />}
+                {tab.id === "events" && <PartnerEvents slug={slug} />}
               </Box>
             </Tabs.Content>
           )}

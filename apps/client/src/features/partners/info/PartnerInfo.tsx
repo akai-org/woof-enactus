@@ -24,7 +24,7 @@ export default function PartnerInfo({ profileData }: PartnerInfoProps) {
 
   return (
     <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={4} w="full">
-      <VStack gap={4} align="start">
+      <VStack gap={4}>
         <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
           <Card.Header>
             <Flex align="center" gap={2} color="brand.700">
@@ -34,7 +34,7 @@ export default function PartnerInfo({ profileData }: PartnerInfoProps) {
               </Heading>
             </Flex>
           </Card.Header>
-          <Card.Body>
+          <Card.Body p="8px">
             <InfoBox title="Główny numer telefonu">
               <NullishGuard check={data.phone}>
                 <Link color="brand.900" href={`tel:${data.phone}`}>
@@ -89,7 +89,7 @@ export default function PartnerInfo({ profileData }: PartnerInfoProps) {
         <WorkingHours workingHours={data.openHours} />
       </VStack>
       <VStack gap={4} align="start">
-        <NullishGuard check={data.image} fallback={null}>
+        <NullishGuard check={data.image} fallback={<></>}>
           <Card.Root w="full" borderColor="brand.300" borderWidth={2}>
             <Card.Body p={[2, 6]}>
               <Image src={data.image} alt="Zdjęcie placówki" />

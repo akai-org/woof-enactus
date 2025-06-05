@@ -23,7 +23,7 @@ function InfoBox({ icon, title, children, ...rest }: InfoBoxProps) {
         </Heading>
       </Flex>
 
-      <Span color="brand.900">{children}</Span>
+      <Span color="brand.900" textWrap="wrap" wordBreak="break-word">{children}</Span>
     </Flex>
   );
 }
