@@ -63,7 +63,7 @@ export default function PartnerInfo({ profileData }: PartnerInfoProps) {
 
             <InfoBox title="Strona internetowa">
               <NullishGuard check={data.website}>
-                <Link color="brand.900" href={data.website}>
+                <Link color="brand.900" href={data.website} rel="noopener noreferrer" target="_blank">
                   {data.website}
                 </Link>
               </NullishGuard>
