@@ -1,10 +1,11 @@
 import { getContainer } from "@/features/di";
 
-import { Box, Card, Flex, Image, Stack } from "@chakra-ui/react";
+import { Box, Card, Flex, Stack } from "@chakra-ui/react";
 import type { IPartnerService } from "@/services";
 import { EmptyArrayGuard, ErrorMessage, NullishGuard } from "@/components";
 import EmptyEventsList from "./EmptyEventsList";
 import { RemindButton } from "./RemindButton";
+import Image from "next/image";
 
 type PartnerEventsProps = {
   slug: string;
@@ -56,12 +57,12 @@ export default async function PartnerEvents({ slug }: PartnerEventsProps) {
               </Box>
 
               <Flex direction="column" alignItems="center" gap={4}>
-                <NullishGuard check={thumbnail}>
+                <NullishGuard check={thumbnail} fallback={<></>}>
                   <Image
-                    src={thumbnail}
+                    src={thumbnail ?? ""}
                     alt={title}
-                    maxWidth={400}
-                    maxHeight={200}
+                    width={300}
+                    height={200}
                   />
                 </NullishGuard>
                 <RemindButton
