@@ -1,32 +1,13 @@
 import * as ExcelJS from "exceljs";
-import { PrismaClient, Prisma, PartnerType } from "@prisma/client";
+import { PrismaClient, Prisma, PartnerType, $Enums } from "@prisma/client";
 import * as bcrypt from "bcrypt";
 import { faker, fakerPL } from "@faker-js/faker";
 import slugify from "slugify";
 import { setTimeout } from "node:timers/promises";
 
-const parseAddress = (address: string): string[] => {
-  console.log(address);
-  const street = address.split(", ")[0].trim();
-  const postal = address.split(", ")[1].split(" ")[0].trim();
-  const city = address.split(", ")[1].split(" ")[1].trim();
-  return [street, postal, city];
-};
-
 const parseAnimal = (animals: string): string[] => {
-  const out: string[] = [];
-  const entries = animals.split(" I ");
-  entries.forEach(entry => {
-    switch (entry) {
-      case "PSY":
-        out.push("Psy");
-        break;
-      case "KOTY":
-        out.push("Koty");
-        break;
-    }
-  });
-  return out;
+  const entries = animals.split(", ");
+  return entries;
 };
 
 const parseOrgType = (type: string): PartnerType => {
@@ -76,13 +57,19 @@ async function main(): Promise<void> {
   if (filePath) {
     const workbook = new ExcelJS.Workbook();
     const workbookData = await workbook.xlsx.readFile(filePath);
-    const sheet = workbookData.worksheets[0];
-    const rows = sheet.getRows(3, 55);
+
+    const partnerSheet = workbookData.worksheets[0];
+    const eventsSheet = workbookData.worksheets[1];
+    const goodsSheet = workbookData.worksheets[2];
+
+    const partnerRows = partnerSheet.getRows(2, 27);
+    const eventsRows = eventsSheet.getRows(2, 9);
+    const goodsRows = goodsSheet.getRows(2, 185);
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    rows?.forEach(async row => {
-      if (row.getCell(1).text != "") {
+    partnerRows?.forEach(async row => {
+      if (row.getCell(1).text) {
         const i = parseInt(row.getCell(1).text);
-        const address = parseAddress(row.getCell(11).text);
 
         partnerAccountPayload.push({
           id: i,
@@ -92,26 +79,26 @@ async function main(): Promise<void> {
 
         partnerPayload.push({
           id: i,
-          name: row.getCell(3).text,
+          name: row.getCell(2).text,
           slug: `temp-${i}`,
-          latitude: parseFloat(row.getCell(12).text.split(", ")[0]),
-          longitude: parseFloat(row.getCell(12).text.split(", ")[1]),
-          type: parseOrgType(row.getCell(2).text),
+          latitude: parseFloat(row.getCell(4).text.split(", ")[0]),
+          longitude: parseFloat(row.getCell(4).text.split(", ")[1]),
+          type: parseOrgType(row.getCell(3).text),
         });
 
         partnerProfilePayload.push({
           id: i,
           partnerId: i,
-          description: fakerPL.lorem.lines(2),
-          getToInfo: "przykładkowe instrukcje dojazdu...",
-          city: address[2],
-          street: address[0],
-          postal: address[1],
-          website: row.getCell(5).text,
-          animals: parseAnimal(row.getCell(8).text),
+          description: row.getCell(5).text,
+          getToInfo: row.getCell(6).text,
+          city: row.getCell(7).text,
+          street: row.getCell(8).text,
+          postal: row.getCell(9).text,
+          website: row.getCell(11).text,
+          animals: parseAnimal(row.getCell(12).text),
           visitHours: "Pon - Pt, 8:00 - 16:00",
-          phone: row.getCell(7).text,
-          email: row.getCell(6).text,
+          phone: row.getCell(10).text,
+          email: row.getCell(13).text,
           image: faker.image.urlPicsumPhotos({
             grayscale: false,
             blur: 0,
@@ -132,33 +119,38 @@ async function main(): Promise<void> {
           sunday: "Zamknięte",
         });
 
-        neededGoodsPayload.push({
-          id: i,
-          partnerId: i,
-          name: fakerPL.lorem.words({ min: 1, max: 4 }),
-          amountCurrent: 0,
-          amountMax: faker.number.int({ min: 0, max: 100 }),
-          amountUnit: faker.helpers.arrayElement(["sztuki", "litry"]),
-          state: "LOW",
-          stateInfo: 'Jakis tam stan typu "Potrzebne pilnie", etc.',
-        });
-
         neededGoodsMetaPayload.push({
           id: i,
           partnerId: i,
-          note: fakerPL.lorem.paragraph(),
+          note: "Bardzo dziękujemy za Waszą pomoc!",
         });
+      }
+    });
 
+    eventsRows?.forEach(row => {
+      if (row.getCell(1).text) {
         partnerEventPayload.push({
-          id: i,
-          partnerId: i,
-          title: fakerPL.lorem.words({ min: 2, max: 3 }),
-          description: fakerPL.lorem.paragraph(),
-          thumbnail: fakerPL.image.avatar(),
-          eventDate: faker.date.between({
-            from: "2025-06-01",
-            to: "2025-12-31",
-          }),
+          id: parseInt(row.getCell(1).text),
+          partnerId: parseInt(row.getCell(3).text),
+          title: row.getCell(4).text,
+          description: row.getCell(5).text,
+          eventDate: row.getCell(6).text,
+          thumbnail: row.getCell(7).text ?? null,
+        });
+      }
+    });
+
+    goodsRows?.forEach(row => {
+      if (row.getCell(1).text) {
+        neededGoodsPayload.push({
+          id: parseInt(row.getCell(1).text),
+          partnerId: parseInt(row.getCell(3).text),
+          name: row.getCell(4).text,
+          amountCurrent: parseInt(row.getCell(5).text),
+          amountMax: parseInt(row.getCell(6).text),
+          amountUnit: row.getCell(7).text,
+          state: row.getCell(8).text as $Enums.GoodsState,
+          stateInfo: "Customowa informacja o stanie...",
         });
       }
     });
@@ -262,6 +254,12 @@ async function main(): Promise<void> {
 
   await setTimeout(100);
 
+  await prisma.partnerEvent.createMany({
+    data: partnerEventPayload,
+  });
+
+  await setTimeout(100);
+
   await prisma.neededGoods.createMany({
     data: neededGoodsPayload,
   });
@@ -270,12 +268,6 @@ async function main(): Promise<void> {
 
   await prisma.neededGoodsMeta.createMany({
     data: neededGoodsMetaPayload,
-  });
-
-  await setTimeout(100);
-
-  await prisma.partnerEvent.createMany({
-    data: partnerEventPayload,
   });
 
   await setTimeout(100);
