@@ -31,8 +31,8 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           token_format: access_token
-          project_id: angular-amp-459415-h8
-          workload_identity_provider: projects/782854916885/locations/global/workloadIdentityPools/haumaps/providers/github
+          project_id: apt-cycling-465810-u1
+          workload_identity_provider: projects/545766980331/locations/global/workloadIdentityPools/haumaps/providers/github
           service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
           access_token_lifetime: 600s
 
@@ -61,8 +61,8 @@ jobs:
           file: prod.Dockerfile
           target: frontend
           tags: |
-            europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-frontend:${{ steps.get-tag.outputs.short_ref }}
-            europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-frontend:latest
+            europe-north1-docker.pkg.dev/apt-cycling-465810-u1/haumaps/haumaps-frontend:${{ steps.get-tag.outputs.short_ref }}
+            europe-north1-docker.pkg.dev/apt-cycling-465810-u1/haumaps/haumaps-frontend:latest
 
       - name: Build and push Backend image
         uses: docker/build-push-action@v6
@@ -71,8 +71,8 @@ jobs:
           file: prod.Dockerfile
           target: backend
           tags: |
-            europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-backend:${{ steps.get-tag.outputs.short_ref }}
-            europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-backend:latest
+            europe-north1-docker.pkg.dev/apt-cycling-465810-u1/haumaps/haumaps-backend:${{ steps.get-tag.outputs.short_ref }}
+            europe-north1-docker.pkg.dev/apt-cycling-465810-u1/haumaps/haumaps-backend:latest
       - name: Build and push Blog image
         uses: docker/build-push-action@v6
         with:
@@ -80,5 +80,5 @@ jobs:
           file: prod.Dockerfile
           target: blog
           tags: |
-            europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-blog:${{ steps.get-tag.outputs.short_ref }}
-            europe-north1-docker.pkg.dev/angular-amp-459415-h8/haumaps/haumaps-blog:latest
+            europe-north1-docker.pkg.dev/apt-cycling-465810-u1/haumaps/haumaps-blog:${{ steps.get-tag.outputs.short_ref }}
+            europe-north1-docker.pkg.dev/apt-cycling-465810-u1/haumaps/haumaps-blog:latest
