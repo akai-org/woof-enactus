@@ -22,7 +22,7 @@
     "prisma:reset": "prisma migrate reset",
     "prisma:migrate": "prisma migrate dev",
     "db:seed:helper": "ts-node ./prisma/seed.ts",
-    "db:seed": "docker container exec -it woof-enactus-backend-dev-1 sh -c \"npm -w server run db:seed:helper\""
+    "db:seed": "docker container exec -it woof-enactus-backend-dev-1 sh -c \"pnpm --filter=server db:seed:helper\""
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
